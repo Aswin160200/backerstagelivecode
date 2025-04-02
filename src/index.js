@@ -28,7 +28,7 @@ import AdmimInvestorsDetails from './component/screens/pages/superAdmin/adminInv
 import AdminInvestor from './component/screens/pages/superAdmin/adminInvestor/Index.js';
 import AdminInvestorsDetails from './component/screens/pages/superAdmin/adminInvestor/adminInverstorDetails/Index.js';
 import { ToastContainer } from 'react-toastify';
-import './amplify-config';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <AppProvider>
