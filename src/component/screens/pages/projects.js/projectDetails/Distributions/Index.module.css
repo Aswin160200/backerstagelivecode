@@ -1,0 +1,124 @@
+.DistributionsPagePageTabsContainerTable{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+}
+.DistributionsPagePageTablePagination{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+}
+.DistributionsPageActionContainer{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.DistributionsPageActionViewIcon{
+    width: 10%;
+    height: 10%;
+    color: var(--purpleColor);
+    cursor: pointer;
+}
+.DistributionsPageActionEditIcon{
+    width: 10%;
+    height: 10%;
+    color: var(--geenColor);
+    cursor: pointer;
+}
+.DistributionsPageActionDeleteIcon{
+    width: 10%;
+    height: 10%;
+    color: var(--lightRed);
+    cursor: pointer;
+}
+.LinkAddress{
+    text-decoration: none !important;
+    color: var(--lightBlueColor);
+}
+.DistributionsPagePageTableNavContent{
+    display: flex;
+    justify-content: space-between;
+    align-items:center ;
+    width: 100%;
+}
+.DistributionsPagePageTableNavContentButton{
+    padding: 0.5rem 1.5rem;
+    margin: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--lightBlueColor);
+    background-color: var(--lightBlueColor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_600);
+    color: var(--whitecolor);
+    cursor: pointer;
+}
+.DistributionsPageGenerateButton{
+    padding: 0.2rem 0.9rem;
+    margin: 0.3rem;
+    border: 1px solid var(--darkGreenColor);
+    background-color: var(--darkGreenColor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_12);
+    font-weight: var(--font-weight_500);
+    color: var(--whitecolor);
+    cursor: pointer;
+}
+.DistributionsPageActionDownloadIcon{
+   
+        width: 10%;
+        height: 10%;
+        color: var(--purpleColor);
+        cursor: pointer;
+    
+}
+.DistributionsPageTableTitleText{
+    font-family: var(--defaultFontFamily);
+    font-weight: var(--font-weight_500);
+    font-size: var(--font-size_18);
+    color: var(--lightBlueColor);
+    margin: 0rem;
+}
+.TableBody{
+    font-size: var(--font-size_14) !important;
+}
+
+.ProjectsDetailsPageAddPartysProjectModelPopupContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.CreateProjetsdetailsAddPartysProjectTitle{
+    font-family: var(--defaultFontFamily);
+    font-weight: var(--font-weight_500);
+    font-size: var(--font-size_18);
+    color: var(--lightBlueColor);
+}
+
+.CreateProjectDetailsInvestorTableAddPartsProjectsCancelButton{
+    padding: 0.5rem 1.5rem;
+    margin: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--darkAshColor);
+    background-color: var(--whitecolor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_500);
+    color: var(--darkBlueColor);
+    cursor: pointer;
+}
+.CreateProjectDetailsInvestorTableAddPartsProjectsSubmitButton{
+    padding: 0.5rem 1.5rem;
+    margin: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--darkBlue);
+    background-color: var(--darkBlue);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_500);
+    color: var(--whitecolor);
+    cursor: pointer;
+}

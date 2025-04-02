@@ -1,0 +1,64 @@
+.HeaderPageMainContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: space-between;
+    background-color: var(--whitecolor);
+}
+.HeaderPageNavContainer{
+    display: flex;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+.HeaderPageLogo{
+    width: 15%;
+    height: 20%;
+}
+.HeaderPageNavContainerLeft{
+    display: flex;
+    width: 80%;
+    gap: 10px;
+    align-items: center;
+}
+.HeaderPageNavContainerLeft p
+{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 0px;
+}
+.HeaderPageBackIcon{
+    height: 50px;;
+}
+.HeaderPageNavContainerRight{
+    display: flex;
+    width: 40%;
+    justify-content: space-between;
+    align-items: center;
+}
+.HeaderPagesearch
+{
+    background: #eff7ff;
+    height: 41px;
+    margin-top: 5px;
+}
+.HeaderPagesearch .MuiInputBase-root
+{
+    height: 36px;
+}
+.HeaderPagesearch .css-1umw9bq-MuiSvgIcon-root
+{
+    color: #3a92fa;
+}
+.HeaderPagesearch input
+{
+    padding: 10px 0px !important;
+}
+
+.HeaderPagesProducerText{
+    color: var(--lightBlueColor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_600);
+    letter-spacing: 0.3px;
+}

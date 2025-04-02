@@ -1,0 +1,250 @@
+.MasterAdminDetailsMainContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    background-color: var(--backgroundcolor);
+
+}
+.MasterAdminDetails{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 0rem;
+}
+.MasterAdminDetailsCantainer{
+    display: flex;
+    justify-content: space-between;
+    width: 96%;
+    align-items: center;
+}
+.MasterAdminDetailsImageAndTextContent{
+    display: flex;
+    align-items: center;
+   
+}
+.MasterAdminDetailsText{
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_20);
+    font-weight: var(--font-weight_600);
+}
+.MasterAdminDetailsNavContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 91%;
+    background-color: var(--whitecolor);
+    margin: 0.3rem;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+}
+.MasterAdminDetailsImg
+{
+    width: 50px;
+    height: 50px;
+    padding: 0.5rem;
+    background-color: var(--whitecolor);
+    border-radius: 50%;
+    margin: 1rem;
+}
+.MasterAdminDetailsNavContainerText{
+    margin: 0rem;
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_22);
+    color: var(--darkColor);
+    font-weight: var(--font-weight_600);
+}
+.MasterAdminDetailsNavContainerButton{
+    padding: 0.6rem 1.5rem;
+    margin: 0rem 0.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--lightBlueColor);
+    background-color: var(--lightBlueColor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_18);
+    font-weight: var(--font-weight_500);
+    color: var(--whitecolor);
+    cursor: pointer;
+}
+.MasterAdminDetailsNavConatinerIcon {
+    background-color: var(--whitecolor);
+    padding: 0.5rem;
+    border-radius: 50px;
+    border: 1px solid var(--boxShadow);
+}
+.MasterAdminDetailsTabAndNotesContainer{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 94%;
+}
+.MasterAdminDetailsPageTabsContainer{
+    width: 100%;
+    border-radius: 10px;
+    padding: 0.5rem;
+    margin: 0.5rem;
+    background-color: var(--whitecolor);
+}
+.TabAddIconTExt{
+    color: var(--darkColor);
+  font-size: var(--font-size_14);
+  margin: 0rem;
+  font-family: var(--defaultFontFamily);
+  text-transform: capitalize;
+}
+.MasterAdminDetailsTabDetailsContainer{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.MasterAdminDetailsTabDetailsHeader{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.MasterAdminDetailsTabDetailsHeaderText{
+    margin: 0rem;
+    font-family: var(--defaultFontFamily);
+    font-weight: var(--font-weight_600);
+    font-size: var(--font-size_18);
+    color: var(--lightBlueColor);
+}
+.MasterAdminDetailsTabDetailsHeaderEditIcon{
+    color: var(--darkGreenColor);
+    background-color: var(--ashColor);
+    padding: 0.3rem;
+    cursor: pointer;
+}
+.MasterAdminDetailsInformationContianer{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin: 1rem 0rem;
+}
+.MasterAdminDetailsInformationContent{
+    display: flex;
+    width: 100%;
+    /* align-items: center; */
+    justify-content: space-between;
+}
+.MasterAdminDetailsInformationDetailsCard{
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+    border-bottom: 2px solid var(--ashColor);
+    margin: 0.5rem 0rem;
+}
+.MasterAdminDetailsInformationDetailsCardText{
+    margin: 0rem;
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_600);
+    color: var(--darkAshColor);
+}
+.MasterAdminDetailsInformationDetailsCardTextdata{
+    margin: 0.5rem 0rem;
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_600);
+    color: var(--darkColor);
+}
+.MasterAdminDetailsPageInformationDocumentICon{
+    color: var(--lightRed);
+}.MasterAdminDetailsTabDetailsHeaderTextLoginInfo{
+    margin: 1rem 0rem;
+    font-family: var(--defaultFontFamily);
+    font-weight: var(--font-weight_600);
+    font-size: var(--font-size_18);
+    color: var(--lightBlueColor);
+}
+.MasterAdminDetailsModelPopupContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.MasterAdminDetailsModelPopupHeader{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid var(--ashColor);
+    padding: 1rem;
+}
+.MasterAdminDetailsModelPopupHeaderText{
+    margin: 0rem;
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_20);
+    font-weight: var(--font-weight_500);
+}
+.MasterAdminDetailsModelPopupHeaderTextIcon{
+    cursor: pointer;
+}
+.MasterAdminDetailsTitleContainer{
+    width: 90%;
+    padding: 1rem;
+}
+.MasterAdminDetailsTitle{
+    font-family: var(--defaultFontFamily);
+    font-weight: var(--font-weight_500);
+    font-size: var(--font-size_18);
+    color: var(--lightBlueColor);
+}
+.MasterAdminDetailsInputContainer{
+    display:flex;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 90%;
+}
+.MasterAdminDetailsInputContent{
+    display: flex;
+    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.MasterAdminDetailsInputCart{
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+}
+.MasterAdminDetailsInputCartText{
+    color: var(--darkColor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_400);
+    letter-spacing: 0.3px;
+}
+.MasterAdminDetailsButtonContainer{
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+    justify-content: flex-end;
+    align-items:center;
+}
+.MasterAdminDetailsCancelButton{
+    padding: 0.5rem 1.5rem;
+    margin: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--darkAshColor);
+    background-color: var(--whitecolor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_500);
+    color: var(--darkBlueColor);
+    cursor: pointer;
+}
+.MasterAdminDetailsSubmitButton{
+    padding: 0.5rem 1.5rem;
+    margin: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--darkAshColor);
+    background-color: var(--darkBlueColor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_500);
+    color: var(--whitecolor);
+    cursor: pointer;
+}

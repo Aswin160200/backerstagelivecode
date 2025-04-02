@@ -1,0 +1,87 @@
+.DcoumentsPagePageTabsContainerTable{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+}
+.DcoumentsPagePageTablePagination{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+}
+.DcoumentsPageActionContainer{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.DcoumentsPageActionViewIcon{
+    width: 10%;
+    height: 10%;
+    color: var(--purpleColor);
+    cursor: pointer;
+}
+.DcoumentsPageActionEditIcon{
+    width: 10%;
+    height: 10%;
+    color: var(--geenColor);
+    cursor: pointer;
+}
+.DcoumentsPageActionDeleteIcon{
+    width: 10%;
+    height: 10%;
+    color: var(--lightRed);
+    cursor: pointer;
+}
+.LinkAddress{
+    text-decoration: none !important;
+    color: var(--lightBlueColor);
+}
+.DcoumentsPagePageTableNavContent{
+    display: flex;
+    justify-content: space-between;
+    align-items:center ;
+    width: 100%;
+}
+.DcoumentsPagePageTableNavContentButton{
+    padding: 0.5rem 1.5rem;
+    margin: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--lightBlueColor);
+    background-color: var(--lightBlueColor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_600);
+    color: var(--whitecolor);
+    cursor: pointer;
+}
+.DcoumentsPageGenerateButton{
+    padding: 0.2rem 0.9rem;
+    margin: 0.3rem;
+    border: 1px solid var(--darkGreenColor);
+    background-color: var(--darkGreenColor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_12);
+    font-weight: var(--font-weight_500);
+    color: var(--whitecolor);
+    cursor: pointer;
+}
+.DcoumentsPageActionDownloadIcon{
+   
+        width: 10%;
+        height: 10%;
+        color: var(--purpleColor);
+        cursor: pointer;
+    
+}
+.DcoumentsPageTableTitleText{
+    font-family: var(--defaultFontFamily);
+    font-weight: var(--font-weight_500);
+    font-size: var(--font-size_18);
+    color: var(--lightBlueColor);
+    margin: 0rem;
+}
+.TableBody{
+    font-size: var(--font-size_14) !important;
+}

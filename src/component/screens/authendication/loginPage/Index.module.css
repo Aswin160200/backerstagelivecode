@@ -1,0 +1,189 @@
+.LoginPageMainContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 0rem;
+  height: 100vh;
+  background-color: #ebedf3;
+}
+.LoginPageMainCart {
+  display: flex;
+  width: 60%;
+  height: 75%;
+}
+.LoginContentCart {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  background: linear-gradient(140deg, #2573d1, #041d4b);
+  width: 40%;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  padding: 1rem 2rem;
+}
+.LoginContentCartTwo {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 50%;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  background-color: var(--whitecolor);
+}
+.LoginContentCartTitleImg {
+  width: 40%;
+  margin: 2rem;
+}
+.LoginContentCartImg {
+  height: 72%;
+  border-radius: 30px;
+}
+.LoginContentCartTitleContainer {
+  margin: 1rem 0rem;
+}
+.LoginContentCartTitleContainerText {
+  margin: 0rem;
+  color: var(--whitecolor);
+  font-style: normal;
+  font-family: var(--defaultFontFamily);
+  font-weight: var(--font-weight_600);
+  font-size: var(--font-size_26);
+  letter-spacing: 2px;
+}
+.LoginPageInputContainer {
+  display: flex;
+  flex-direction: column;
+}
+.LoginPageInputContainerText {
+  color: var(--whitecolor);
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_16);
+  font-weight: var(--font-weight_400);
+  letter-spacing: 0.3px;
+  cursor: pointer;
+}
+.LoginPageCartPasswordRememberContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.LoginPageCartPasswordRememberContent {
+  display: flex;
+  align-items: center;
+  width: 50%;
+}
+.LoginPageCartPasswordRememberContentIcon {
+  color: var(--whitecolor) !important;
+}
+.LoginButton {
+  color: var(--blueColor);
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_18);
+  font-weight: var(--font-weight_700);
+  letter-spacing: 0.3px;
+  background-color: var(--whitecolor);
+  border-radius: 50px;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+.LoginButton:focus,
+.LoginButton:active {
+  border: none;
+}
+.registerErrormsg {
+  font-size: var(--font-size_14);
+  /* font-weight: var(--font-weight_400); */
+  color: var(--lightRed);
+  letter-spacing: 2 0.3rem;
+  letter-spacing: 0.1rem;
+}
+
+
+.LoginModelModelPopupContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.LoginModelModelPopupHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid var(--ashColor);
+  padding: 1rem;
+}
+.LoginModelModelPopupHeaderText {
+  margin: 0rem;
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_20);
+  font-weight: var(--font-weight_500);
+}
+.LoginModelModelPopupHeaderTextIcon {
+  cursor: pointer;
+}
+
+.LoginModelTitle {
+  font-family: var(--defaultFontFamily);
+  font-weight: var(--font-weight_500);
+  font-size: var(--font-size_18);
+  color: var(--lightBlueColor);
+}
+.LoginModelInputContainer{
+    display:flex;
+    flex-wrap: wrap;
+    align-items: center;
+   
+}
+.LoginModelInputContent{
+    display: flex;
+    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap:20px;
+}
+.LoginModelInputCart{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+.LoginModelInputCartText{
+    color: var(--darkColor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_400);
+    letter-spacing: 0.3px;
+}
+.LoginModelButtonContainer{
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+    justify-content: flex-end;
+    align-items:center;
+}
+.LoginModelCancelButton{
+    padding: 0.5rem 1.5rem;
+    margin: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--darkAshColor);
+    background-color: var(--whitecolor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_500);
+    color: var(--darkBlueColor);
+    cursor: pointer;
+}
+.LoginModelSubmitButton{
+    padding: 0.5rem 1.5rem;
+    margin: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--darkAshColor);
+    background-color: var(--darkBlueColor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_500);
+    color: var(--whitecolor);
+    cursor: pointer;
+}

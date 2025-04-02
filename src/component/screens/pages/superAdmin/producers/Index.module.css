@@ -1,0 +1,209 @@
+.ProducersMainContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: var(--backgroundcolor);
+}
+.ProducersPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1rem 0rem;
+}
+.ProducersPageNav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 96%;
+}
+.ProducersPageNavImg
+{
+  width: 50px;
+  height: 50px;
+  padding: 0.5rem;
+  background-color: var(--whitecolor);
+  border-radius: 50%;
+  margin: 1rem; 
+}
+.ProducersPageNavText {
+  display: flex;
+  align-items: center;
+  color: var(--darkColor);
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_20);
+  font-weight: var(--font-weight_600);
+  font-family: var(--defaultFontFamily);
+  letter-spacing: 0.3px;
+  margin: 0rem;
+}
+.ProducersPageNavButtonContainer {
+  display: flex;
+  justify-content: flex-end;
+  width: 30%;
+}
+.ProducersPageNavExportButton {
+  padding: 0.5rem 1.5rem;
+  margin: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid var(--lightRed);
+  background-color: var(--lightRed);
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_16);
+  font-weight: var(--font-weight_500);
+  color: var(--whitecolor);
+  cursor: pointer;
+}
+.ProducersPageNavAddProducersButton {
+  padding: 0.5rem 1.5rem;
+  margin: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid var(--lightBlueColor);
+  background-color: var(--lightBlueColor);
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_16);
+  font-weight: var(--font-weight_500);
+  color: var(--whitecolor);
+  cursor: pointer;
+}
+.ProducersPageTabsContainerTable {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 1rem;
+  background-color: var(--whitecolor);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 0 8px 4px var(--boxShadow);
+}
+.ProducersPageTablePagination {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+}
+.ProducersPageActionContainer {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.ProducersPageTableActionEditIcon {
+  width: 10%;
+  height: 10%;
+  color: var(--geenColor);
+  cursor: pointer;
+}
+.ProjectsTableActionDownloadIcon {
+  width: 10%;
+  height: 10%;
+  color: var(--purpleColor);
+  cursor: pointer;
+}
+.ProducersPageTableActionViewIcon {
+  width: 10%;
+  height: 10%;
+  color: var(--purpleColor);
+  cursor: pointer;
+}
+.ProducersPageTableActionDeleteIcon {
+  width: 10%;
+  height: 10%;
+  color: var(--lightRed);
+  cursor: pointer;
+}
+.ProducersPageModelPopupContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.ProducersPageModelPopupHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid var(--ashColor);
+  padding: 1rem;
+}
+.ProducersPageModelPopupHeaderText {
+  margin: 0rem;
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_20);
+  font-weight: var(--font-weight_500);
+}
+.ProducersPageModelPopupHeaderTextIcon {
+  cursor: pointer;
+}
+
+.ProducersPageTitle {
+  font-family: var(--defaultFontFamily);
+  font-weight: var(--font-weight_500);
+  font-size: var(--font-size_18);
+  color: var(--lightBlueColor);
+}
+.ProducersPageInputContainer{
+    display:flex;
+    flex-wrap: wrap;
+    align-items: center;
+   
+}
+.ProducersPageInputContent{
+    display: flex;
+    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap:20px;
+}
+.ProducersPageInputCart{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+.ProducersPageInputCartText{
+    color: var(--darkColor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_400);
+    letter-spacing: 0.3px;
+}
+.ProducersPageButtonContainer{
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+    justify-content: flex-end;
+    align-items:center;
+}
+.ProducersPageCancelButton{
+    padding: 0.5rem 1.5rem;
+    margin: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--darkAshColor);
+    background-color: var(--whitecolor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_500);
+    color: var(--darkBlueColor);
+    cursor: pointer;
+}
+.ProducersPageSubmitButton{
+    padding: 0.5rem 1.5rem;
+    margin: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--darkAshColor);
+    background-color: var(--darkBlueColor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_500);
+    color: var(--whitecolor);
+    cursor: pointer;
+}
+
+.ProjectsPageTabsContainerTable .Search input {
+  border-radius: 5px;
+  border: 1px solid #e1e1e1 !important;
+  padding: 10px;
+  font-size: 16px;
+}

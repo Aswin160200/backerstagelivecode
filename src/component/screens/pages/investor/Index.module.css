@@ -1,0 +1,208 @@
+.InvestorPageMainContainer{
+    display: flex;
+    flex-direction: column;
+    background-color: var(--backgroundcolor);
+}
+.InvestorPageMainContent{
+    display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        padding: 1rem 0rem;
+}
+.InvestorPageMainNavContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 96%;
+   
+}
+.InvestorPagenavCart{
+    display: flex;
+    align-items: center;
+}
+.InvestorPagenavCartImg{
+    width: 25%;
+    padding: 0.5rem;
+    background-color: var(--whitecolor);
+    border-radius: 50%;
+    margin: 1rem;
+}
+.InvestorPagenavCartText{
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_18);
+    font-weight: var(--font-weight_500);
+}
+.InvestorPageTabsContainer{
+    width: 95%;
+    border-radius: 10px;
+    padding: 1rem;
+    background-color: var(--whitecolor);
+}
+.TabHeader{
+    display: flex;
+    align-items: center;
+}
+.TabAddIcon{
+    width: 15%;
+    margin: 0rem 0.5rem;
+}
+.TabAddIconTExt{
+    color: var(--darkColor);
+}
+.InvestorPageTabsContainerTable{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: 1rem;
+    background-color: var(--whitecolor);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 0 8px 4px var(--boxShadow);
+}
+.InvestorPageTablePagination{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+}
+.ViewInvestorPageNavContainerButton{
+    padding: 0.6rem 1.5rem;
+    margin: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--lightBlueColor);
+    background-color: var(--lightBlueColor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_18);
+    font-weight: var(--font-weight_500);
+    color: var(--whitecolor);
+    cursor: pointer;
+}
+.ViewTableActionContainer{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.ViewTableActionEditIcon{
+    width: 10%;
+    height: 10%;
+    color: var(--geenColor);
+    cursor: pointer;
+}
+.ViewTableActionViewIcon{
+    width: 10%;
+    height: 10%;
+    color: var(--purpleColor);
+    cursor: pointer;
+}
+.ViewTableActionDeleteIcon{
+    width: 10%;
+    height: 10%;
+    color: var(--lightRed);
+    cursor: pointer;
+}
+
+/* model  */
+.CreateInvestorMainContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.CreateInvestorTitleContainer{
+    width: 90%;
+    padding: 1rem;
+}
+.CreateInvestorTitle{
+    font-family: var(--defaultFontFamily);
+    font-weight: var(--font-weight_500);
+    font-size: var(--font-size_18);
+    color: var(--lightBlueColor);
+}
+.CreateInvestorInputContainer{
+    display:flex;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 90%;
+}
+.CreateInvestorInputContent{
+    display: flex;
+    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.CreateInvestorInputCart {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+  }
+  .CreateInvestorInputCartSingleInput{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  } 
+  .CreateInvestorInputCartText {
+    color: var(--darkColor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_400);
+    letter-spacing: 0.3px;
+  }
+  .CreateInvestorButtonContainer{
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+    justify-content: flex-end;
+    align-items:center;
+  }
+  .CreateInvestorCancelButton{
+    padding: 0.5rem 1.5rem;
+    margin: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--darkAshColor);
+    background-color: var(--whitecolor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_500);
+    color: var(--darkBlueColor);
+    cursor: pointer;
+  }
+  .CreateInvestorSubmitButton{
+    padding: 0.5rem 1.5rem;
+    margin: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--darkAshColor);
+    background-color: var(--darkBlueColor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_500);
+    color: var(--whitecolor);
+    cursor: pointer;
+  }
+  .ViewInvestorPageNavContainerButton{
+    padding: 0.6rem 1.5rem;
+    margin: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--lightBlueColor);
+    background-color: var(--lightBlueColor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_18);
+    font-weight: var(--font-weight_500);
+    color: var(--whitecolor);
+    cursor: pointer;
+  }
+  .CreateInvestorButtonContentExportButton{
+    padding: 0.6rem 1.5rem;
+    margin: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--lightRed);
+    background-color: var(--lightRed);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_18);
+    font-weight: var(--font-weight_500);
+    color: var(--whitecolor);
+    cursor: pointer;
+
+  }

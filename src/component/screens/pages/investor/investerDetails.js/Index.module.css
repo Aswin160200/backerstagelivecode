@@ -1,0 +1,290 @@
+.InvestorDetailsMainConatiner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background-color: var(--backgroundcolor);
+}
+.InvestorDetailsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.InvestorDetailsNavConatiner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 96%;
+}
+.InvestorDetailsNavImageConatiner {
+  display: flex;
+  align-items: center;
+}
+.InvestorDetailsNavConatinerImg {
+  width: 50px;
+  height: 50px;
+  padding: 0.5rem;
+  background-color: var(--whitecolor);
+  border-radius: 50%;
+  margin: 1rem;
+}
+.InvestorDetailsNavConatinerIcon {
+  background-color: var(--whitecolor);
+  padding: 0.5rem;
+  border-radius: 50px;
+  border: 1px solid var(--boxShadow);
+}
+.InvestorDetailsNavImageConatinerText {
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_20);
+  font-weight: var(--font-weight_600);
+  color: var(--darkColor);
+  margin: 0rem 0.5rem;
+}
+.InvestorDetailsTitleConatiner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  width: 91%;
+  background-color: var(--whitecolor);
+  margin: 0.5rem;
+  border-radius: 10px;
+}
+.InvestorDetailsTitleConatinerText {
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_22);
+  font-weight: var(--font-weight_600);
+  color: var(--darkColor);
+  margin: 0rem 0.5rem;
+}
+.InvestorDetailsTitleConatinerButton {
+  padding: 0.6rem 1rem;
+  border-radius: 5px;
+  border: 1px solid var(--lightBlueColor);
+  background-color: var(--lightBlueColor);
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_18);
+  font-weight: var(--font-weight_500);
+  color: var(--whitecolor);
+  cursor: pointer;
+}
+.InvestorDetailsTabs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 65%;
+  border-radius: 10px;
+  background-color: var(--whitecolor);
+  padding: 0.5rem;
+  margin: 0.5rem;
+}
+.InvestorDetailsTabsAndNotesContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 95%;
+}
+.InvestorDetailsTabsContainer {
+  width: 100%;
+  border-radius: 10px;
+  padding: 1rem;
+  background-color: var(--whitecolor);
+}
+.TabHeader {
+  width: 30% !important;
+}
+.TabAddIcon {
+  width: 15%;
+  margin: 0rem 0.5rem;
+}
+.TabAddIconTExt {
+  color: var(--darkColor);
+  text-transform: capitalize;
+}
+.InvestorDetailsPartiesAndNotesContainer {
+  background-color: var(--whitecolor);
+  width: 30%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  padding: 0.5rem;
+  margin: 0.5rem;
+}
+.InvestorDetailsPartiesAndNotesContentMainContainer {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--ashColor);
+  border-radius: 10px;
+  margin: 0.5rem;
+}
+.InvestorDetailsPartiesAndNotesContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  border: 1px solid var(--ashColor);
+  border-radius: 10px;
+}
+.InvestorDetailsPartiesAndNotesContentHeader {
+  display: flex;
+  align-items: center;
+}
+.InvestorDetailsPartiesAndNotesContentHeaderText {
+  margin: 0rem 0.5rem;
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_16);
+  font-weight: var(--font-weight_600);
+  color: var(--darkColor);
+}
+.InvestorDetailsPAtiesAndNotesIcon {
+  cursor: pointer;
+}
+.InvestorDetailsPartiesContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+}
+.InvestorDetailsPartiesContainerText {
+  margin: 0rem 0.5rem;
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_16);
+  font-weight: var(--font-weight_600);
+  color: var(--lightBlueColor);
+  display: flex;
+  justify-content: space-between;
+}
+.InvestorDetailsPartiesContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0.3rem 0rem;
+}
+.InvestorDetailsPartiesContentTitle {
+  width: 50%;
+  margin: 0rem 0.5rem;
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_16);
+  font-weight: var(--font-weight_600);
+  color: var(--darkAshColor);
+}
+.InvestorDetailsPartiesContentText {
+  width: 45%;
+  margin: 0rem 0.5rem;
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_16);
+  font-weight: var(--font-weight_600);
+  color: var(--darkColor);
+}
+.InvestorDetailsTabDetailsContainer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.InvestorDetailsTabDetailsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.InvestorDetailsTabDetailsHeaderText {
+  margin: 0rem;
+  font-family: var(--defaultFontFamily);
+  font-weight: var(--font-weight_600);
+  font-size: var(--font-size_18);
+  color: var(--lightBlueColor);
+}
+.InvestorDetailsTabDetailsHeaderEditIcon {
+  color: var(--darkGreenColor);
+  background-color: var(--ashColor);
+  padding: 0.3rem;
+  cursor: pointer;
+}
+.InvestorDetailsInformationContianer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin: 1rem 0rem;
+}
+.InvestorDetailsInformationContent {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.InvestorDetailsInformationDetailsCard {
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+  border-bottom: 2px solid var(--ashColor);
+  margin: 0.5rem 0rem;
+}
+.InvestorDetailsInformationDetailsCardText {
+  margin: 0rem;
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_16);
+  font-weight: var(--font-weight_600);
+  color: var(--darkAshColor);
+}
+.InvestorDetailsInformationDetailsCardTextdata {
+  margin: 0.5rem 0rem;
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_16);
+  font-weight: var(--font-weight_600);
+  color: var(--darkColor);
+}
+.InvestorDetailsPageInvestorTableHeaderButtonContainer {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+.InvestorDetailsPageInvestorTableHeaderButton {
+  padding: 0.3rem 0.7rem;
+  border-radius: 5px;
+  border: 1px solid var(--lightBlueColor);
+  background-color: var(--lightBlueColor);
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_16);
+  font-weight: var(--font-weight_500);
+  color: var(--whitecolor);
+  cursor: pointer;
+}
+.InvestorDetailsPageInvestorTabsContainerTable {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--whitecolor);
+}
+.InvestorDetailsPageInvesotrTablePagination {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+}
+.InvestorDetailsTableActionContainer {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.InvestorDetailsTableActionEditIcon {
+  width: 10%;
+  height: 10%;
+  color: var(--geenColor);
+  cursor: pointer;
+}
+.InvestorDetailsTableActionViewIcon {
+  width: 10%;
+  height: 10%;
+  color: var(--purpleColor);
+  cursor: pointer;
+}
+.InvestorDetailsTableActionDeleteIcon {
+  width: 10%;
+  height: 10%;
+  color: var(--lightRed);
+  cursor: pointer;
+}

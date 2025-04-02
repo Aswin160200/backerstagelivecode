@@ -1,0 +1,211 @@
+.MasterAdminLoginMainContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 0rem;
+    height: 100vh;
+    background-image: url("../../../assets/images/MasterLoginBackground.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+  }
+  .MasterAdminLoginMainCart {
+    display: flex;
+    width: 55%;
+    height: 75%;
+    margin-left: 2rem;
+  }
+  .MasterAdminLoginContentCart {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    background-color: var(--whitecolor);
+    width: 45%;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    padding: 1rem 2rem;
+  }
+  .MasterAdminLoginContentCartTwo {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 50%;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background-image: url("../../../assets/images/MasterLoginContentImage.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    align-items: baseline;
+  }
+  .MasterAdminLoginContentCartTitleImg {
+    width: 45%;
+    margin: 2rem 2rem 0.5rem 2rem;
+  }
+  .MasterAdminLoginContentCartImg {
+    height: 72%;
+  }
+  .MasterAdminLoginContentCartTitleContainer {
+    margin: 1rem 0rem;
+  }
+  .MasterAdminLoginContentCartTitleContainerText {
+    margin: 0rem;
+    color: var(--darkAshColor);
+    font-style: normal;
+    font-family: var(--defaultFontFamily);
+    font-weight: var(--font-weight_600);
+    font-size: var(--font-size_26);
+    letter-spacing: 2px;
+  }
+  .MasterAdminLoginInputContainer {
+    display: flex;
+    flex-direction: column;
+  }
+  .MasterAdminLoginInputContainerText {
+    color: var(--darkAshColor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_400);
+    letter-spacing: 0.3px;
+  }
+  .MasterAdminLoginCartPasswordRememberContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .MasterAdminLoginCartPasswordRememberContent {
+    display: flex;
+    align-items: center;
+    width: 50%;
+  }
+  .MasterAdminLoginCartPasswordRememberContentIcon {
+    color: var(--darkAshColor) !important;
+  }
+  .MasterAdminLoginButton {
+    color: var(--whitecolor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_18);
+    font-weight: var(--font-weight_700);
+    letter-spacing: 0.3px;
+    background-color: var(--lightBlueColor);
+    border-radius: 50px;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+  }
+  .MasterAdminLoginButton:focus,
+  .MasterAdminLoginButton:active {
+    border: none;
+  }
+  .registerErrormsg {
+    font-size: var(--font-size_12);
+    font-weight: var(--font-weight_400);
+    color: var(--redColor);
+    letter-spacing: 2 0.3rem;
+    letter-spacing: 0.1rem;
+  }
+  .MasterAdminLoginInputContainerTextLink{
+    color: var(--lightBlueColor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_600);
+    letter-spacing: 0.3px;
+    cursor: pointer;
+  }
+  .MasterAdminLoginTitleText{
+    color: var(--darkAshColor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_26);
+    font-weight: var(--font-weight_600);
+    letter-spacing: 0.3px;
+    margin: 0rem;
+  }
+
+
+  
+.MasterAdminLoginModelModelPopupContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.MasterAdminLoginModelModelPopupHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid var(--ashColor);
+  padding: 1rem;
+}
+.MasterAdminLoginModelModelPopupHeaderText {
+  margin: 0rem;
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_20);
+  font-weight: var(--font-weight_500);
+}
+.MasterAdminLoginModelModelPopupHeaderTextIcon {
+  cursor: pointer;
+}
+
+.MasterAdminLoginModelTitle {
+  font-family: var(--defaultFontFamily);
+  font-weight: var(--font-weight_500);
+  font-size: var(--font-size_18);
+  color: var(--lightBlueColor);
+}
+.MasterAdminLoginModelInputContainer{
+    display:flex;
+    flex-wrap: wrap;
+    align-items: center;
+   
+}
+.MasterAdminLoginModelInputContent{
+    display: flex;
+    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap:20px;
+}
+.MasterAdminLoginModelInputCart{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+.MasterAdminLoginModelInputCartText{
+    color: var(--darkColor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_400);
+    letter-spacing: 0.3px;
+}
+.MasterAdminLoginModelButtonContainer{
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+    justify-content: flex-end;
+    align-items:center;
+}
+.MasterAdminLoginModelCancelButton{
+    padding: 0.5rem 1.5rem;
+    margin: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--darkAshColor);
+    background-color: var(--whitecolor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_500);
+    color: var(--darkBlueColor);
+    cursor: pointer;
+}
+.MasterAdminLoginModelSubmitButton{
+    padding: 0.5rem 1.5rem;
+    margin: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--darkAshColor);
+    background-color: var(--darkBlueColor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_500);
+    color: var(--whitecolor);
+    cursor: pointer;
+}

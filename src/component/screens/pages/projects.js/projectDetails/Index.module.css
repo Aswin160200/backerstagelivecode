@@ -1,0 +1,575 @@
+.ProjectDetailsMainContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: var(--backgroundcolor);
+}
+.ProjectDetailsTabAndNotesContainer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 95%;
+}
+.ProjectDetailsPageTabsContainer {
+  width: 65%;
+  border-radius: 10px;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  background-color: var(--whitecolor);
+}
+.TabHeader {
+  display: flex;
+  align-items: center;
+}
+.TabAddIconTExt {
+  color: var(--darkColor);
+  font-size: var(--font-size_14);
+  margin: 0rem;
+  font-family: var(--defaultFontFamily);
+  text-transform: capitalize;
+}
+.ProjectsDetailsNavContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 96%;
+  align-items: center;
+}
+.ProjectsDetailsNavContainerLeftSide {
+  display: flex;
+  align-items: center;
+}
+.ProjectsDetailsPagenavCartImg {
+  width: 25%;
+  padding: 0.5rem;
+  background-color: var(--whitecolor);
+  border-radius: 50%;
+  margin: 1rem;
+}
+.ProjectsDetailsPagenavCartText {
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_20);
+  font-weight: var(--font-weight_500);
+}
+.ProjectDetailsPageNavCalenderIcon {
+  padding: 0.3rem 0.5rem;
+  background-color: var(--whitecolor);
+  border-radius: 50px;
+  border: 1px solid var(--boxShadow);
+  height: 30px !important; 
+}
+.ProjectDetailsNavCartContainer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 91%;
+  border-radius: 10px;
+  padding: 1rem;
+  margin: 0.5rem;
+  background-color: var(--whitecolor);
+}
+.ProjectDetailsNavCartHeaderContent {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+.ProjectDetailsNavCartHeaderContentText {
+  margin: 0rem;
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_18);
+  font-weight: var(--font-weight_500);
+}
+.ProjectDetailsNavCartHeaderContentButton {
+  padding: 0.5rem 1.5rem;
+  margin: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid var(--lightBlueColor);
+  background-color: var(--lightBlueColor);
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_16);
+  font-weight: var(--font-weight_500);
+  color: var(--whitecolor);
+  cursor: pointer;
+}
+.ProjectDetailsNavCartDetails {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.ProjectDetailsNavCartDetailsCard {
+  display: flex;
+  flex-direction: column;
+  width: 12%;
+}
+.ProjectDetailsNavCartDetailsCardText {
+  margin: 0rem;
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_16);
+  font-weight: var(--font-weight_600);
+  color: var(--darkAshColor);
+}
+.ProjectDetailsNavCartDetailsCardTextdata {
+  margin: 0.5rem 0rem;
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_16);
+  font-weight: var(--font-weight_600);
+  color: var(--darkColor);
+}
+.ProjectDetailsTabDetailsContainer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.ProjectDetailsTabDetailsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.ProjectDetailsTabDetailsHeaderText {
+  margin: 0rem;
+  font-family: var(--defaultFontFamily);
+  font-weight: var(--font-weight_600);
+  font-size: var(--font-size_18);
+  color: var(--lightBlueColor);
+}
+.ProjectDetailsTabDetailsHeaderEditIcon {
+  color: var(--darkGreenColor);
+  background-color: var(--ashColor);
+  padding: 0.3rem;
+  cursor: pointer;
+}
+.ProjectDetailsInformationContianer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin: 1rem 0rem;
+}
+.ProjectDetailsInformationContent {
+  display: flex;
+  width: 100%;
+  /* align-items: center; */
+  justify-content: space-between;
+
+}
+.ProjectDetailsInformationDetailsCard {
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+  border-bottom: 2px solid var(--ashColor);
+  margin: 0.5rem 0rem;
+}
+.ProjectDetailsInformationDetailsCardText {
+  margin: 0rem;
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_16);
+  font-weight: var(--font-weight_600);
+  color: var(--darkAshColor);
+}
+.ProjectDetailsInformationDetailsCardTextdata {
+  margin: 0.5rem 0rem;
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_16);
+  font-weight: var(--font-weight_600);
+  color: var(--darkColor);
+  align-items: center;
+  display: flex;
+}
+.ProjectDetailsPageInformationDocumentICon {
+    color: var(--lightRed);
+
+}
+.ProjectsDetailsPageInvestorTabsContainerTable{
+    display: flex;
+    flex-direction: column;
+    background-color: var(--whitecolor);
+
+}
+.ProjectDetailsPageInvesotrTablePagination{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+}
+.ProjectDetailsPageInvestorTableHeaderButtonContainer{
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+}
+.ProjectDetailsPageInvestorTableHeaderButton{
+    padding: 0.3rem 0.7rem;
+    border-radius: 5px;
+    border: 1px solid var(--lightBlueColor);
+    background-color: var(--lightBlueColor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_500);
+    color: var(--whitecolor);
+    cursor: pointer;
+}
+.ProjectDetailsInvestorTableInvestorDocumentButtonContainer{
+    display: flex;
+    align-items: center;
+}
+.ProjectDetailsInvestorTableInvestorDocumentViewButton{
+    padding: 0.3rem 0.9rem;
+    margin: 0.3rem;
+    border: 1px solid var(--darkBlue);
+    background-color: var(--darkBlue);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_14);
+    font-weight: var(--font-weight_500);
+    color: var(--whitecolor);
+    cursor: pointer;
+}
+.ProjectDetailsInvestorTableInvestorDocumentUploadButton{
+    padding: 0.3rem 0.9rem;
+    margin: 0.3rem;
+    border: 1px solid var(--DartPurpleColor);
+    background-color: var(--DartPurpleColor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_14);
+    font-weight: var(--font-weight_500);
+    color: var(--whitecolor);
+    cursor: pointer;
+}
+.ProjectDetailsInvestorTableInvestorDocumentGenerateButton{
+    padding: 0.3rem 0.9rem;
+    margin: 0.3rem;
+    border: 1px solid var(--darkGreenColor);
+    background-color: var(--darkGreenColor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_14);
+    font-weight: var(--font-weight_500);
+    color: var(--whitecolor);
+    cursor: pointer;
+}
+.ProjectsDetailsPageAddPartysProjectModelPopupContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.ProjectsDetailsPageAddPartysProjectModelPopupHeader{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.ProjectsDetailsPageAddPartysProjectModelPopupHeaderText{
+    margin: 0rem;
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_20);
+    font-weight: var(--font-weight_500);
+}
+.ProjectsDetailsPageAddPartysProjectModelPopupHeaderTextIcon{
+    cursor: pointer;
+}
+
+.CreateProjetsdetailsAddPartysProjectTitle{
+    font-family: var(--defaultFontFamily);
+    font-weight: var(--font-weight_500);
+    font-size: var(--font-size_18);
+    color: var(--lightBlueColor);
+}
+.CreateProjetsdetailsAddPartysInputContainer{
+    display:flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.CreateProjetsdetailsAddPartysInputContent{
+    display: flex;
+    justify-content: center;
+    justify-content: space-between;
+    width: 100%;
+    gap:20px;
+}
+.CreateProjetsdetailsAddPartysInputCart{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+.CreateProjetsdetailsAddPartysInputCartText{
+    color: var(--darkColor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_400);
+    letter-spacing: 0.3px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.CreateProjectDetailsInvestorTableAddPartsProjectsButtonContainer{
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+    justify-content: flex-end;
+    align-items:center;
+}
+.CreateProjectDetailsInvestorTableAddPartsProjectsCancelButton{
+    padding: 0.5rem 1.5rem;
+    margin: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--darkAshColor);
+    background-color: var(--whitecolor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_500);
+    color: var(--darkBlueColor);
+    cursor: pointer;
+}
+.CreateProjectDetailsInvestorTableAddPartsProjectsSubmitButton{
+    padding: 0.5rem 1.5rem;
+    margin: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--darkBlue);
+    background-color: var(--darkBlue);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_500);
+    color: var(--whitecolor);
+    cursor: pointer;
+}
+.CreateProjetsdetailsAddPartysProjectText{
+    font-family: var(--defaultFontFamily);
+    font-weight: var(--font-weight_500);
+    font-size: var(--font-size_16);
+    color: var(--darkColor);
+}
+.ProjectTableActionEditIcon{
+    width: 5%;
+    height: 5%;
+    color: var(--geenColor);
+    cursor: pointer;
+}
+.ProjectsTableActionDownloadIcon{
+    width: 5%;
+    height: 5%;
+    color: var(--purpleColor);
+    cursor: pointer;
+}
+.ProjectsTableActionViewIcon{
+    width: 5%;
+    height: 5%;
+    color: var(--purpleColor);
+    cursor: pointer;
+}
+.ProjectsTableActionDeleteIcon{
+    width: 5%;
+    height: 5%;
+    color: var(--lightRed);
+    cursor: pointer;
+}
+.ProjectDetailsPartiesAndNotesContainer{
+    background-color: var(--whitecolor);
+    width: 30%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    padding: 0.5rem;
+    margin: 0.5rem;
+
+}
+.ProjectDetailsPartiesAndNotesContentMainContainer{
+        display: flex;
+        flex-direction: column;
+        border: 1px solid var(--ashColor);
+        border-radius: 10px;
+        margin: 0.5rem;
+}
+.ProjectDetailsPartiesAndNotesContent{
+    display: flex;
+    justify-content: space-between;
+    align-items:center ;
+    padding: 0.5rem;
+    border: 1px solid var(--ashColor);
+    border-radius: 10px;
+}
+.ProjectDetailsPartiesAndNotesContentHeader{
+    display: flex;
+    align-items:center ;
+}
+.ProjectDetailsPartiesAndNotesContentHeaderText{
+    margin: 0rem 0.5rem;
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_600);
+    color: var(--darkColor);
+}
+.ProjectDetailsPAtiesAndNotesIcon{
+    cursor: pointer;
+}
+.ProjectDetailsPartiesContainer{
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+}
+.ProjectDetailsPartiesContainerText{
+    margin: 0rem 0.5rem;
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_600);
+    color: var(--lightBlueColor);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.ProjectDetailsPartiesContent{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0.3rem 0rem;
+}
+.ProjectDetailsPartiesContentTitle{
+    width: 50%;
+    margin: 0rem 0.5rem;
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_600);
+    color: var(--darkAshColor);
+}
+.ProjectDetailsPartiesContentText{
+    width: 45%;
+    margin: 0rem 0.5rem;
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_600);
+    color: var(--darkColor);
+}
+.MuiPaper-root
+{
+  box-shadow: none;
+}
+
+.CoProducersTablePageTabsContainerTable{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.CoProducersTablePageTablePagination{
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+
+.ProjectsPageModelPopupContainer{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.ProjectsPageModelPopupHeader{
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+  background: var(--LightGray8);
+  position: relative;
+  height: 25px;
+  border-radius: 10px 10px 0px 0px;
+  border-bottom: 1px solid #ccc;
+}
+.ProjectsPageModelPopupHeaderText{
+  margin: 0rem;
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_22);
+  font-weight: var(--font-weight_600);
+  color: var(--headerColor);
+  
+}
+.ProjectsPageModelPopupbody
+{
+  height: 70vh;
+  overflow-Y: scroll;
+  padding: 0px 20px;
+}
+.ProjectsPageModelPopupHeaderTextIcon{
+  cursor: pointer;
+  right: 0px;
+  position: absolute;
+  top: 3px;
+}
+
+.CreateProjetsTitle{
+  font-family: var(--defaultFontFamily);
+  font-weight: var(--font-weight_500);
+  font-size: var(--font-size_18);
+  color: var(--lightBlueColor);
+}
+.CreateProjectsInputContainer{
+  display:flex;
+  flex-wrap: wrap;
+  align-items: center;
+  
+}
+.CreateProjectsInputContent{
+  display: flex;
+  gap:20px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+.CreateProjcetsInputCart{
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+.CreateProjectsInputCartText{
+  color: var(--darkColor);
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_16);
+  font-weight: var(--font-weight_400);
+  letter-spacing: 0.3px;
+}
+.CreateProjectsButtonContainer{
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px 20px;
+  text-align: center;
+  background: var(--LightGray8);
+  justify-content: flex-end;
+  align-items:center;
+  border-radius: 0px 0px 10px 10px;
+  border-top: 1px solid #ccc;
+}
+.CreateProjectsCancelButton{
+  padding: 0.5rem 1.5rem;
+  margin: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid var(--darkAshColor);
+  background-color: var(--whitecolor);
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_16);
+  font-weight: var(--font-weight_500);
+  color: var(--darkBlueColor);
+  cursor: pointer;
+}
+.CreateProjectsSubmitButton{
+  padding: 0.5rem 1.5rem;
+  margin: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid var(--darkAshColor);
+  background-color: var(--darkBlueColor);
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_16);
+  font-weight: var(--font-weight_500);
+  color: var(--whitecolor);
+  cursor: pointer;
+}
+
+.ProjectDetailsNodataAvailableText{
+  color: var(--darkBlue);
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_18);
+  font-weight: var(--font-weight_600);
+  letter-spacing: 0.3px;
+  text-align: center;
+}

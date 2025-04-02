@@ -1,0 +1,274 @@
+.AdminInvestorDetailsMainContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: var(--backgroundcolor);
+}
+.AdminInvestorDetails{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 1rem 0rem;
+}
+.AdminInvestorDetailsPageNavImg
+{
+  width: 50px;
+    height: 50px;
+    padding: 0.5rem;
+    background-color: var(--whitecolor);
+    border-radius: 50%;
+    margin: 1rem;
+}
+.AdminInvestorDetailsPageNav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 96%;
+   
+  }
+  .AdminInvestorDetailsPageNavText {
+    display: flex;
+    align-items: center;
+    color: var(--darkColor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_20);
+    font-weight: var(--font-weight_600);
+    font-family: var(--defaultFontFamily);
+    letter-spacing: 0.3px;
+    margin: 0rem;
+  }
+  .AdminInvestorDetailsTitleCart{
+    display: flex;
+    width: 90%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.3rem 1rem;
+    background-color: var(--whitecolor);
+    border-radius: 10px;
+    margin: 0.5rem;
+
+  }
+  .AdminInvestorDetailsTitleCartText{
+    color: var(--darkColor);
+    font-size: var(--font-size_20);
+    font-weight: var(--font-weight_600);
+    font-family: var(--defaultFontFamily);
+    letter-spacing: 0.3px;
+    margin: 0rem;
+  }
+  .AdminInvestorDetailsTitleCartButton{
+    padding: 0.5rem 1.5rem;
+    margin: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--lightBlueColor);
+    background-color: var(--lightBlueColor);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_500);
+    color: var(--whitecolor);
+    cursor: pointer;
+  }
+  .AdminInvestorDetailsTabAndNotesContainer{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 93%;
+  }
+  .AdminInvestorDetailsPageTabsContainer{
+    width: 100%;
+    border-radius: 10px;
+    padding: 0.5rem;    
+    background-color: var(--whitecolor);
+  }
+  .TabAddIconTExt{
+    color: var(--darkColor);
+  font-size: var(--font-size_14);
+  margin: 0rem;
+  font-family: var(--defaultFontFamily);
+  text-transform: capitalize;
+}
+.AdminInvestorDetailsTabDetailsContainer{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.AdminInvestorDetailsTabDetailsHeader{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.AdminInvestorDetailsTabDetailsHeaderText{
+    margin: 0rem;
+    font-family: var(--defaultFontFamily);
+    font-weight: var(--font-weight_600);
+    font-size: var(--font-size_18);
+    color: var(--lightBlueColor);
+}
+.AdminInvestorDetailsTabDetailsHeaderTextLoginInfo{
+    margin: 1rem 0rem;
+    font-family: var(--defaultFontFamily);
+    font-weight: var(--font-weight_600);
+    font-size: var(--font-size_18);
+    color: var(--lightBlueColor);
+}
+.AdminInvestorDetailsTabDetailsHeaderEditIcon{
+    color: var(--darkGreenColor);
+    background-color: var(--ashColor);
+    padding: 0.3rem;
+    cursor: pointer;
+}
+.AdminInvestorDetailsInformationContianer{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin: 1rem 0rem;
+}
+.AdminInvestorDetailsInformationContent{
+    display: flex;
+    width: 100%;
+    /* align-items: center; */
+    justify-content: space-between;
+}
+.AdminInvestorDetailsInformationDetailsCard{
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+    border-bottom: 2px solid var(--ashColor);
+    margin: 0.5rem 0rem;
+}
+.AdminInvestorDetailsInformationDetailsCardText{
+    margin: 0rem;
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_600);
+    color: var(--darkAshColor);
+}
+.AdminInvestorDetailsInformationDetailsCardTextdata{
+    margin: 0.5rem 0rem;
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_600);
+    color: var(--darkColor);
+}
+
+
+.AdminInvestorDetailsModelPopupContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .AdminInvestorDetailsModelPopupHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid var(--ashColor);
+    padding: 1rem;
+  }
+  .AdminInvestorDetailsModelPopupHeaderText {
+    margin: 0rem;
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_20);
+    font-weight: var(--font-weight_500);
+  }
+  .AdminInvestorDetailsModelPopupHeaderTextIcon {
+    cursor: pointer;
+  }
+  
+  .AdminInvestorDetailsTitle {
+    font-family: var(--defaultFontFamily);
+    font-weight: var(--font-weight_500);
+    font-size: var(--font-size_18);
+    color: var(--lightBlueColor);
+  }
+  .AdminInvestorDetailsInputContainer{
+      display:flex;
+      flex-wrap: wrap;
+      align-items: center;
+      
+  }
+  .AdminInvestorDetailsInputContent{
+      display: flex;
+      justify-content: center;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      gap:20px;
+  }
+  .AdminInvestorDetailsInputCart{
+      display: flex;
+      flex-direction: column;
+      width: 50%;
+  }
+  .AdminInvestorDetailsInputCartText{
+      color: var(--darkColor);
+      font-family: var(--defaultFontFamily);
+      font-size: var(--font-size_16);
+      font-weight: var(--font-weight_400);
+      letter-spacing: 0.3px;
+  }
+  .AdminInvestorDetailsButtonContainer{
+      display: flex;
+      flex-wrap: wrap;
+      width: 90%;
+      justify-content: flex-end;
+      align-items:center;
+  }
+  .AdminInvestorDetailsCancelButton{
+      padding: 0.5rem 1.5rem;
+      margin: 0.5rem;
+      border-radius: 5px;
+      border: 1px solid var(--darkAshColor);
+      background-color: var(--whitecolor);
+      font-family: var(--defaultFontFamily);
+      font-size: var(--font-size_16);
+      font-weight: var(--font-weight_500);
+      color: var(--darkBlueColor);
+      cursor: pointer;
+  }
+  .AdminInvestorDetailsSubmitButton{
+      padding: 0.5rem 1.5rem;
+      margin: 0.5rem;
+      border-radius: 5px;
+      border: 1px solid var(--darkAshColor);
+      background-color: var(--darkBlueColor);
+      font-family: var(--defaultFontFamily);
+      font-size: var(--font-size_16);
+      font-weight: var(--font-weight_500);
+      color: var(--whitecolor);
+      cursor: pointer;
+  }
+
+  .AdminInvestorPageTitleCart
+  {
+    display: flex  ;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem;
+        width: 91%;
+        background-color: var(--whitecolor);
+        margin: 0.5rem;
+        border-radius: 10px;
+  }
+  .AdminInvestorPageTitleCartText
+  {
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_22);
+    font-weight: var(--font-weight_600);
+    color: var(--darkColor);
+    margin: 0rem 0.5rem;
+  }
+  .AdminInvestorPageTitleCartText span
+  {
+    font-weight: var(--font-weight_400);
+  }
+  .InvestorDetailsNavConatinerIcon
+  {
+    background-color: var(--whitecolor);
+    padding: 0.5rem;
+    border-radius: 50px;
+    border: 1px solid var(--boxShadow);
+  }
