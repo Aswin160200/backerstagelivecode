@@ -1,15 +1,6 @@
 import React, { createContext, useContext, useEffect, useReducer } from 'react';
-import { StylesProvider, jssPreset } from '@material-ui/styles';
-
-import { ThemeProvider } from '@material-ui/styles';
-import { create } from 'jss';
-import { createMuiTheme } from '@material-ui/core/styles';
-import indigo from '@material-ui/core/colors/indigo';
-import red from '@material-ui/core/colors/red';
-import rtl from 'jss-rtl';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-
-const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
+import { createTheme, ThemeProvider, CssBaseline, useMediaQuery, StyledEngineProvider } from '@mui/material';
+import { indigo, red } from '@mui/material/colors';
 
 const Context = createContext();
 const { Provider } = Context;
@@ -17,11 +8,7 @@ const { Provider } = Context;
 const reducer = (state, action) => {
   switch (action.type) {
     case 'direction':
-      const newState = {
-        ...state,
-        direction: state.direction === 'ltr' ? 'rtl' : 'ltr'
-      };
-      return newState;
+      return { ...state, direction: state.direction === 'ltr' ? 'rtl' : 'ltr' };
     case 'type':
       return { ...state, type: state.type === 'light' ? 'dark' : 'light' };
     default:
@@ -30,38 +17,27 @@ const reducer = (state, action) => {
 };
 
 const AppProvider = ({ children }) => {
-  const prefersDarkMode = useMediaQuery('@media (prefers-color-scheme: dark)');
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const [state, dispatch] = useReducer(reducer, {
     type: prefersDarkMode ? 'dark' : 'light',
     direction: 'ltr'
   });
 
-  const theme = createMuiTheme({
+  const theme = createTheme({
     direction: state.direction,
     palette: {
-      type: state.type,
+      mode: state.type, 
       primary: indigo,
       secondary: red,
       error: red
     },
     typography: {
-      headline: {
-        fontSize: '1rem'
-      },
-      subtitle1: {
-        fontSize: '0.8125rem'
-      },
-      button: {
-        fontWeight: 400,
-        textTransform: 'initial'
-      },
-      body1: {
-        fontSize: '0.875rem'
-      }
+      headline: { fontSize: '1rem' },
+      subtitle1: { fontSize: '0.8125rem' },
+      button: { fontWeight: 400, textTransform: 'initial' },
+      body1: { fontSize: '0.875rem' }
     },
-    shape: {
-      borderRadius: 4
-    }
+    shape: { borderRadius: 4 }
   });
 
   useEffect(() => {
@@ -69,11 +45,12 @@ const AppProvider = ({ children }) => {
   }, [state.direction]);
 
   return (
-    <ThemeProvider theme={theme}>
-      <StylesProvider jss={jss}>
+    <StyledEngineProvider injectFirst> 
+      <ThemeProvider theme={theme}>
+        <CssBaseline /> 
         <Provider value={[state, dispatch]}>{children}</Provider>
-      </StylesProvider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </StyledEngineProvider>
   );
 };
 
