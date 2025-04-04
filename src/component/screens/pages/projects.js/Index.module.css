@@ -32,7 +32,8 @@
 .ProjectsPagenavCartText{
     font-family: var(--defaultFontFamily);
     font-size: var(--font-size_20);
-    font-weight: var(--font-weight_500);
+    font-weight: var(--font-weight_500);    
+    color: var(--darkBlueColor);
 }
 .ProjectsPageNavContainerButton{
     padding: 0.6rem 1.5rem;
@@ -81,12 +82,11 @@
     gap: 5px;
 }
 .ProjectTableActionEditIcon{
-    width: 10%;
-    height: 10%;
+
     color: var(--geenColor);
     cursor: pointer;
     background-color: var(--LightGray);
-    padding: 5px;
+    padding: 1px;
 }
 .ProjectsTableActionDownloadIcon{
     width: 10%;
@@ -96,20 +96,18 @@
     
 }
 .ProjectsTableActionViewIcon{
-    width: 10%;
-    height: 10%;
+
     color: var(--purpleColor);
     cursor: pointer;
     background-color: var(--LightGray);
-    padding: 5px;
+    padding: 1px;
 }
 .ProjectsTableActionDeleteIcon{
-    width: 10%;
-    height: 10%;
+
     color: var(--lightRed);
     cursor: pointer;
     background-color: var(--LightGray);
-    padding: 5px;
+    padding: 1px;
 }
 .ProjectPageTablePagination{
     display: flex;
@@ -127,7 +125,7 @@
     display: flex;
     justify-content:center;
     align-items: center;
-    padding: 20px;
+    padding: 25px;
     text-align: center;
     background: var(--LightGray8);
     position: relative;
@@ -151,9 +149,9 @@
 }
 .ProjectsPageModelPopupHeaderTextIcon{
     cursor: pointer;
-    right: 0px;
+    right: 10px;
     position: absolute;
-    top: 3px;
+    top: 10px;
 }
 
 .CreateProjetsTitle{

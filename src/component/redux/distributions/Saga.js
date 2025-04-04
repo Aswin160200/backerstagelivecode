@@ -3,7 +3,8 @@ import {
     GET_ALL_DISTRIBUTIONS,
     GET_DISTRIBUTION_BY_PRODUCER_ID,
     GET_DISRIBUTION_BY_ID,
-    EDIT_DISRIBUTION_BY_ID
+    EDIT_DISRIBUTION_BY_ID,
+    ADD_DISTRIBUTION,
 } from "./ActionTypes";
 import { Service } from "../../service/Helper";
 import {
@@ -11,6 +12,7 @@ import {
     getByProducersIdResponse,
     getByDistributionIdResponse,
     editByDistributionIdResponse,
+    addDistributionResponse,
 } from "./Action";
 
 function* getAllDistributionsByProjectId({payload : id}) {
@@ -57,11 +59,29 @@ function* editByDistributionId({ payload }) {
     console.error("Update project failed:", error);
   }
 }
+
+function* createDistribution({ payload: addDistribution }) {
+  try {
+    const response = yield call(
+      Service.commonFetch,
+      "/distributions",
+      "POST",
+      addDistribution,
+      null
+    );
+    yield put(addDistributionResponse(response));
+    console.log(response);
+  } catch (error) {}
+}
+
+
 function* distributions() {
   yield takeEvery(GET_ALL_DISTRIBUTIONS, getAllDistributionsByProjectId);
   yield takeEvery(GET_DISTRIBUTION_BY_PRODUCER_ID, getAllDistributionsByProducerId);
   yield takeEvery(GET_DISRIBUTION_BY_ID, getByDistributionId);
   yield takeEvery(EDIT_DISRIBUTION_BY_ID, editByDistributionId);
+  yield takeEvery(ADD_DISTRIBUTION, createDistribution);
+
 }
 
 export default distributions;

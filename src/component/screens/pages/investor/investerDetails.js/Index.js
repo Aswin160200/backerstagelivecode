@@ -354,7 +354,7 @@ const InvestorDetails = () => {
           </div>         
           <Link to="/investor" className="Link">
             <Tooltip title="Back to List" arrow>
-              <KeyboardReturnIcon className={Styles.InvestorDetailsNavConatinerIcon} />
+            <span className='InvestorDetailsNavConatinerIcon'>&#8629;</span>
             </Tooltip>
           </Link>
         </div>
@@ -367,7 +367,7 @@ const InvestorDetails = () => {
         <div className={Styles.InvestorDetailsTabsAndNotesContainer}>
           <div className={Styles.InvestorDetailsTabs}>
             <div className={Styles.InvestorDetailsTabsContainer}>
-              <Box sx={{ bgcolor: "background.paper" }}>
+              <Box >
                 <AppBar
                   position="static"
                   sx={{ bgcolor: "#fff", borderRadius: "10px", boxShadow: "none !important" }}

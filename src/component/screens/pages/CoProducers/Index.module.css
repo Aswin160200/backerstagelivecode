@@ -37,6 +37,7 @@
     font-family: var(--defaultFontFamily);
     font-size: var(--font-size_18);
     font-weight: var(--font-weight_500);
+    color: var(--darkColor);
 }
 .CoProducersPageTabsContainer{
     width: 95%;

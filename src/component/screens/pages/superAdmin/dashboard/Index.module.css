@@ -10,6 +10,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
+        height: 100vh;
 }
 .SuperAdminDashboardNavContainer{
     display: flex;
@@ -58,12 +59,12 @@
     align-items: center;
     width: 90%;
     padding: 0.5rem 2rem;
-    margin: 1rem;
+    margin: 0.5rem;
 }
 .SuperAdminDashboardCard{
     display: flex;
     flex-direction: column;
-    width: 17%;
+    width: 20%;
     background-color: var(--whitecolor);
     font-family: var(--defaultFontFamily);
     border-radius: 10px;
@@ -121,7 +122,7 @@
     display: flex;
     justify-content: space-between;
     align-items:center;
-    width: 92%;
+    width: 86.5%;
 
 }
 .SuperAdminDashboardProducersAndAsubscriptionCard{
@@ -129,7 +130,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 1rem;
+    margin: 0.5rem;
     color: var(--whitecolor);
     font-size: var(--font-size_26);
     font-family: var(--defaultFontFamily);

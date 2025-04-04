@@ -328,7 +328,7 @@ const CoProducersDetails = () => {
           </div>
           <Link to="/co_producers" className="Link">
             <Tooltip title="Back to List" arrow>
-              <KeyboardReturnIcon className={Styles.CoProducersDetailsNavConatinerIcon} />
+            <span className='InvestorDetailsNavConatinerIcon'>&#8629;</span>
             </Tooltip>
           </Link>
         </div>
@@ -341,7 +341,7 @@ const CoProducersDetails = () => {
         <div className={Styles.CoProducersDetailsTabsAndNotesContainer}>
           <div className={Styles.CoProducersDetailsTabs}>
             <div className={Styles.CoProducersDetailsTabsContainer}>
-              <Box sx={{ bgcolor: "background.paper" }}>
+              <Box >
                 <AppBar
                   position="static"
                   sx={{ bgcolor: "#fff", borderRadius: "10px", boxShadow: "none" }}

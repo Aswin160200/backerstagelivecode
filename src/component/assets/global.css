@@ -127,7 +127,7 @@ tr {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 25px;
   text-align: center;
   background: var(--LightGray8);
   position: relative;
@@ -147,9 +147,10 @@ tr {
 }
 .ModelPopupHeaderIcon {
   cursor: pointer;
-  right: 0px;
+  right: 13px;
   position: absolute;
-  top: 3px;
+  top: 13px;
+  color: var(--darkBlue);
 }
 .ModelPopupbody {
   max-height: 400px;
@@ -175,33 +176,29 @@ tr {
   gap: 5px;
 }
 .TableActionEditIcon {
-  width: 10%;
-  height: 10%;
+
   color: var(--geenColor);
   cursor: pointer;
   background-color: var(--LightGray);
-  padding: 5px;
+  padding: 1px;
 }
 .TableActionViewIcon {
-  width: 10%;
-  height: 10%;
   color: var(--purpleColor);
   cursor: pointer;
   background-color: var(--LightGray);
-  padding: 5px;
+  padding: 1px;
 }
 .TableActionDeleteIcon {
-  width: 10%;
-  height: 10%;
+
   color: var(--lightRed);
   cursor: pointer;
   background-color: var(--LightGray);
-  padding: 5px;
+  padding: 1px;
 }
 .Search input {
   border-radius: 5px;
-  border: 1px solid #b3b3b3 !important;
-  padding: 10px;
+  border: 1px solid #c4bdbd !important;
+  padding: 0px 10px;
   font-size: 16px;
 }
 
@@ -369,3 +366,26 @@ border-bottom: 1px solid var(--darkBlue);
 .TableFilter .TableStatus {
   width: 15%;
 }
+.SearchSelectFilter{
+  border-radius: 5px;
+  border: 1px solid #c4bdbd !important;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.SearchSelectFilterInput{
+  border-radius: 5px;
+  border: 1px solid #9e9b9b !important;
+  padding: 12px;
+  font-size: 16px;
+}
+.InvestorDetailsNavConatinerIcon
+  {
+    background-color: var(--whitecolor);
+    color: var(--darkBlueColor);
+    border-radius: 50px;
+    border: 1px solid var(--boxShadow);
+    font-size: var(--font-size_40);
+    padding: 0rem 0.9rem;
+    font-family: var(--defaultFontFamily);
+  }

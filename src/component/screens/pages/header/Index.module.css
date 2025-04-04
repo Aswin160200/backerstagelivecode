@@ -62,3 +62,6 @@
     font-weight: var(--font-weight_600);
     letter-spacing: 0.3px;
 }
+.HeaderNavigation{
+    color: var(--lightBlueColor);
+}

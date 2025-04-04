@@ -3,6 +3,7 @@ import {
   GET_PROJECTCOST_BY_PRODUCER_ID_RESPONSE,
   GET_PROJECTCOST_BY_ID_RESPONSE,
   EDIT_PROJECTCOST_BY_ID_RESPONSE,
+  ADD_NEW_PROJECT_COST_RESPONSE,
 } from "./ActionTypes";
 
 const initialState = {
@@ -11,6 +12,7 @@ const initialState = {
   getByProducersIdSuccessfull: "",
   getByProjectCostIdSuccessfull: "",
   editByProjectCostIdSuccessfull: "",
+  addNewProjectCostSuccessfull:"",
 };
 
 const projectCost = (state = initialState, action) => {
@@ -37,6 +39,12 @@ const projectCost = (state = initialState, action) => {
       state = {
         ...state,
         editByProjectCostIdSuccessfull: action.payload,
+      };
+      break;
+      case ADD_NEW_PROJECT_COST_RESPONSE:
+      state = {
+        ...state,
+        addNewProjectCostSuccessfull: action.payload,
       };
       break;
     default:

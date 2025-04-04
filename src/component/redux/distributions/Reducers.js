@@ -3,6 +3,7 @@ import {
     GET_DISTRIBUTION_BY_PRODUCER_ID_RESPONSE,
     GET_DISRIBUTION_BY_ID_RESPONSE,
     EDIT_DISRIBUTION_BY_ID_RESPONSE,
+    ADD_DISTRIBUTION_RESPONSE,
 } from "./ActionTypes";
 
 const initialState = {
@@ -11,7 +12,7 @@ const initialState = {
   getByProducersIdSuccessfull:"",
   getByDistributionIdSuccessfull:"",
   editByDistributionIdSuccessfull:"",
- 
+  addDistributionSuccessfull:"",
 };
 
 const distributions = (state = initialState, action) => {
@@ -40,6 +41,12 @@ const distributions = (state = initialState, action) => {
               editByDistributionIdSuccessfull: action.payload,
             };
             break;
+            case ADD_DISTRIBUTION_RESPONSE:
+              state = {
+                ...state,
+                addDistributionSuccessfull: action.payload,
+              };
+              break;
     default:
       state = { ...state };
       break;

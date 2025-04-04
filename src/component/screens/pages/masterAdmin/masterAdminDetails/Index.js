@@ -167,7 +167,7 @@ const MasterAdminDetails = () => {
           </div>
           <Link to="/admin" className="Link">
             <Tooltip title="Back to List" arrow>
-                <ArrowForwardIcon className={Styles.MasterAdminDetailsNavConatinerIcon} />
+            <span className='InvestorDetailsNavConatinerIcon'>&#8629;</span>
             </Tooltip>
         </Link>
         </div>
@@ -186,7 +186,7 @@ const MasterAdminDetails = () => {
 
         <div className={Styles.MasterAdminDetailsTabAndNotesContainer}>
           <div className={Styles.MasterAdminDetailsPageTabsContainer}>
-            <Box sx={{ bgcolor: "background.paper" }}>
+            <Box >
               <AppBar
                 position="static"
                 sx={{ bgcolor: "#fff", borderRadius: "10px", boxShadow: "none !important" }}

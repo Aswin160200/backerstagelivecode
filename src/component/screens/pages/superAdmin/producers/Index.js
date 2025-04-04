@@ -40,7 +40,7 @@ const style = {
 
 export const InputStyled = styled(TextField)`
   & .MuiOutlinedInput-root {
-    border-color: rgb(166, 167, 172);
+    border-color: rgb(91, 92, 94);
     color: rgb(13, 13, 14);
     height: 46px;
     font-size: 14px;
@@ -68,27 +68,27 @@ export const SelectStyled = styled(Select)`
   & .MuiOutlinedInput-root {
     height: 44px;
     font-size: 14px;
-    color: rgb(13, 13, 14);
+    color: rgb(13, 13, 14) !important;
     border-radius: 6px;
     transition: border-color 0.2s ease-in-out;
 
     & fieldset {
-      border-color: rgb(166, 167, 172);
+      border-color: rgb(87, 87, 88) !important;
     }
 
     &:hover fieldset {
-      border-color: rgb(166, 167, 172);
+      border-color: rgb(45, 45, 46) !important;
     }
 
     &.Mui-disabled fieldset {
-      border-color: rgb(166, 167, 172);
+      border-color: rgb(49, 50, 51) !important;
     }
   }
 `;
 export const SelectStyledFilter = styled(Select)`
       & .MuiOutlinedInput-root {
         font-size: 14px;
-        color: rgb(13, 13, 14);
+        color: rgb(13, 13, 14) !important;
         border-radius: 8px;
         transition: border-color 0.2s ease-in-out;
         display: flex;
@@ -96,15 +96,15 @@ export const SelectStyledFilter = styled(Select)`
         height: 36px; / Reduce height to match image /
     
         & fieldset {
-          border-color: rgb(166, 167, 172);
+          border-color: rgb(166, 167, 172) !important;
         }
     
         &:hover fieldset {
-          border-color: rgb(166, 167, 172);
+          border-color: rgb(166, 167, 172) !important;
         }
     
         &.Mui-disabled fieldset {
-          border-color: rgb(166, 167, 172);
+          border-color: rgb(166, 167, 172) ;
         }
     
         & .MuiOutlinedInput-input {
@@ -193,35 +193,60 @@ const [updateId,setUpdateId]=useState();
   )
 
   console.log(producerUser,"producerUser")
-  // const [editUser,setEditUser]=useState()
-
-    // const handleGetByID = (id) => {
-    //   setUpdateId(id)
-    //   dispatch(getByUserId(id));
-    // }
-
-    const handleGetByID = async (id) => {
+  
+  const handleGetByID = async (id) => {
+    try {
       setUpdateId(id);
-      try {
-        await dispatch(getByUserId(id));
+      const response = await dispatch(getByUserId(id)); // Ensure data is fetched
+  
+      if (response?.payload) {
+        setUpdateProducerUser(response.payload); // Set fetched data in form state
         setOpenEdit(true);
-      } catch (error) {
-        toast.error("Failed to load user data");
+      } else {
+        throw new Error("No data received");
       }
-    };
-
-    // useEffect(() => {
-    //   if (userById && Object.keys(userById).length > 0 && userById) {
-
-    //     setOpenEdit(true);
-    //   }
-    // }, [userById]);
-
-
-    const handleCloseEdit = (id) => {
-      dispatch(getByUserId(id))
-      setOpenEdit(false);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      toast.error("Failed to load user data");
     }
+  };
+  
+  // Close the edit modal and reset the form
+  const handleCloseEdit = () => {
+    setOpenEdit(false);
+    setUpdateProducerUser({});
+  };
+  
+  // Sync updateProducerUser state when userById updates
+  useEffect(() => {
+    if (userById) {
+      setUpdateProducerUser({
+        username: userById.username || "",
+        password: userById.password || "",
+        firstname: userById.firstname || "",
+        lastname: userById.lastname || "",
+        email: userById.email || "",
+        phone: userById.phone || "",
+        legalentity: userById.legalentity || "",
+        street: userById.street || "",
+        city: userById.city || "",
+        state: userById.state || "",
+        role: userById.role || "",
+        zipcode: userById.zipcode || "",
+        status: userById.status || "",
+      });
+    }
+  }, [userById]);
+  
+  
+
+    
+
+
+    // const handleCloseEdit = (id) => {
+    //   dispatch(getByUserId(id))
+    //   setOpenEdit(false);
+    // }
 
     
     
@@ -449,7 +474,7 @@ const [updateId,setUpdateId]=useState();
             <div class="Search">
               <input
                 style={{ minWidth: "100% !important" }}
-                placeholder="Search the list..."
+                placeholder="Search the producers..."
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
                 type="search"
@@ -465,14 +490,12 @@ const [updateId,setUpdateId]=useState();
               />
             </div>
             <FormControl sx={{ minWidth: 200 }} className="TableStatus">
-              <SelectStyledFilter
-                value={selectedStatus}
-                onChange={handleStatusChange}
-              >
-                <MenuItem value="Status">Show</MenuItem>
-                <MenuItem value="All">All</MenuItem>
-                <MenuItem value="Newest First">Newest First</MenuItem>
-              </SelectStyledFilter>
+             
+              <select name="cars" id="cars" class="SearchSelectFilter">
+              <option value="Status">Show</option>
+              <option value="All">All</option>
+              <option value="Newest First">Newest First</option>
+            </select>
             </FormControl>
           </div>
           <table>
@@ -694,16 +717,14 @@ const [updateId,setUpdateId]=useState();
                   </div>
                   <div className={Styles.ProducersPageInputCart}>
                     <p className={Styles.ProducersPageInputCartText}>Status</p>
-                    <SelectStyled
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                    
+                  
+                    <select  class="SearchSelectFilterInput"
                       onChange={(e) => setProducerUser({ ...producerUser, status: e.target.value })}
-                    >
-                      <MenuItem value={10}>-None-</MenuItem>
-                      <MenuItem value="acitve">Acitve</MenuItem>
-                      <MenuItem value="unAcitve">Inactive</MenuItem>
-                    </SelectStyled>
+                      >
+                      <option value="None">None</option>
+                      <option value="Acitve">acitve</option>
+                      <option value="Inacitve">Inacitve</option>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -926,17 +947,16 @@ const [updateId,setUpdateId]=useState();
                   </div>
                   <div className={Styles.ProducersPageInputCart}>
                     <p className={Styles.ProducersPageInputCartText}>Status</p>
-                    <SelectStyled
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      defaultValue={userById.status}
-                      key={userById.status}
-                      onChange={(e) => setUpdateProducerUser({ ...updateProducerUser, status: e.target.value })}
-                    >
-                      <MenuItem value="">-None-</MenuItem>
-                      <MenuItem value="Active">Acitve</MenuItem>
-                      <MenuItem value="Inactive">Inactive</MenuItem>
-                    </SelectStyled>
+                   
+                    <select  class="SearchSelectFilterInput"
+                     defaultValue={userById?.status}
+                     key={userById.status}
+                       onChange={(e) => setUpdateProducerUser({ ...updateProducerUser, status: e.target.value })}
+                      >
+                      <option value="None">None</option>
+                      <option value="Acitve">acitve</option>
+                      <option value="Inacitve">Inacitve</option>
+                    </select>
                   </div>
                 </div>
               </div>

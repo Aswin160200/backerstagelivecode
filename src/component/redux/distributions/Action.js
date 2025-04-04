@@ -1,4 +1,6 @@
 import {
+  ADD_DISTRIBUTION,
+    ADD_DISTRIBUTION_RESPONSE,
     EDIT_DISRIBUTION_BY_ID,
     EDIT_DISRIBUTION_BY_ID_RESPONSE,
   GET_ALL_DISTRIBUTIONS,
@@ -48,4 +50,15 @@ export const editByDistributionId = (distributionId) => ({
   export const editByDistributionIdResponse = (distributionIdResponse) => ({
     type: EDIT_DISRIBUTION_BY_ID_RESPONSE,
     payload: distributionIdResponse,
+  });
+
+
+  export const addNewDistribution = (addDistribution) => ({
+    type: ADD_DISTRIBUTION,
+    payload: addDistribution,
+  });
+  
+  export const addDistributionResponse = (addDistributionResponse) => ({
+    type: ADD_DISTRIBUTION_RESPONSE,
+    payload: addDistributionResponse,
   });

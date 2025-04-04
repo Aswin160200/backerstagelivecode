@@ -36,7 +36,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import Tooltip from "@mui/material/Tooltip";
 import { useParams } from "react-router-dom";
-import {  createPartysProject, createProjects, getAllInvestors, getAllPartysProject, getCoProducerByProducerId, getInvestorById, getInvestorbyProducerId, getInvestorsByProjectId, getPartisProjectByID, getProjectByProducerId, getProjectsByID, updateProjects } from "../../../../redux/Action";
+import {  addNewDistribution, addNewProjectCost, createPartysProject, createProjects, getAllDistributions, getAllInvestors, getAllPartysProject, getCoProducerByProducerId, getInvestorById, getInvestorbyProducerId, getInvestorsByProjectId, getPartisProjectByID, getProjectByProducerId, getProjectsByID, updateProjects } from "../../../../redux/Action";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from 'react-toastify';
 import DistributionsPage from "./Distributions/Index";
@@ -432,10 +432,55 @@ useEffect(() => {
     updateddate: "",
   })
 
+  const [addDistribution, setAddDistribution]=useState(
+    {
+      projectid: projectid,
+      producersid:storedUser.userid,
+      distributionname: "",
+      distributionnumber: "",
+      projectname: "",
+      dateofdistribution: "",
+      amountofdistribution: "",
+      totalrecoupedtodate: "",
+    }
+    
+  )
+
+  const handleAddNewDistribution = () => {
+    dispatch(addNewDistribution(addDistribution))
+    setOpenNewDistribution(false);
+    dispatch(getAllDistributions())
+  }
+
+  const [addProjectCost, setAddProjectCost]=useState(
+    {
+      projectid: projectid,
+      producersid:storedUser.userid,
+      costdescription: "",
+      totalcost: "",
+      dateofcost: "",
+      status: "",
+      costincuredby: "",
+      dateofreimbursement: "",
+      projectname: "",
+      expensecomments: ""
+    }
+    
+    
+  )
+
+  const handleAddNewProjectCost = () => {
+    dispatch(addNewProjectCost(addProjectCost))
+    setOpenNewProjectCost(false);
+    dispatch(getAllDistributions())
+
+  }
+
   
   const handleAddPartysProject = () => {
     dispatch(createPartysProject(addPartysProject))
     setOpenPartysProject(false);
+    
   }
 
   const tableHead = {
@@ -454,31 +499,7 @@ useEffect(() => {
     cloneDeep(allData.slice(0, countPerPage))
   );
 
-  // useEffect(() => {
-  //   if (getCreatePartysProjectData?.data) {
-  //       const mappedData = getCreatePartysProjectData.data?.map((item, index) => ({
-  //         no: index + 1,
-  //         investorname: `${getallInvestorsList.data?.firstname}${getallInvestorsList.data?.lastname}`,
-  //         finalAmount: item.finalamount,
-  //         status:"active",
-  //         action: (
-  //                  <div className="TableActionContainer">
-  //                  <EditOutlinedIcon className="TableActionEditIcon" />
-  //                 <RemoveRedEyeOutlinedIcon
-  //                    className="TableActionViewIcon"
-  //                 />
-  //                  <DeleteOutlineOutlinedIcon
-  //                className="TableActionDeleteIcon"
-  //                  />
-  //                </div>
-  //                ),
-  //         investorsDoc:<div className={Styles.ProjectDetailsInvestorTableInvestorDocumentButtonContainer}><button className={Styles.ProjectDetailsInvestorTableInvestorDocumentViewButton} onClick={()=> handleOpenViewInvestorDocument()}>View</button><button className={Styles.ProjectDetailsInvestorTableInvestorDocumentUploadButton} onClick={()=> handleOpenInvestorDocument()}>Upload</button></div>,
-  //         docs:<button className={Styles.ProjectDetailsInvestorTableInvestorDocumentGenerateButton} onClick={()=> handleOpenGeneratedView()}>View</button>,
-  //     }));
-  //       setAllData(mappedData);
-  //       setCollection(cloneDeep(mappedData.slice(0, countPerPage)));
-  //     }
-  //   }, [getCreatePartysProjectData,getallInvestorsList]);
+  
 
   useEffect(() => {
     if (getCreatePartysProjectData?.data && getallInvestorsList?.data) {
@@ -667,7 +688,8 @@ useEffect(() => {
 
         <Link to="/projects" className="Link">
             <Tooltip title="Back to List" arrow>
-                <KeyboardReturnIcon className={Styles.ProjectDetailsPageNavCalenderIcon} />
+                {/* <KeyboardReturnIcon className={Styles.ProjectDetailsPageNavCalenderIcon} /> */}
+                <span className='InvestorDetailsNavConatinerIcon'>&#8629;</span>
             </Tooltip>
         </Link>
 
@@ -1154,7 +1176,7 @@ useEffect(() => {
                     <p className={Styles.CreateProjetsdetailsAddPartysInputCartText}>
                       Investor
                     </p>
-                      <SelectStyled
+                      {/* <SelectStyled
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={addPartysProject.investorid}
@@ -1175,7 +1197,27 @@ useEffect(() => {
                       ) : (
                         <MenuItem disabled>No Investors Available</MenuItem>
                       )}
-                  </SelectStyled>
+                  </SelectStyled> */}
+
+                      <select
+                        className="SearchSelectFilter"
+                        value={addPartysProject.investorid || "None"}
+                        onChange={(e) =>
+                          setAddPartysProject({ ...addPartysProject, investorid: e.target.value })
+                        }
+                      >
+                        <option value="None">None</option>
+                        {Array.isArray(investorsByProjectId?.data) && investorsByProjectId.data.length > 0 ? (
+                          investorsByProjectId.data.map((investor) => (
+                            <option key={investor.investorid} value={investor.investorid}>
+                              {investor.firstname} {investor.lastname}
+                            </option>
+                          ))
+                        ) : (
+                          <option disabled>No Investors Available</option>
+                        )}
+                      </select>
+
                     {/* {error?.username && (
               <span className={Styles.registerErrormsg}>{error?.username}</span>
             )} */}
@@ -1200,7 +1242,7 @@ useEffect(() => {
                     Status
                     </p>
 
-                    <SelectStyled
+                    {/* <SelectStyled
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={addPartysProject.status}
@@ -1210,7 +1252,15 @@ useEffect(() => {
                     <MenuItem value="Interested">Interested</MenuItem>
                     <MenuItem value="Investing In Project">Investing In Project</MenuItem>
                     <MenuItem value="Passing On Project">Passing On Project</MenuItem>
-                  </SelectStyled>
+                  </SelectStyled> */}
+                  <select  class="SearchSelectFilter"
+                  value={addPartysProject.status}
+                  onChange={(e)=> setAddPartysProject({...addPartysProject, status:e.target.value})}>
+              <option value="None">None</option>
+              <option value="Interested">Interested</option>
+              <option value="Investing In Project">Investing In Project</option>
+              <option value="Passing On Project">Passing On Project</option>
+            </select>
                     {/* {error?.username && (
                       <span className={Styles.registerErrormsg}>{error?.username}</span>
                     )} */}
@@ -1268,7 +1318,7 @@ useEffect(() => {
                       Project
                     </p>
 
-                    <SelectStyled
+                    {/* <SelectStyled
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={addPartysProject.investoridprojectid}
@@ -1289,7 +1339,25 @@ useEffect(() => {
                       ) : (
                         <MenuItem disabled>No Projects Available</MenuItem>
                       )}
-                  </SelectStyled>
+                  </SelectStyled> */}
+
+                  <select
+                        className="SearchSelectFilter"
+                        value={addPartysProject.investoridprojectid}
+                    onChange={(e)=> setAddPartysProject({...addPartysProject, projectid:e.target.value})}
+                   
+                      >
+                        <option value="None">None</option>
+                        {Array.isArray(projectList?.data) && projectList.data.length > 0 ? (
+                          projectList.data.map((project) => (
+                            <option key={project.projectid} value={project.projectid}>
+                               {project.projectname}
+                            </option>
+                          ))
+                        ) : (
+                          <option disabled>No Projects Available</option>
+                        )}
+                      </select>
                     {/* {error?.username && (
               <span className={Styles.registerErrormsg}>{error?.username}</span>
             )} */}
@@ -1297,7 +1365,7 @@ useEffect(() => {
                       Investment Method
                     </p>
 
-                    <SelectStyled
+                    {/* <SelectStyled
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={addPartysProject.invesmentmethod}
@@ -1306,7 +1374,15 @@ useEffect(() => {
                     <MenuItem value="-None-">-None-</MenuItem>
                     <MenuItem value="SPV">SPV</MenuItem>
                     <MenuItem value="Direct to Production">Direct to Production</MenuItem>
-                  </SelectStyled>
+                  </SelectStyled> */}
+
+                  <select  class="SearchSelectFilter"
+                  value={addPartysProject.invesmentmethod}
+                  onChange={(e)=> setAddPartysProject({...addPartysProject, invesmentmethod:e.target.value})}>
+              <option value="None">None</option>
+              <option value="SPV">SPV</option>
+              <option value="Direct to Production">Direct to Production</option>
+            </select>
                     {/* {error?.username && (
                       <span className={Styles.registerErrormsg}>{error?.username}</span>
                     )} */}
@@ -1375,7 +1451,7 @@ useEffect(() => {
                     Co-Producer
                     </p>
 
-                    <SelectStyled
+                    {/* <SelectStyled
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     defaultValue={"None"}
@@ -1391,7 +1467,24 @@ useEffect(() => {
                       ) : (
                         <MenuItem disabled>No Co-Producers Available</MenuItem>
                       )}
-                  </SelectStyled>
+                  </SelectStyled> */}
+
+                  <select
+                        className="SearchSelectFilter"
+                        defaultValue={"None"}
+                    onChange={(e)=> setAddPartysProject({...addPartysProject, co_producers:e.target.value})}
+                      >
+                        <option value="None">None</option>
+                        {Array.isArray(coProducers?.data) && coProducers.data.length > 0 ? (
+                          coProducers.data.map((coProducer) => (
+                            <option key={coProducer.co_producersid} value={coProducer.co_producersid}>
+                               {coProducer.firstname} {coProducer.lastname}
+                            </option>
+                          ))
+                        ) : (
+                          <option disabled>No Co-Producers Available</option>
+                        )}
+                      </select>
                     {/* {error?.username && (
                       <span className={Styles.registerErrormsg}>{error?.username}</span>
                     )} */}
@@ -1442,7 +1535,7 @@ useEffect(() => {
                     <p className={Styles.CreateProjetsdetailsAddPartysInputCartText}>
                       Investor
                     </p>
-                      <SelectStyled
+                      {/* <SelectStyled
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={getPartysProjectDataByID.investorid}
@@ -1464,7 +1557,23 @@ useEffect(() => {
                       ) : (
                         <MenuItem disabled>No Investors Available</MenuItem>
                       )}
-                  </SelectStyled>
+                  </SelectStyled> */}
+
+                  <select
+                        className="SearchSelectFilter"
+                        value={getPartysProjectDataByID?.investorid}
+                    readOnly
+                      >
+                        {Array.isArray(investorsByProjectId?.data) && investorsByProjectId.data.length > 0 ? (
+                          investorsByProjectId.data.map((investor) => (
+                            <option key={investor.investorid} value={investor.investorid}>
+                               {investor.firstname} {investor.lastname}
+                            </option>
+                          ))
+                        ) : (
+                          <option disabled>No Investors Available</option>
+                        )}
+                      </select>
                     {/* {error?.username && (
               <span className={Styles.registerErrormsg}>{error?.username}</span>
             )} */}
@@ -1490,7 +1599,7 @@ useEffect(() => {
                     Status
                     </p>
 
-                    <SelectStyled
+                    {/* <SelectStyled
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={getPartysProjectDataByID.data?.status}
@@ -1501,7 +1610,20 @@ useEffect(() => {
                     <MenuItem value="Interested">Interested</MenuItem>
                     <MenuItem value="Investing In Project">Investing In Project</MenuItem>
                     <MenuItem value="Passing On Project">Passing On Project</MenuItem>
-                  </SelectStyled>
+                  </SelectStyled> */}
+
+                  <select
+                        className="SearchSelectFilter"
+                        value={getPartysProjectDataByID.data?.status}
+                        onChange={(e)=> setEditPartysProject({...editPartysProject, status:e.target.value})}
+                      >
+                        <option value="None">None</option>
+                        <option value="Interested">Interested</option>
+                        <option value="Investing In Project">Investing In Project</option>
+                        <option value="Passing On Project">Passing On Project</option>
+
+                       
+                      </select>
                     {/* {error?.username && (
                       <span className={Styles.registerErrormsg}>{error?.username}</span>
                     )} */}
@@ -1560,7 +1682,7 @@ useEffect(() => {
                       Project
                     </p>
 
-                    <SelectStyled
+                    {/* <SelectStyled
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value= {getPartysProjectDataByID.data?.projectname}
@@ -1582,7 +1704,23 @@ useEffect(() => {
                       ) : (
                         <MenuItem disabled>No Projects Available</MenuItem>
                       )}
-                  </SelectStyled>
+                  </SelectStyled> */}
+
+                  <select
+                        className="SearchSelectFilter"
+                        value= {getPartysProjectDataByID?.data?.projectname}
+                        readOnly
+                      >
+                        {Array.isArray(projectList?.data) && projectList.data.length > 0 ? (
+                          projectList.data.map((project) => (
+                            <option key={project.projectid} value={project.projectid}>
+                                {project.projectname}
+                            </option>
+                          ))
+                        ) : (
+                          <option disabled>No Projects Available</option>
+                        )}
+                      </select>
                     {/* {error?.username && (
               <span className={Styles.registerErrormsg}>{error?.username}</span>
             )} */}
@@ -1590,7 +1728,7 @@ useEffect(() => {
                       Investment Method
                     </p>
 
-                    <SelectStyled
+                    {/* <SelectStyled
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                    
@@ -1600,7 +1738,18 @@ useEffect(() => {
                     <MenuItem value="-None-">-None-</MenuItem>
                     <MenuItem value="SPV">SPV</MenuItem>
                     <MenuItem value="Direct to Production">Direct to Production</MenuItem>
-                  </SelectStyled>
+                  </SelectStyled> */}
+
+                  <select
+                        className="SearchSelectFilter"
+                        value= {getPartysProjectDataByID.data?.invesmentmethod}
+                    onChange={(e)=> setEditPartysProject({...editPartysProject, invesmentmethod:e.target.value})}
+                      >
+                        <option value="None">None</option>
+                        <option value="SPV">SPV</option>
+                        <option value="Direct to Production">Direct to Production</option>
+                       
+                      </select>
                     {/* {error?.username && (
                       <span className={Styles.registerErrormsg}>{error?.username}</span>
                     )} */}
@@ -1672,7 +1821,7 @@ useEffect(() => {
                     Co-Producer
                     </p>
 
-                    <SelectStyled
+                    {/* <SelectStyled
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value= {getPartysProjectDataByID.data?.co_producers}
@@ -1688,7 +1837,24 @@ useEffect(() => {
                       ) : (
                         <MenuItem disabled>No Co-Producers Available</MenuItem>
                       )}
-                  </SelectStyled>
+                  </SelectStyled> */}
+
+                  <select
+                        className="SearchSelectFilter"
+                        value= {getPartysProjectDataByID.data?.co_producers}
+                        onChange={(e)=> setEditPartysProject({...editPartysProject, co_producers:e.target.value})}
+                      >
+                        <option value="None">None</option>
+                        {Array.isArray(coProducers?.data) && coProducers.data.length > 0 ? (
+                          coProducers.data.map((coProducer) => (
+                            <option key={coProducer.co_producersid} value={coProducer.co_producersid}>
+                                 {coProducer.firstname} {coProducer.lastname}
+                            </option>
+                          ))
+                        ) : (
+                          <option disabled>No Co-Producers Available</option>
+                        )}
+                      </select>
                     {/* {error?.username && (
                       <span className={Styles.registerErrormsg}>{error?.username}</span>
                     )} */}
@@ -2015,7 +2181,7 @@ useEffect(() => {
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 20 }}
                       name="firstname"
-                      // onChange={(e) => setCreateInvestor({ ...createInvestor, firstname: e.target.value })}
+                      onChange={(e) => setAddDistribution({ ...addDistribution, distributionname: e.target.value })}
                     />
                     {/* {error?.username && (
               <span className={Styles.registerErrormsg}>{error?.username}</span>
@@ -2030,7 +2196,7 @@ useEffect(() => {
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 20 }}
                       name="firstname"
-                      // onChange={(e) => setCreateInvestor({ ...createInvestor, firstname: e.target.value })}
+                      onChange={(e) => setAddDistribution({ ...addDistribution, dateofdistribution: e.target.value })}
                     />
                     <p className="InputCartText">
                     Total Recouped to Date
@@ -2042,7 +2208,7 @@ useEffect(() => {
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 20 }}
                       name="firstname"
-                      // onChange={(e) => setCreateInvestor({ ...createInvestor, firstname: e.target.value })}
+                      onChange={(e) => setAddDistribution({ ...addDistribution, totalrecoupedtodate: e.target.value })}
                     />
             
                   </div>
@@ -2054,7 +2220,7 @@ useEffect(() => {
                     <SelectStyled
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    // onChange={(e)=> setAddPartysProject({...addPartysProject, projectid:e.target.value})}
+                    onChange={(e) => setAddDistribution({ ...addDistribution, projectname: e.target.value })}
                     slotProps={{
                       input: {
                         endAdornment: <InputAdornment position="start"><SearchIcon/></InputAdornment>,
@@ -2064,7 +2230,7 @@ useEffect(() => {
                      <MenuItem value="-None-">-None-</MenuItem>
                      {Array.isArray(projectList?.data) && projectList?.data.length > 0 ? (
                         projectList?.data.map((project) => (
-                          <MenuItem key={project.projectid} value={project.projectid}>
+                          <MenuItem key={project.projectid} value={project.projectname}>
                             {project.projectname}
                           </MenuItem>
                         ))
@@ -2082,8 +2248,8 @@ useEffect(() => {
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 20 }}
                       name="firstname"
-                      // onChange={(e) => setCreateInvestor({ ...createInvestor, firstname: e.target.value })}
-                    />             
+                      onChange={(e) => setAddDistribution({ ...addDistribution, amountofdistribution: e.target.value })}
+                      />             
                   </div>
                 </div>
                
@@ -2094,7 +2260,7 @@ useEffect(() => {
               <button className={Styles.CreateProjectDetailsInvestorTableAddPartsProjectsCancelButton} onClick={()=>handleCloseNewDistribution()}>
                 Cancel
               </button>
-              <button className={Styles.CreateProjectDetailsInvestorTableAddPartsProjectsSubmitButton} onClick={()=>handleCloseNewDistribution()}>
+              <button className={Styles.CreateProjectDetailsInvestorTableAddPartsProjectsSubmitButton} onClick={()=>handleAddNewDistribution()}>
                 Save
               </button>
             </div>
@@ -2139,7 +2305,7 @@ useEffect(() => {
                       name="firstname"
                       multiline
                       rows={4}
-                      // onChange={(e) => setCreateInvestor({ ...createInvestor, firstname: e.target.value })}
+                      onChange={(e) => setAddProjectCost({ ...addProjectCost, costdescription: e.target.value })}
                     />
                     {/* {error?.username && (
               <span className={Styles.registerErrormsg}>{error?.username}</span>
@@ -2157,7 +2323,7 @@ useEffect(() => {
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 20 }}
                       name="firstname"
-                      // onChange={(e) => setCreateInvestor({ ...createInvestor, firstname: e.target.value })}
+                      onChange={(e) => setAddProjectCost({ ...addProjectCost, totalcost: e.target.value })}
                     />    
                     <p className="InputCartText">
                     Date of Cast
@@ -2169,7 +2335,7 @@ useEffect(() => {
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 20 }}
                       name="firstname"
-                      // onChange={(e) => setCreateInvestor({ ...createInvestor, firstname: e.target.value })}
+                      onChange={(e) => setAddProjectCost({ ...addProjectCost, dateofcost: e.target.value })}
                     />             
                   </div>
                 </div>
@@ -2186,8 +2352,9 @@ useEffect(() => {
                   <SelectStyled
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={role}
-                    onChange={handleChangeRole}
+                    value={addProjectCost.status}
+                    onChange={(e) => setAddProjectCost({ ...addProjectCost, status: e.target.value })}
+
                   >
                    <MenuItem value="None">-None-</MenuItem>
                     <MenuItem value="Unreimbursed">Unreimbursed</MenuItem>
@@ -2204,8 +2371,8 @@ useEffect(() => {
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 20 }}
                       name="firstname"
-                      // onChange={(e) => setCreateInvestor({ ...createInvestor, firstname: e.target.value })}
-                    />
+                      onChange={(e) => setAddProjectCost({ ...addProjectCost, dateofreimbursement: e.target.value })}
+                      />
                     <p className="InputCartText">
                     Expense Comments
                     </p>
@@ -2218,7 +2385,7 @@ useEffect(() => {
                       name="firstname"
                       multiline
                       rows={4}
-                      // onChange={(e) => setCreateInvestor({ ...createInvestor, firstname: e.target.value })}
+                      onChange={(e) => setAddProjectCost({ ...addProjectCost, expensecomments: e.target.value })}
                     />
             
                 </div>
@@ -2237,7 +2404,7 @@ useEffect(() => {
                           endAdornment: <InputAdornment position="start"><SearchIcon/></InputAdornment>,
                         },
                       }}
-                      // onChange={(e) => setCreateInvestor({ ...createInvestor, firstname: e.target.value })}
+                      onChange={(e) => setAddProjectCost({ ...addProjectCost, costincuredby: e.target.value })}
                     />
                   <p className="InputCartText">
                     Project
@@ -2248,7 +2415,7 @@ useEffect(() => {
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 20 }}
                       name="firstname"
-                      // onChange={(e) => setCreateInvestor({ ...createInvestor, firstname: e.target.value })}
+                      onChange={(e) => setAddProjectCost({ ...addProjectCost, projectname: e.target.value })}
                     />
                 </div> 
               </div>
@@ -2259,7 +2426,7 @@ useEffect(() => {
               <button className={Styles.CreateProjectDetailsInvestorTableAddPartsProjectsCancelButton} onClick={()=>handleCloseNewProjectCost()}>
                 Cancel
               </button>
-              <button className={Styles.CreateProjectDetailsInvestorTableAddPartsProjectsSubmitButton} onClick={()=>handleCloseNewProjectCost()}>
+              <button className={Styles.CreateProjectDetailsInvestorTableAddPartsProjectsSubmitButton} onClick={()=>handleAddNewProjectCost()}>
                 Save
               </button>
             </div>
@@ -2450,7 +2617,7 @@ useEffect(() => {
                         Status
                       </p>
 
-                      <SelectStyled
+                      {/* <SelectStyled
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         value={createProject.status}
@@ -2468,7 +2635,24 @@ useEffect(() => {
                 <MenuItem value="Turned Down">Turned Down</MenuItem>
                 <MenuItem value="Completed">Completed</MenuItem>
                 <MenuItem value="Other">Other</MenuItem>
-                        </SelectStyled>
+                        </SelectStyled> */}
+
+                        <select  class="SearchSelectFilter"
+                            value={createProject.status}
+                            onChange={(e) =>
+                              setCreateProject({
+                                ...createProject,
+                                status: e.target.value,
+                              })
+                            }>
+                        <option value="None">-None-</option>
+                        <option value="All">All</option>
+                        <option value="Active Raising">Active Raising</option>
+                        <option value="Active Investment">Active Investment</option>
+                        <option value="Turned Down">Turned Down</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Other">Other</option>
+                        </select>
                       {/* {error?.username && (
                       <span className={Styles.registerErrormsg}>{error?.username}</span>
                     )} */}
@@ -2773,7 +2957,7 @@ useEffect(() => {
                         Status
                       </p>
 
-                      <SelectStyled
+                      {/* <SelectStyled
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         defaultValue={projectIdList.data?.status}
@@ -2787,7 +2971,19 @@ useEffect(() => {
                                          <MenuItem value="Turned Down">Turned Down</MenuItem>
                                          <MenuItem value="Completed">Completed</MenuItem>
                                          <MenuItem value="Other">Other</MenuItem>
-                          </SelectStyled>
+                          </SelectStyled> */}
+
+                          <select  class="SearchSelectFilter"
+                           defaultValue={projectIdList.data?.status}
+                           onChange={(e) => setUpdateProject({ ...updateProject, status: e.target.value })}>
+                        <option value="None">-None-</option>
+                        <option value="All">All</option>
+                        <option value="Active Raising">Active Raising</option>
+                        <option value="Active Investment">Active Investment</option>
+                        <option value="Turned Down">Turned Down</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Other">Other</option>
+                        </select>
                       {/* {error?.username && (
                       <span className={Styles.registerErrormsg}>{error?.username}</span>
                     )} */}

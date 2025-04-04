@@ -184,7 +184,8 @@ const AdminInvestorsDetails= () => {
           </p>
            <Link to="/admin_investor" className="Link">
                                         <Tooltip title="Back to List" arrow>
-                                            <KeyboardReturnIcon className={Styles.InvestorDetailsNavConatinerIcon} />
+                                            {/* <KeyboardReturnIcon className={Styles.InvestorDetailsNavConatinerIcon} /> */}
+                                            <span className='InvestorDetailsNavConatinerIcon'>&#8629;</span>
                                         </Tooltip>
                                     </Link>
         </div>
@@ -195,7 +196,7 @@ const AdminInvestorsDetails= () => {
 
         <div className={Styles.AdminInvestorDetailsTabAndNotesContainer}>
           <div className={Styles.AdminInvestorDetailsPageTabsContainer}>
-            <Box sx={{ bgcolor: "background.paper" }}>
+            <Box >
               <AppBar
                 position="static"
                 sx={{ bgcolor: "#fff", borderRadius: "10px", boxShadow: "none !important" }}
@@ -670,15 +671,14 @@ const AdminInvestorsDetails= () => {
                     Refferral Source
                   </p>
 
-                  <SelectStyled
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    defaultValue={investorById.data?.referralsource}
-                    onChange={handleChangeRole}
-                  >
-                    <MenuItem value={10}>-None-</MenuItem>
-                    <MenuItem value="Google">Co-Producer</MenuItem>                   
-                  </SelectStyled>
+                  <select  class="SearchSelectFilterInput"
+                     defaultValue={investorById.data?.referralsource}
+                     onChange={handleChangeRole}
+                      >
+                      <option value="None">None</option>
+                      <option value="Co-Producer">Co-Producer</option>
+                    </select>
+                  
                   {/* {error?.username && (
               <span className={Styles.registerErrormsg}>{error?.username}</span>
             )} */}

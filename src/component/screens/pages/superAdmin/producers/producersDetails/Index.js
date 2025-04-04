@@ -174,7 +174,8 @@ const ProducerDetails = () => {
           </p>
            <Link to="/producers" className="Link">
                               <Tooltip title="Back to List" arrow>
-                                  <KeyboardReturnIcon className={Styles.InvestorDetailsNavConatinerIcon} />
+                                  {/* <KeyboardReturnIcon className={Styles.InvestorDetailsNavConatinerIcon} /> */}
+                                  <span className='InvestorDetailsNavConatinerIcon'>&#8629;</span>
                               </Tooltip>
                           </Link>
         </div>
@@ -190,7 +191,7 @@ const ProducerDetails = () => {
 
         <div className={Styles.ProducerDetailsTabAndNotesContainer}>
           <div className={Styles.ProducerDetailsPageTabsContainer}>
-            <Box sx={{ bgcolor: "background.paper" }}>
+            <Box >
               <AppBar
                 position="static"
                 sx={{ bgcolor: "#fff", borderRadius: "10px", boxShadow: "none !important" }}
@@ -663,7 +664,7 @@ const ProducerDetails = () => {
                 </div>
                 <div className={Styles.ProducerDetailsInputCart}>
                   <p className={Styles.ProducerDetailsInputCartText}>Status</p>
-                  <SelectStyled
+                  {/* <SelectStyled
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={role}
@@ -671,8 +672,15 @@ const ProducerDetails = () => {
                   >
                     <MenuItem value={10}>-None-</MenuItem>
                     <MenuItem value={20}>Acitve</MenuItem>
-                    <MenuItem value={30}>Inactive</MenuItem>
-                  </SelectStyled>
+                    <MenuItem value={30}>Inactive</MenuItem> */}
+                    <select  class="SearchSelectFilter"
+                    value={role}
+                    onChange={handleChangeRole}>
+              <option value="None">None</option>
+              <option value="Acitve">Acitve</option>
+              <option value="Inactive">Inactive</option>
+            </select>
+                  {/* </SelectStyled> */}
                 </div>
               </div>
             </div>
@@ -918,7 +926,7 @@ const ProducerDetails = () => {
                 </div>
                 <div className={Styles.ProducerDetailsInputCart}>
                   <p className={Styles.ProducerDetailsInputCartText}>Status</p>
-                  <SelectStyled
+                  {/* <SelectStyled
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     defaultValue={userById.status} 
@@ -927,7 +935,14 @@ const ProducerDetails = () => {
                     <MenuItem value={10}>-None-</MenuItem>
                     <MenuItem value={20}>Acitve</MenuItem>
                     <MenuItem value={30}>Inactive</MenuItem>
-                  </SelectStyled>
+                  </SelectStyled> */}
+                  <select  class="SearchSelectFilter"
+                   defaultValue={userById.status} 
+                   onChange={handleChangeRole}>
+              <option value="None">None</option>
+              <option value="Acitve">Acitve</option>
+              <option value="Inactive">Inactive</option>
+            </select>
                 </div>
               </div>
             </div>

@@ -37,7 +37,7 @@ const HeaderPage = () => {
         <div className={Styles.HeaderPageNavContainerLeft}>
           <img src={HeaderImage} alt="logo" className={Styles.HeaderPageLogo} />
           <Link className="Link" to="/homepage">
-            <p>
+            <p className={Styles.HeaderNavigation}>
               <img
                 src={backarrowOne}
                 alt="logo"

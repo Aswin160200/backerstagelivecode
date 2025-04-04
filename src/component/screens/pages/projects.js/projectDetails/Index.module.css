@@ -51,6 +51,7 @@
   font-family: var(--defaultFontFamily);
   font-size: var(--font-size_20);
   font-weight: var(--font-weight_500);
+  color: var(--darkBlue);
 }
 .ProjectDetailsPageNavCalenderIcon {
   padding: 0.3rem 0.5rem;
@@ -138,7 +139,7 @@
 .ProjectDetailsTabDetailsHeaderEditIcon {
   color: var(--darkGreenColor);
   background-color: var(--ashColor);
-  padding: 0.3rem;
+  padding: 1px;
   cursor: pointer;
 }
 .ProjectDetailsInformationContianer {
@@ -470,7 +471,7 @@
   display: flex;
   justify-content:center;
   align-items: center;
-  padding: 20px;
+  padding: 25px;
   text-align: center;
   background: var(--LightGray8);
   position: relative;
@@ -494,9 +495,9 @@
 }
 .ProjectsPageModelPopupHeaderTextIcon{
   cursor: pointer;
-  right: 0px;
+  right: 10px;
   position: absolute;
-  top: 3px;
+  top: 10px;
 }
 
 .CreateProjetsTitle{

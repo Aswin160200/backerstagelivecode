@@ -35,6 +35,7 @@
     font-family: var(--defaultFontFamily);
     font-size: var(--font-size_20);
     font-weight: var(--font-weight_600);
+    color: var(--darkColor)
 }
 .MasterAdminNavButtonContent{
     display: flex;

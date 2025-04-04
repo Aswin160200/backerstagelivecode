@@ -472,29 +472,31 @@ const ProjectsPage = () => {
               />
             </div>
             <FormControl sx={{ minWidth: 200 }} className="TableStatus">
-              <SelectStyledFilter
-                value={selectedStatus}
-                onChange={handleStatusChange}
-              >
-                <MenuItem value="Status">Status</MenuItem>
-                <MenuItem value="All">All</MenuItem>
-                <MenuItem value="Active Raising">Active Raising</MenuItem>
-                <MenuItem value="Active Investment">Active Investment</MenuItem>
-                <MenuItem value="Turned Down">Turned Down</MenuItem>
-                <MenuItem value="Completed">Completed</MenuItem>
-                <MenuItem value="Other">Other</MenuItem>
-              </SelectStyledFilter>
+              
+
+                <select name="cars" id="cars" class="SearchSelectFilter"
+                 value={selectedStatus}
+                 onChange={handleStatusChange}>
+              <option value="Status">Status</option>
+              <option value="All">All</option>
+              <option value="Active Raising">Active Raising</option>
+              <option value="Active Investment">Active Investment</option>
+              <option value="Turned Down">Turned Down</option>
+              <option value="Completed">Completed</option>
+              <option value="Other">Other</option>
+            </select>
+             
             </FormControl>
 
             <FormControl sx={{ minWidth: 200 }} className="TableStatus">
-              <SelectStyledFilter
-                value={selectedStatus}
-                onChange={handleStatusChange}
-              >
-                <MenuItem value="Status">Show</MenuItem>
-                <MenuItem value="All">All</MenuItem>
-                <MenuItem value="Newest First">Newest First</MenuItem>
-              </SelectStyledFilter>
+             
+              <select name="cars" id="cars" class="SearchSelectFilter"
+                 value={selectedStatus}
+                 onChange={handleStatusChange}>
+              <option value="Status">Status</option>
+              <option value="All">All</option>
+              <option value="Newest First">Newest First</option>
+              </select>
             </FormControl>
           </div>
           <table>
@@ -573,7 +575,7 @@ const ProjectsPage = () => {
                         Status
                       </p>
 
-                      <SelectStyled
+                      {/* <SelectStyled
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         value={createProject.status}
@@ -595,7 +597,23 @@ const ProjectsPage = () => {
                         <MenuItem value="Turned Down">Turned Down</MenuItem>
                         <MenuItem value="Completed">Completed</MenuItem>
                         <MenuItem value="Other">Other</MenuItem>
-                      </SelectStyled>
+                      </SelectStyled> */}
+                      <select  class="SearchSelectFilter"
+                            value={createProject.status}
+                            onChange={(e) =>
+                              setCreateProject({
+                                ...createProject,
+                                status: e.target.value,
+                              })
+                            }>
+                        <option value="None">-None-</option>
+                        <option value="All">All</option>
+                        <option value="Active Raising">Active Raising</option>
+                        <option value="Active Investment">Active Investment</option>
+                        <option value="Turned Down">Turned Down</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Other">Other</option>
+                        </select>
                       {/* {error?.username && (
                       <span className={Styles.registerErrormsg}>{error?.username}</span>
                     )} */}
@@ -905,7 +923,7 @@ const ProjectsPage = () => {
                         Status
                       </p>
 
-                      <SelectStyled
+                      {/* <SelectStyled
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         defaultValue={projectIdList.data?.status}
@@ -927,7 +945,23 @@ const ProjectsPage = () => {
                         <MenuItem value="Turned Down">Turned Down</MenuItem>
                         <MenuItem value="Completed">Completed</MenuItem>
                         <MenuItem value="Other">Other</MenuItem>
-                      </SelectStyled>
+                      </SelectStyled> */}
+                      <select  class="SearchSelectFilter"
+                            defaultValue={projectIdList.data?.status}
+                            onChange={(e) =>
+                              setUpdateProject({
+                                ...updateProject,
+                                status: e.target.value,
+                              })
+                            }>
+                        <option value="None">-None-</option>
+                        <option value="All">All</option>
+                        <option value="Active Raising">Active Raising</option>
+                        <option value="Active Investment">Active Investment</option>
+                        <option value="Turned Down">Turned Down</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Other">Other</option>
+                        </select>
                       {/* {error?.username && (
                       <span className={Styles.registerErrormsg}>{error?.username}</span>
                     )} */}

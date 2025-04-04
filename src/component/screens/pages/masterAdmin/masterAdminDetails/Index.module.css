@@ -28,6 +28,7 @@
     font-family: var(--defaultFontFamily);
     font-size: var(--font-size_20);
     font-weight: var(--font-weight_600);
+    color: var(--darkColor)
 }
 .MasterAdminDetailsNavContainer{
     display: flex;
@@ -114,7 +115,7 @@
 .MasterAdminDetailsTabDetailsHeaderEditIcon{
     color: var(--darkGreenColor);
     background-color: var(--ashColor);
-    padding: 0.3rem;
+    padding: 1px;
     cursor: pointer;
 }
 .MasterAdminDetailsInformationContianer{

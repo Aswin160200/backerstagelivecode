@@ -230,7 +230,8 @@ const handleCreateSubscription=()=>{
           </p>
           <Link to="/subscription" className="Link">
                     <Tooltip title="Back to List" arrow>
-                        <KeyboardReturnIcon className={Styles.InvestorDetailsNavConatinerIcon} />
+                        {/* <KeyboardReturnIcon className={Styles.InvestorDetailsNavConatinerIcon} /> */}
+                        <span className='InvestorDetailsNavConatinerIcon'>&#8629;</span>
                     </Tooltip>
                 </Link>
         </div>
@@ -247,7 +248,7 @@ const handleCreateSubscription=()=>{
 
         <div className={Styles.SubscriptionDetailsTabAndNotesContainer}>
           <div className={Styles.SubscriptionDetailsPageTabsContainer}>
-            <Box sx={{ bgcolor: "background.paper" }}>
+            <Box >
               <AppBar
                 position="static"
                 sx={{ bgcolor: "#fff", borderRadius: "10px", boxShadow: "none !important" }}
@@ -471,33 +472,29 @@ const handleCreateSubscription=()=>{
                 <div className={Styles.SubscriptionDetailsInputCart}>
                   <p className={Styles.SubscriptionDetailsInputCartText}>Producer</p>
 
-                  <SelectStyled
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={createsubscription.producersname}
-                    onChange={(e)=> setCreateSubscription({...createsubscription, producersname:e.target.value})}
-                  >
-                    <MenuItem value={10}>-None-</MenuItem>
-                    <MenuItem value="Stew">Stew</MenuItem>
-                    <MenuItem value="Robbin">Robbin</MenuItem>
-                  </SelectStyled>
+                  
+                  <select  class="SearchSelectFilterInput"
+                     value={createsubscription.producersname}
+                     onChange={(e)=> setCreateSubscription({...createsubscription, producersname:e.target.value})}
+                      >
+                      <option value="None">None</option>
+                      <option value="Stew">Stew</option>
+                      <option value="Robbin">Robbin</option>
+                    </select>
                   {/* {error?.username && (
               <span className={Styles.registerErrormsg}>{error?.username}</span>
             )} */}
                 </div>
                 <div className={Styles.SubscriptionDetailsInputCart}>
                   <p className={Styles.SubscriptionDetailsInputCartText}>Subscription Plan</p>
-
-                  <SelectStyled
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={createsubscription.subscriptionplan}
-                    onChange={(e)=> setCreateSubscription({...createsubscription, subscriptionplan:e.target.value})}
-                  >
-                    <MenuItem value={10}>-None-</MenuItem>
-                    <MenuItem value="Trial">Trial</MenuItem>
-                    <MenuItem value="Primium">Primium</MenuItem>
-                  </SelectStyled>
+                  <select  class="SearchSelectFilterInput"
+                      value={createsubscription.subscriptionplan}
+                      onChange={(e)=> setCreateSubscription({...createsubscription, subscriptionplan:e.target.value})}
+                      >
+                      <option value="None">None</option>
+                      <option value="Trial">Trial</option>
+                      <option value="Primium">Primium</option>
+                    </select>
                   {/* {error?.username && (
               <span className={Styles.registerErrormsg}>{error?.username}</span>
             )} */}
@@ -546,16 +543,15 @@ const handleCreateSubscription=()=>{
                 <div className={Styles.SubscriptionDetailsInputCart}>
                   <p className={Styles.SubscriptionDetailsInputCartText}>Payment Method</p>
 
-                  <SelectStyled
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={createsubscription.paymentmethod}
-                    onChange={(e)=> setCreateSubscription({...createsubscription, paymentmethod:e.target.value})}
-                  >
-                    <MenuItem value={10}>-None-</MenuItem>
-                    <MenuItem value="online">Online</MenuItem>
-                    <MenuItem value="Direct Payment">Direct Payment</MenuItem>
-                  </SelectStyled>
+                  
+                  <select  class="SearchSelectFilterInput"
+                       value={createsubscription.paymentmethod}
+                       onChange={(e)=> setCreateSubscription({...createsubscription, paymentmethod:e.target.value})}
+                      >
+                      <option value="None">None</option>
+                      <option value="online">online</option>
+                      <option value="Direct Payment">Direct Payment</option>
+                    </select>
                   {/* {error?.username && (
                       <span className={Styles.registerErrormsg}>{error?.username}</span>
                     )} */}
@@ -563,16 +559,15 @@ const handleCreateSubscription=()=>{
                 <div className={Styles.SubscriptionDetailsInputCart}>
                   <p className={Styles.SubscriptionDetailsInputCartText}>Status</p>
 
-                  <SelectStyled
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={createsubscription.status}
-                    onChange={(e)=> setCreateSubscription({...createsubscription, status:e.target.value})}
-                  >
-                    <MenuItem value={10}>-None-</MenuItem>
-                    <MenuItem value="Active">Acitve</MenuItem>
-                    <MenuItem value="InActive">Inactive</MenuItem>
-                  </SelectStyled>
+                 
+                  <select  class="SearchSelectFilterInput"
+                          value={createsubscription.status}
+                          onChange={(e)=> setCreateSubscription({...createsubscription, status:e.target.value})}
+                      >
+                      <option value="None">None</option>
+                      <option value="Active">Active</option>
+                      <option value="InActive">InActive</option>
+                    </select>
                   {/* {error?.username && (
                       <span className={Styles.registerErrormsg}>{error?.username}</span>
                     )} */}
@@ -660,16 +655,15 @@ const handleCreateSubscription=()=>{
                 <div className={Styles.SubscriptionDetailsInputCart}>
                   <p className={Styles.SubscriptionDetailsInputCartText}>Producer</p>
 
-                  <SelectStyled
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    defaultValue={subscriptionbyId.producersname}
-                    onChange={(e)=> setUpdateSubscription({...updateSubscription, producersname: e.target.value})}
-                  >
-                    <MenuItem value={10}>-None-</MenuItem>
-                    <MenuItem value="Stew">Stew</MenuItem>
-                    <MenuItem value="Robbin">Robbin</MenuItem>
-                  </SelectStyled>
+                
+                  <select  class="SearchSelectFilterInput"
+                        defaultValue={subscriptionbyId.producersname}
+                        onChange={(e)=> setUpdateSubscription({...updateSubscription, producersname: e.target.value})}
+                      >
+                      <option value="None">None</option>
+                      <option value="Stew">Stew</option>
+                      <option value="Robbin">Robbin</option>
+                    </select>
                   {/* {error?.username && (
               <span className={Styles.registerErrormsg}>{error?.username}</span>
             )} */}
@@ -677,16 +671,15 @@ const handleCreateSubscription=()=>{
                 <div className={Styles.SubscriptionDetailsInputCart}>
                   <p className={Styles.SubscriptionDetailsInputCartText}>Subscription Plan</p>
 
-                  <SelectStyled
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    defaultValue={subscriptionbyId.subscriptionplan}
-                    onChange={(e)=> setUpdateSubscription({...updateSubscription, subscriptionplan: e.target.value})}
-                  >
-                    <MenuItem value={10}>-None-</MenuItem>
-                    <MenuItem value="Trial">Trial</MenuItem>
-                    <MenuItem value="Promium">Primium</MenuItem>
-                  </SelectStyled>
+
+                  <select  class="SearchSelectFilterInput"
+                        defaultValue={subscriptionbyId.producersname}
+                        onChange={(e)=> setUpdateSubscription({...updateSubscription, producersname: e.target.value})}
+                      >
+                      <option value="None">None</option>
+                      <option value="Trial">Trial</option>
+                      <option value="Primium">Primium</option>
+                    </select>
                   {/* {error?.username && (
               <span className={Styles.registerErrormsg}>{error?.username}</span>
             )} */}
@@ -728,16 +721,14 @@ const handleCreateSubscription=()=>{
                 <div className={Styles.SubscriptionDetailsInputCart}>
                   <p className={Styles.SubscriptionDetailsInputCartText}>Payment Method</p>
 
-                  <SelectStyled
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    defaultValue={subscriptionbyId.paymentmethod}
-                    onChange={(e)=> setUpdateSubscription({...updateSubscription, paymentmethod: e.target.value})}
-                  >
-                    <MenuItem value={10}>-None-</MenuItem>
-                    <MenuItem value={20}>Online</MenuItem>
-                    <MenuItem value={30}>Direct Payment</MenuItem>
-                  </SelectStyled>
+                  <select  class="SearchSelectFilterInput"
+                        defaultValue={subscriptionbyId.paymentmethod}
+                        onChange={(e)=> setUpdateSubscription({...updateSubscription, paymentmethod: e.target.value})}
+                      >
+                      <option value="None">None</option>
+                      <option value="Online">Online</option>
+                      <option value="Direct Payment">Direct Payment</option>
+                    </select>
                   {/* {error?.username && (
                       <span className={Styles.registerErrormsg}>{error?.username}</span>
                     )} */}
@@ -745,16 +736,15 @@ const handleCreateSubscription=()=>{
                 <div className={Styles.SubscriptionDetailsInputCart}>
                   <p className={Styles.SubscriptionDetailsInputCartText}>Status</p>
 
-                  <SelectStyled
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
+                 
+                  <select  class="SearchSelectFilterInput"
                     defaultValue={subscriptionbyId.status}
                     onChange={(e)=> setUpdateSubscription({...updateSubscription, status: e.target.value})}
-                  >
-                    <MenuItem value={10}>-None-</MenuItem>
-                    <MenuItem value={20}>Acitve</MenuItem>
-                    <MenuItem value={30}>Inactive</MenuItem>
-                  </SelectStyled>
+                      >
+                      <option value="None">None</option>
+                      <option value="Acitve">Acitve</option>
+                      <option value="Inactive">Inactive</option>
+                    </select>
                   {/* {error?.username && (
                       <span className={Styles.registerErrormsg}>{error?.username}</span>
                     )} */}

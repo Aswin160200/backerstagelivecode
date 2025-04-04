@@ -1,4 +1,6 @@
 import {
+  ADD_NEW_PROJECT_COST,
+  ADD_NEW_PROJECT_COST_RESPONSE,
     EDIT_PROJECTCOST_BY_ID,
     EDIT_PROJECTCOST_BY_ID_RESPONSE,
   GET_ALL_PROJECTCOST,
@@ -48,4 +50,15 @@ export const editByProjectCostId = (projectCostId) => ({
   export const editByProjectCostIdResponse = (projectCostIdResponse) => ({
     type: EDIT_PROJECTCOST_BY_ID_RESPONSE,
     payload: projectCostIdResponse,
+  });
+
+
+  export const addNewProjectCost = (addNewProjectCost) => ({
+    type: ADD_NEW_PROJECT_COST,
+    payload: addNewProjectCost,
+  });
+  
+  export const addNewProjectCostResponse = (addNewProjectCostResponse) => ({
+    type: ADD_NEW_PROJECT_COST_RESPONSE,
+    payload: addNewProjectCostResponse,
   });

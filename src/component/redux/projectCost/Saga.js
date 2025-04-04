@@ -3,7 +3,8 @@ import {
     GET_ALL_PROJECTCOST,
     GET_PROJECTCOST_BY_PRODUCER_ID,
     GET_PROJECTCOST_BY_ID,
-    EDIT_PROJECTCOST_BY_ID
+    EDIT_PROJECTCOST_BY_ID,
+    ADD_NEW_PROJECT_COST,
 } from "./ActionTypes";
 import { Service } from "../../service/Helper";
 import {
@@ -11,6 +12,7 @@ import {
     getProjectCostByProducersIdResponse,
     getByProjectCostIdResponse,
     editByProjectCostIdResponse,
+    addNewProjectCostResponse,
 } from "./Action";
 
 function* getAllProjectCostByProjectId({payload : id}) {
@@ -57,11 +59,29 @@ function* editByProjectCostId({ payload }) {
     console.error("Update project failed:", error);
   }
 }
+
+function* createProjectCost({ payload: addNewProjectCost }) {
+  try {
+    const response = yield call(
+      Service.commonFetch,
+      "/projectscost",
+      "POST",
+      addNewProjectCost,
+      null
+    );
+    yield put(addNewProjectCostResponse(response));
+    console.log(response);
+  } catch (error) {}
+}
+
+
 function* projectCost() {
   yield takeEvery(GET_ALL_PROJECTCOST, getAllProjectCostByProjectId);
   yield takeEvery(GET_PROJECTCOST_BY_PRODUCER_ID, getAllProjectCostByProducerId);
   yield takeEvery(GET_PROJECTCOST_BY_ID, getByProjectCostId);
   yield takeEvery(EDIT_PROJECTCOST_BY_ID, editByProjectCostId);
+  yield takeEvery(ADD_NEW_PROJECT_COST, createProjectCost);
+
 }
 
 export default projectCost;

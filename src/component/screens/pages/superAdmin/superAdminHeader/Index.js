@@ -27,7 +27,7 @@ const SuperAdminHeaderPage = () => {
         <div className={Styles.HeaderPageNavContainerLeft}>
           <img src={HeaderImage} alt="logo" className={Styles.HeaderPageLogo} />
           <Link className="Link" to="/master_admin_dashboard">
-            <p>
+            <p className={Styles.HeaderNavigation}>
               <img
                 src={backarrowOne}
                 alt="logo"

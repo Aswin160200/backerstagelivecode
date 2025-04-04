@@ -202,7 +202,7 @@
 .CoProducersDetailsTabDetailsHeaderEditIcon{
     color: var(--darkGreenColor);
     background-color: var(--ashColor);
-    padding: 0.3rem;
+    padding: 1px;
     cursor: pointer;
 }
 .CoProducersDetailsInformationContianer{

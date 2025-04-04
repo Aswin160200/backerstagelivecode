@@ -117,7 +117,7 @@
 .ProducerDetailsTabDetailsHeaderEditIcon{
     color: var(--darkGreenColor);
     background-color: var(--ashColor);
-    padding: 0.3rem;
+    padding: 1px;
     cursor: pointer;
 }
 .ProducerDetailsInformationContianer{
@@ -242,10 +242,4 @@
       color: var(--whitecolor);
       cursor: pointer;
   }
-  .InvestorDetailsNavConatinerIcon
-  {
-    background-color: var(--whitecolor);
-    padding: 0.5rem;
-    border-radius: 50px;
-    border: 1px solid var(--boxShadow);
-  }
+  

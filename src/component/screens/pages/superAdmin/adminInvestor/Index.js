@@ -21,7 +21,7 @@ import { InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { FormControl } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllInvestors, getInvestorById } from "../../../../redux/Action";
+import { getAllInvestors, getAllUsers, getInvestorById } from "../../../../redux/Action";
 
 const style = {
   position: "absolute",
@@ -135,6 +135,8 @@ const AdminInvestor = () => {
       (state) => state.investors.getInvestorsByIdDetails
     );
 
+    const userList = useSelector((state) => state.users.getAllUsersSuccessfull);
+  
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -152,6 +154,12 @@ const AdminInvestor = () => {
     window.location.reload()
   }
 
+  const [filterProducerInvestors, setFilterProducerInvestors]= useState();
+
+  const handleChangeFilterProducerbyInvestors = (investorId) => {
+    // dispatch(getInvestorById(investorId));
+    alert(investorId);
+  };
   const [role, setRole] = useState(10);
 
   const handleChangeRole = (event) => {
@@ -192,169 +200,7 @@ const AdminInvestor = () => {
 
   const [allData, setAllData] = useState([]);
 
-  // const allData = [
-  //   {
-  //     no: "1",
-  //     name: "Robin Pattison",
-  //     email: "robin@gmail.com",
-  //     phone: "205-453-3736",
-  //     state: "Alamaba",
-  //     acccredited: "No",
-  //     date: "1/14/2025",
-  //     action: (
-  //       <div className="TableActionContainer">
-  //         <EditOutlinedIcon
-  //           className="TableActionEditIcon"
-  //           onClick={() => handleOpenEdit()}
-  //         />
-  //         <Link to="/admin_investors_details" className="Link">
-  //           <RemoveRedEyeOutlinedIcon className="TableActionViewIcon" />
-  //         </Link>
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     no: "2",
-  //     name: "Robin Pattison",
-  //     email: "robin@gmail.com",
-  //     phone: "205-453-3736",
-  //     state: "Alamaba",
-  //     acccredited: "No",
-  //     date: "1/14/2025",
-  //     action: (
-  //       <div className="TableActionContainer">
-  //         <EditOutlinedIcon
-  //           className="TableActionEditIcon"
-  //           onClick={() => handleOpenEdit()}
-  //         />
-  //         <Link to="/admin_investors_details" className="Link">
-  //           <RemoveRedEyeOutlinedIcon className="TableActionViewIcon" />
-  //         </Link>
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     no: "3",
-  //     name: "Robin Pattison",
-  //     email: "robin@gmail.com",
-  //     phone: "205-453-3736",
-  //     state: "Alamaba",
-  //     acccredited: "No",
-  //     date: "1/14/2025",
-  //     action: (
-  //       <div className="TableActionContainer">
-  //         <EditOutlinedIcon
-  //           className="TableActionEditIcon"
-  //           onClick={() => handleOpenEdit()}
-  //         />
-  //         <Link to="/admin_investors_details" className="Link">
-  //           <RemoveRedEyeOutlinedIcon className="TableActionViewIcon" />
-  //         </Link>
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     no: "4",
-  //     name: "Robin Pattison",
-  //     email: "robin@gmail.com",
-  //     phone: "205-453-3736",
-  //     state: "Alamaba",
-  //     acccredited: "No",
-  //     date: "1/14/2025",
-  //     action: (
-  //       <div className="TableActionContainer">
-  //         <EditOutlinedIcon
-  //           className="TableActionEditIcon"
-  //           onClick={() => handleOpenEdit()}
-  //         />
-  //         <Link to="/admin_investors_details" className="Link">
-  //           <RemoveRedEyeOutlinedIcon className="TableActionViewIcon" />
-  //         </Link>
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     no: "5",
-  //     name: "Robin Pattison",
-  //     email: "robin@gmail.com",
-  //     phone: "205-453-3736",
-  //     state: "Alamaba",
-  //     acccredited: "Yes",
-  //     date: "1/14/2025",
-  //     action: (
-  //       <div className="TableActionContainer">
-  //         <EditOutlinedIcon
-  //           className="TableActionEditIcon"
-  //           onClick={() => handleOpenEdit()}
-  //         />
-  //         <Link to="/admin_investors_details" className="Link">
-  //           <RemoveRedEyeOutlinedIcon className="TableActionViewIcon" />
-  //         </Link>
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     no: "6",
-  //     name: "Robin Pattison",
-  //     email: "robin@gmail.com",
-  //     phone: "205-453-3736",
-  //     state: "Alamaba",
-  //     acccredited: "Yes",
-  //     date: "1/14/2025",
-  //     action: (
-  //       <div className="TableActionContainer">
-  //         <EditOutlinedIcon
-  //           className="TableActionEditIcon"
-  //           onClick={() => handleOpenEdit()}
-  //         />
-  //         <Link to="/admin_investors_details" className="Link">
-  //           <RemoveRedEyeOutlinedIcon className="TableActionViewIcon" />
-  //         </Link>
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     no: "7",
-  //     name: "Robin Pattison",
-  //     email: "robin@gmail.com",
-  //     phone: "205-453-3736",
-  //     state: "Alamaba",
-  //     acccredited: "Yes",
-  //     date: "1/14/2025",
-  //     action: (
-  //       <div className="TableActionContainer">
-  //         <EditOutlinedIcon
-  //           className="TableActionEditIcon"
-  //           onClick={() => handleOpenEdit()}
-  //         />
-  //         <Link to="/admin_investors_details" className="Link">
-  //           <RemoveRedEyeOutlinedIcon className="TableActionViewIcon" />
-  //         </Link>
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     no: "8",
-  //     name: " Robin Pattison",
-  //     email: "robin@gmail.com",
-  //     phone: "205-453-3736",
-  //     state: "Alamaba",
-  //     acccredited: "Yes",
-  //     date: "1/14/2025",
-  //     action: (
-  //       <div className="TableActionContainer">
-  //         <EditOutlinedIcon
-  //           className="TableActionEditIcon"
-  //           onClick={() => handleOpenEdit()}
-  //         />
-  //         <Link to="/admin_investors_details" className="Link">
-  //           <RemoveRedEyeOutlinedIcon className="TableActionViewIcon" />
-  //         </Link>
-  //       </div>
-  //     ),
-  //   },
-  // ];
-
+  
   const tableHead = {
     S_no: "S.no",
     investor_Name: "Investor Name",
@@ -375,6 +221,7 @@ const AdminInvestor = () => {
 
   useEffect(() => {
     dispatch(getAllInvestors());
+    dispatch(getAllUsers());
   }, []);
 
   useEffect(() => {
@@ -472,7 +319,24 @@ const AdminInvestor = () => {
         </div>
         <div className={Styles.AdminInvestorPageTitleCart}>
           <p className={Styles.AdminInvestorPageTitleCartText}>
-            <span>Producer - </span>Christin Stew
+            <span className={Styles.AdminInvestorPageTitleCartText}>Producer</span>
+            <select  
+              className="SearchSelectFilterInput"
+              defaultValue={investorById.data?.referralsource}
+              onChange={(e) => handleChangeFilterProducerbyInvestors(e.target.value)} 
+            >
+              <option value="Show">none</option>
+              {Array.isArray(userList) && userList.length > 0 ? (
+                userList.map((investor) => (
+                  <option key={investor.investorid} value={investor.investorid}>
+                    {investor.firstname} {investor.lastname}
+                  </option>
+                ))
+              ) : (
+                <option disabled>No Producers Available</option>
+              )}
+            </select>
+
           </p>
         </div>
 
@@ -481,7 +345,7 @@ const AdminInvestor = () => {
             <div class="Search">
               <input
                 style={{ minWidth: "100% !important" }}
-                placeholder="Search the list..."
+                placeholder="Search the investors..."
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
                 type="search"
@@ -497,14 +361,15 @@ const AdminInvestor = () => {
               />
             </div>
             <FormControl sx={{ minWidth: 200 }} className="TableStatus">
-              <SelectStyledFilter
-                value={selectedStatus}
-                onChange={handleStatusChange}
-              >
-                <MenuItem value="Status">Show</MenuItem>
-                <MenuItem value="All">All</MenuItem>
-                <MenuItem value="Newest First">Newest First</MenuItem>
-              </SelectStyledFilter>
+             
+                <select  class="SearchSelectFilterInput"
+                     defaultValue={investorById.data?.referralsource}
+                     onChange={handleChangeRole} 
+                      >
+                      <option value="Show">Show</option>
+                      <option value="All">All</option>
+                      <option value="Newest First">Newest First</option>
+                    </select>
             </FormControl>
           </div>
           <table>
@@ -697,16 +562,15 @@ const AdminInvestor = () => {
                   <div className="InputCart">
                     <p className="InputCartText">Refferral Source</p>
 
-                    <SelectStyled
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                   
-                      defaultValue={investorById.data?.referralsource}
-                      onChange={handleChangeRole}
-                    >
-                      <MenuItem value={10}>-None-</MenuItem>
-                      <MenuItem value="Google">Co-Producer</MenuItem>
-                    </SelectStyled>
+                    
+                    <select  class="SearchSelectFilterInput"
+                     defaultValue={investorById.data?.referralsource}
+                     onChange={handleChangeRole}
+                      >
+                      <option value="Show">Show</option>
+                      <option value="None">None</option>
+                      <option value="Co-Producer">Co-Producer</option>
+                    </select>
                     {/* {error?.username && (
               <span className={Styles.registerErrormsg}>{error?.username}</span>
             )} */}
