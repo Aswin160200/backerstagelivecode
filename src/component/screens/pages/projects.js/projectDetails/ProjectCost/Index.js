@@ -90,6 +90,9 @@ const ProjectCostPage = () => {
     (state) => state.projects.getProjectbyProducerId
   );
 
+  const ProjectCostList = useSelector(
+    (state) => state.projectCost.getAllProjectCostData
+  );
   const ProjectCostByProducer = useSelector(
     (state) => state.projectCost.getByProducersIdSuccessfull
   );
@@ -99,6 +102,7 @@ const ProjectCostPage = () => {
   );
 
   useEffect(() => {
+    dispatch(getAllProjectCost(projectid));
     dispatch(getProjectCostByProducersId(storedUser.userid));
     dispatch(getProjectByProducerId(storedUser.userid));
   }, []);
@@ -162,10 +166,10 @@ const ProjectCostPage = () => {
 
   useEffect(() => {
     if (
-      ProjectCostByProducer?.data &&
-      Array.isArray(ProjectCostByProducer.data)
+      ProjectCostList?.data &&
+      Array.isArray(ProjectCostList.data)
     ) {
-      const mappedData = ProjectCostByProducer?.data.map((item, index) => ({
+      const mappedData = ProjectCostList?.data.map((item, index) => ({
         no: index + 1,
         costdescription: item.costdescription,
         totalcost: item.totalcost,
@@ -192,10 +196,10 @@ const ProjectCostPage = () => {
     } else {
       console.error(
         "Distribution.data is not an array",
-        ProjectCostByProducer?.data
+        ProjectCostList?.data
       );
     }
-  }, [ProjectCostByProducer]);
+  }, [ProjectCostList]);
 
   const searchData = useRef(
     throttle((val) => {

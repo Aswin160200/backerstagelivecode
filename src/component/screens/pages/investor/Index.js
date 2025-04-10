@@ -477,6 +477,44 @@ const InvestorPage = () => {
     ));
   };
 
+
+  const handleExportCSV = () => {
+    if (!investorList?.data || investorList.data.length === 0) {
+      toast.error("No investor data available to export.");
+      return;
+    }
+  
+    const allInvestors = investorList.data;
+  
+    // Dynamically collect all unique keys from all investor objects
+    const headersSet = new Set();
+    allInvestors.forEach(investor => {
+      Object.keys(investor).forEach(key => headersSet.add(key));
+    });
+  
+    const headers = Array.from(headersSet);
+  
+    const csvRows = [
+      headers.join(","), // CSV header row
+      ...allInvestors.map(investor =>
+        headers.map(header =>
+          `"${(investor[header] ?? "").toString().replace(/"/g, '""')}"`
+        ).join(",")
+      )
+    ];
+  
+    const csvContent = csvRows.join("\n");
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+  
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `investors_export_${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+  
+
   return (
     <div className={Styles.InvestorPageMainContainer}>
       <HeaderPage />
@@ -491,9 +529,13 @@ const InvestorPage = () => {
             <p className={Styles.InvestorPagenavCartText}>Investor</p>
           </div>
           <div className={Styles.CreateInvestorButtonContent}>
-            <button className={Styles.CreateInvestorButtonContentExportButton}>
-              Export
-            </button>
+          <button
+          className={Styles.CreateInvestorButtonContentExportButton}
+          onClick={handleExportCSV}
+        >
+          Export
+        </button> 
+
             <button
               className={Styles.ViewInvestorPageNavContainerButton}
               onClick={handleOpen}

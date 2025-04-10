@@ -96,7 +96,7 @@ const DistributionsPage = () => {
   );
 
   useEffect(() => {
-    dispatch(getByProducersId(storedUser.userid));
+    dispatch(getByProducersId(projectid));
     dispatch(getProjectByProducerId(storedUser.userid));
   }, []);
 

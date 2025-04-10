@@ -143,6 +143,7 @@
 }
 .CoProducersDetailsPAtiesAndNotesIcon{
     cursor: pointer;
+    fill: var(--darkColor);
 }
 .CoProducersDetailsPartiesContainer{
     display: flex;

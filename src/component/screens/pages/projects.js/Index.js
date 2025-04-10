@@ -434,6 +434,44 @@ const ProjectsPage = () => {
     ));
   };
 
+  const handleExportCSV = () => {
+    if (!projectList?.data || projectList.data.length === 0) {
+      toast.error("No project data available to export.");
+      return;
+    }
+  
+    const allProjects = projectList.data;
+  
+    // Collect all unique keys across all items
+    const headersSet = new Set();
+    allProjects.forEach(project => {
+      Object.keys(project).forEach(key => headersSet.add(key));
+    });
+  
+    const headers = Array.from(headersSet);
+  
+    const csvRows = [
+      headers.join(","), // header row
+      ...allProjects.map(project =>
+        headers.map(header =>
+          `"${(project[header] ?? "").toString().replace(/"/g, '""')}"`
+        ).join(",")
+      )
+    ];
+  
+    const csvContent = csvRows.join("\n");
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+  
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `projects_export_${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+  
+
+  
   return (
     <div className={Styles.ProjectsPageMainContainer}>
       <HeaderPage />
@@ -448,12 +486,13 @@ const ProjectsPage = () => {
             <p className={Styles.ProjectsPagenavCartText}>Projects</p>
           </div>
           <div>
-            <button
-              className={Styles.ProjectsPageNavContainerExportButton}
-              onClick={handleOpen}
-            >
-              Export
-            </button>
+          <button
+            className={Styles.ProjectsPageNavContainerExportButton}
+            onClick={handleExportCSV}
+          >
+            Export
+          </button>
+
             <button
               className={Styles.ProjectsPageNavContainerButton}
               onClick={handleOpen}

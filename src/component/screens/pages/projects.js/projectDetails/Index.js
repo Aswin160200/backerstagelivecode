@@ -36,7 +36,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import Tooltip from "@mui/material/Tooltip";
 import { useParams } from "react-router-dom";
-import {  addNewDistribution, addNewProjectCost, createPartysProject, createProjects, getAllDistributions, getAllInvestors, getAllPartysProject, getCoProducerByProducerId, getInvestorById, getInvestorbyProducerId, getInvestorsByProjectId, getPartisProjectByID, getProjectByProducerId, getProjectsByID, updateProjects } from "../../../../redux/Action";
+import {  addNewDistribution, addNewProjectCost, createNote, createPartysProject, createProjects, getAllDistributions, getAllInvestors, getAllPartysProject, getCoProducerByProducerId, getInvestorById, getInvestorbyProducerId, getInvestorsByProjectId, getPartisProjectByID, getProjectByProducerId, getProjectsByID, updateProjects } from "../../../../redux/Action";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from 'react-toastify';
 import DistributionsPage from "./Distributions/Index";
@@ -336,7 +336,7 @@ useEffect(() => {
    dispatch(getInvestorbyProducerId(storedUser.userid));
     dispatch(getCoProducerByProducerId(storedUser.userid));
       dispatch(getProjectByProducerId(storedUser.userid));
-      dispatch(getAllPartysProject());
+      dispatch(getAllPartysProject(projectid));
       dispatch(getAllInvestors());
 }, [investorID]);
 
@@ -446,6 +446,9 @@ useEffect(() => {
     
   )
 
+
+
+
   const handleAddNewDistribution = () => {
     dispatch(addNewDistribution(addDistribution))
     setOpenNewDistribution(false);
@@ -465,10 +468,24 @@ useEffect(() => {
       projectname: "",
       expensecomments: ""
     }
-    
-    
   )
 
+   const [addNewNotes, setAddNewNotes]=useState(
+    {
+      projectid: projectid,
+      producersid:storedUser.userid,
+      investorid: "",
+      co_producersid: "",
+      notetitle: "",
+      notedescription: "",
+    }
+   );
+
+
+   const handleAddNewNotes = () => {
+    dispatch(createNote(addNewNotes))
+    setOpenNotesDoc(false);
+  }
   const handleAddNewProjectCost = () => {
     dispatch(addNewProjectCost(addProjectCost))
     setOpenNewProjectCost(false);
@@ -2526,10 +2543,9 @@ useEffect(() => {
                     <InputStyled
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
-                      inputProps={{ maxLength: 20 }}
-                      name="firstname"
-                      
-                      // onChange={(e) => setCreateInvestor({ ...createInvestor, firstname: e.target.value })}
+                      inputProps={{ maxLength: 50 }}
+                      name="notetitle"
+                      onChange={(e) => setAddNewNotes({ ...addNewNotes, notetitle: e.target.value })}
                     />
                     {/* {error?.username && (
               <span className={Styles.registerErrormsg}>{error?.username}</span>
@@ -2546,12 +2562,11 @@ useEffect(() => {
                     <InputStyled
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
-                      inputProps={{ maxLength: 200 }}
-                      name="firstname"
+                      inputProps={{ maxLength: 50000 }}
+                      name="notedescription"
                       multiline
                       rows={4}
-                      // onChange={(e) => setCreateInvestor({ ...createInvestor, firstname: e.target.value })}
-                    />
+                      onChange={(e) => setAddNewNotes({ ...addNewNotes, notedescription: e.target.value })}                    />
                     </div>
                   </div>
                   </div>
@@ -2561,7 +2576,7 @@ useEffect(() => {
               <button className={Styles.CreateProjectDetailsInvestorTableAddPartsProjectsCancelButton} onClick={()=>handleCloseNotesDoc()}>
                 Cancel
               </button>
-              <button className={Styles.CreateProjectDetailsInvestorTableAddPartsProjectsSubmitButton} onClick={()=>handleCloseNotesDoc()}>
+              <button className={Styles.CreateProjectDetailsInvestorTableAddPartsProjectsSubmitButton} onClick={()=>handleAddNewNotes()}>
                 Save
               </button>
             </div>              

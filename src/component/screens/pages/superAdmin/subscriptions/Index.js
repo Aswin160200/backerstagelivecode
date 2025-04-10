@@ -22,20 +22,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import { FormControl } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { addSubscription, deleteSubscriptiondata, editSubscriptiondata, getAllSubscription, getBySubscriptionId } from "../../../../redux/Action";
-// const style = {
-//   position: "absolute",
-//   top: "50%",
-//   left: "50%",
-//   transform: "translate(-50%, -50%)",
-//   width: 800,
-//   height: "60vh",
-//   bgcolor: "background.paper",
-//   boxShadow: 24,
-//   p: 4,
-//   borderRadius: "10px",
-//   overflowY: "scroll",
-// };
+import { addSubscription, deleteSubscriptiondata, editSubscriptiondata, getAllSubscription, getAllUsers, getBySubscriptionId, getByUserId } from "../../../../redux/Action";
+
 
 export const InputStyled = styled(TextField)`
   & .MuiOutlinedInput-root {
@@ -128,6 +116,9 @@ export const SelectStyledFilter = styled(Select)`
 const Subscriptions = () => {
   let dispatch = useDispatch();
 
+    const userList = useSelector((state) => state.users.getAllUsersSuccessfull);
+  
+
   const subscriptionList = useSelector(
     (state) => state.subscription.getAllSubscriptionSuccessfull
   );
@@ -148,9 +139,15 @@ const Subscriptions = () => {
     (state) => state.subscription.deleteSubscriptionIdSuccessfull
   );
 
+    const userById = useSelector((state) => state.users.getByUserIdSuccessfull);
+
+  
 
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+   
+    setOpen(true);
+  }
   const handleClose = () => setOpen(false);
 
   const [openEdit, setOpenEdit] = useState(false);
@@ -168,13 +165,57 @@ const Subscriptions = () => {
   const handleCloseEdit = () => setOpenEdit(false);
 
 
+    const [deleteConfimationModelOpen, setDeleteConfimationModelOpen] = useState(false);
+    const handlesetDeleteConfimationModelOpen = (id) => 
+      {
+        setUpdateID(id)
+        dispatch(getBySubscriptionId(id));
+        setDeleteConfimationModelOpen(true);
+      }
+    const handlesetDeleteConfimationModelClose = () => setDeleteConfimationModelOpen(false);
+  
 
   const [role, setRole] = useState(10);
+
+  const [fetchedUsers, setFetchedUsers] = useState([]);
+  const [userMap, setUserMap] = useState({});
+
 
   // get all subscriptions
   useEffect(() => {
     dispatch(getAllSubscription());
+    dispatch(getAllUsers());
   }, []);
+  
+  useEffect(() => {
+    const fetchUsers = async () => {
+      if (subscriptionList && subscriptionList.length > 0) {
+        const uniqueProducerIds = [
+          ...new Set(subscriptionList.map((item) => item.producersid)),
+        ];
+  
+        const users = [];
+  
+        // Wait for all user fetch promises in parallel
+        const userFetches = await Promise.all(
+          uniqueProducerIds.map((id) => dispatch(getByUserId(id)))
+        );
+  
+        userFetches.forEach((res) => {
+          if (res?.payload) {
+            users.push(res.payload);
+          }
+        });
+  
+        setFetchedUsers(users);
+      }
+    };
+  
+    fetchUsers();
+  }, [subscriptionList, dispatch]);
+  
+  
+  
 
   const handleChangeRole = (event) => {
     setRole(event.target.value);
@@ -185,10 +226,9 @@ const Subscriptions = () => {
   };
 
   const [allData, setAllData] = useState([]);
-
   const [createsubscription, setCreateSubscription]=useState(
     {      
-      producersid: 1,
+        producersid: "",
         producersname: "",
         subscriptionplan: "",
         fromdate: "",
@@ -200,9 +240,11 @@ const Subscriptions = () => {
     }
   )
 
+  console.log(createsubscription,"createsubscription")
+
   const [updateSubscription, setUpdateSubscription]=useState(
     {      
-      producersid: 1,
+      producersid: subscriptionbyId.producersid,
       producersname: subscriptionbyId.producersname,
       subscriptionplan: subscriptionbyId.subscriptionplan,
       fromdate: subscriptionbyId.fromdate,
@@ -216,6 +258,7 @@ const Subscriptions = () => {
 
   const handleCreateSubscription=()=>{
     dispatch(addSubscription(createsubscription));
+    
     setOpen(false);
     if (subscriptionCreate !== "" || subscriptionCreate !== undefined || subscriptionCreate !== null){
       setTimeout(() => {
@@ -241,8 +284,11 @@ const Subscriptions = () => {
     
   }
 
-  const handleDeleteSubscription=(id)=>{
-    dispatch(deleteSubscriptiondata(id));
+
+
+  const handleDeleteSubscription=()=>{
+
+    dispatch(deleteSubscriptiondata(updateID));
     if (deleteSubscription !== "" || deleteSubscription !== undefined || deleteSubscription !== null){
       setTimeout(() => {
       dispatch(getAllSubscription());
@@ -271,36 +317,110 @@ const Subscriptions = () => {
     cloneDeep(allData.slice(0, countPerPage))
   );
 
-  useEffect(() => {
-    if (subscriptionList) {
-      const mappedData = subscriptionList.map((item, index) => ({
-        no: index + 1,
-        name: item.producersname,
-        subscriptionPlan: item.subscriptionplan,
-        from: item.fromdate,
-        to: item.todate,
-        paymentMethod: item.paymentmethod,
-        status: item.status,
-        action: (
-          <div className="TableActionContainer">
-            <EditOutlinedIcon
-              className="TableActionEditIcon"
-              onClick={() => handleOpenEdit(item.subscriptionid)}
-            />
-            <Link to={`/subscription_details/${item.subscriptionid}`} className="Link">
-              <RemoveRedEyeOutlinedIcon className="TableActionViewIcon" />
-            </Link>
-            <DeleteOutlineOutlinedIcon className="TableActionDeleteIcon" 
-            onClick={()=> handleDeleteSubscription(item.subscriptionid)}/>
-          </div>
-        ),
-      }));
+  // useEffect(() => {
+  //   if (subscriptionList) {
+  //     const mappedData = subscriptionList.map((item, index) => ({
+  //       no: index + 1,
+  //       name: item.producersname,
+  //       subscriptionPlan: item.subscriptionplan,
+  //       from: item.fromdate,
+  //       to: item.todate,
+  //       paymentMethod: item.paymentmethod,
+  //       status: item.status,
+  //       action: (
+  //         <div className="TableActionContainer">
+  //           <EditOutlinedIcon
+  //             className="TableActionEditIcon"
+  //             onClick={() => handleOpenEdit(item.subscriptionid)}
+  //           />
+  //           <Link to={`/subscription_details/${item.subscriptionid}`} className="Link">
+  //             <RemoveRedEyeOutlinedIcon className="TableActionViewIcon" />
+  //           </Link>
+  //           <DeleteOutlineOutlinedIcon className="TableActionDeleteIcon" 
+  //           onClick={()=> handlesetDeleteConfimationModelOpen(item.subscriptionid)}/>
+  //         </div>
+  //       ),
+  //     }));
 
+  //     setAllData(mappedData);
+  //     setCollection(cloneDeep(mappedData.slice(0, countPerPage)));
+  //   }
+  // }, [subscriptionList]);
+
+
+  // useEffect(() => {
+  //   if (subscriptionList && userById) {
+  //     const mappedData = subscriptionList.map((item, index) => {
+
+  //       // const user = userById[item.firstname];
+  
+  //       return {
+  //         no: index + 1,
+  //         name:  `${userById.firstname} ${userById.lastname}`,
+  //         subscriptionPlan: item.subscriptionplan,
+  //         from: item.fromdate,
+  //         to: item.todate,
+  //         paymentMethod: item.paymentmethod,
+  //         status: item.status,
+  //         action: (
+  //           <div className="TableActionContainer">
+  //             <EditOutlinedIcon
+  //               className="TableActionEditIcon"
+  //               onClick={() => handleOpenEdit(item.subscriptionid)}
+  //             />
+  //             <Link to={`/subscription_details/${item.subscriptionid}`} className="Link">
+  //               <RemoveRedEyeOutlinedIcon className="TableActionViewIcon" />
+  //             </Link>
+  //             <DeleteOutlineOutlinedIcon
+  //               className="TableActionDeleteIcon"
+  //               onClick={() => handlesetDeleteConfimationModelOpen(item.subscriptionid)}
+  //             />
+  //           </div>
+  //         ),
+  //       };
+  //     });
+  
+  //     setAllData(mappedData);
+  //     setCollection(cloneDeep(mappedData.slice(0, countPerPage)));
+  //   }
+  // }, [subscriptionList, userById]);
+  
+  useEffect(() => {
+    if (subscriptionList && fetchedUsers.length > 0) {
+      const mappedData = subscriptionList.map((item, index) => {
+      
+  
+        return {
+          no: index + 1,
+          name: `${fetchedUsers.firstname} ${fetchedUsers.lastname}`,
+          subscriptionPlan: item.subscriptionplan,
+          from: item.fromdate,
+          to: item.todate,
+          paymentMethod: item.paymentmethod,
+          status: item.status,
+          action: (
+            <div className="TableActionContainer">
+              <EditOutlinedIcon
+                className="TableActionEditIcon"
+                onClick={() => handleOpenEdit(item.subscriptionid)}
+              />
+              <Link to={`/subscription_details/${item.subscriptionid}`} className="Link">
+                <RemoveRedEyeOutlinedIcon className="TableActionViewIcon" />
+              </Link>
+              <DeleteOutlineOutlinedIcon
+                className="TableActionDeleteIcon"
+                onClick={() => handlesetDeleteConfimationModelOpen(item.subscriptionid)}
+              />
+            </div>
+          ),
+        };
+      });
+  
       setAllData(mappedData);
       setCollection(cloneDeep(mappedData.slice(0, countPerPage)));
     }
-  }, [subscriptionList]);
-
+  }, [subscriptionList, fetchedUsers]);
+  
   const searchData = useRef(
     throttle((val) => {
       const query = val.toLowerCase();
@@ -449,14 +569,23 @@ const Subscriptions = () => {
                     <p className={Styles.SubscriptionsInputCartText}>
                       Producer
                     </p>
-                    <select  class="SearchSelectFilterInput"
-                     value={createsubscription.producersname}
-                     onChange={(e)=> setCreateSubscription({...createsubscription, producersname:e.target.value })}
+                   
+                    <select
+                        className="SearchSelectFilter"
+                        value={createsubscription.producersname}
+                        onChange={(e)=> setCreateSubscription({...createsubscription, producersid:e.target.value })}
+
                       >
-                      <option value="None">None</option>
-                      <option value="Stew">Stew</option>
-                      <option value="Robbin">Robbin</option>
-                    </select>
+                        {Array.isArray(userList) && userList.length > 0 ? (
+                          userList.map((user) => (
+                            <option key={user.userid} value={user.userid}>
+                               {user.firstname} {user.lastname}
+                            </option>
+                          ))
+                        ) : (
+                          <option disabled>No Producers Available</option>
+                        )}
+                      </select>
                     {/* {error?.username && (
               <span className={Styles.registerErrormsg}>{error?.username}</span>
             )} */}
@@ -612,7 +741,7 @@ const Subscriptions = () => {
           </div>
         </Box>
       </Modal>
-
+ 
       <Modal
         open={openEdit}
         onClose={handleCloseEdit}
@@ -638,16 +767,17 @@ const Subscriptions = () => {
                     <p className={Styles.SubscriptionsInputCartText}>
                       Producer
                     </p>
+                   
+                    <select
+                          className="SearchSelectFilter"
+                          value={`${userById?.firstname ?? ''} ${userById?.lastname ?? ''}`}
+                          onChange={() => {}}
+                        >
+                          <option disabled value={`${userById?.firstname ?? ''} ${userById?.lastname ?? ''}`}>
+                            {userById ? `${userById.firstname} ${userById.lastname}` : "No Producer Selected"}
+                          </option>
+                        </select>
 
-                    
-                    <select  class="SearchSelectFilterInput"
-                     defaultValue={subscriptionbyId.producersname}
-                     onChange={(e)=> setUpdateSubscription({...updateSubscription, producersname:e.target.value})}
-                      >
-                      <option value="None">None</option>
-                      <option value="Stew">Stew</option>
-                      <option value="Robbin">Robbin</option>
-                    </select>
                     {/* {error?.username && (
               <span className={Styles.registerErrormsg}>{error?.username}</span>
             )} */}
@@ -656,10 +786,8 @@ const Subscriptions = () => {
                     <p className={Styles.SubscriptionsInputCartText}>
                       Subscription Plan
                     </p>
-
-                 
                     <select  class="SearchSelectFilterInput"
-                      defaultValue={subscriptionbyId.subscriptionplan}
+                      value={subscriptionbyId.subscriptionplan}
                       onChange={(e)=> setUpdateSubscription({...updateSubscription, subscriptionplan:e.target.value})}
                       >
                       <option value="None">None</option>
@@ -681,11 +809,8 @@ const Subscriptions = () => {
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50 }} // Increased max length for multiline
                       name="firstname"
-                      defaultValue={subscriptionbyId.fromdate}
+                      value={subscriptionbyId.fromdate}
                       onChange={(e)=> setUpdateSubscription({...updateSubscription, fromdate:e.target.value})}
-
-
-
                       // onChange={(e) =>
                       //   setCreateInvestor({
                       //     ...createInvestor,
@@ -696,14 +821,13 @@ const Subscriptions = () => {
                   </div>
                   <div className={Styles.SubscriptionsInputCart}>
                     <p className={Styles.SubscriptionsInputCartText}>To</p>
-
                     <InputStyled
                       id="outlined-basic"
                       type="date"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50 }}
                       name="firstname"
-                      defaultValue={subscriptionbyId.todate}
+                      value={subscriptionbyId.todate}
                       onChange={(e)=> setUpdateSubscription({...updateSubscription, todate:e.target.value})}
                     />
                     {/* {error?.username && (
@@ -717,7 +841,7 @@ const Subscriptions = () => {
                       Payment Method
                     </p>
                     <select  class="SearchSelectFilterInput"
-                       defaultValue={subscriptionbyId.paymentmethod}
+                       value={subscriptionbyId.paymentmethod}
                        onChange={(e)=> setUpdateSubscription({...updateSubscription, paymentmethod:e.target.value})}
                       >
                       <option value="None">None</option>
@@ -730,10 +854,8 @@ const Subscriptions = () => {
                   </div>
                   <div className={Styles.SubscriptionsInputCart}>
                     <p className={Styles.SubscriptionsInputCartText}>Status</p>
-
-                    
                     <select  class="SearchSelectFilterInput"
-                      defaultValue={subscriptionbyId.status}
+                       value={subscriptionbyId.status}
                       onChange={(e)=> setUpdateSubscription({...updateSubscription, status:e.target.value})}
                       >
                       <option value="None">None</option>
@@ -750,13 +872,12 @@ const Subscriptions = () => {
                     <p className={Styles.SubscriptionsInputCartText}>
                       Amount Paid
                     </p>
-
                     <InputStyled
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50 }}
                       name="firstname"
-                      defaultValue={subscriptionbyId.amountpaid}
+                      value={subscriptionbyId.amountpaid}
                       onChange={(e)=> setUpdateSubscription({...updateSubscription, amountpaid:e.target.value})}
                     />
                     {/* {error?.username && (
@@ -767,13 +888,12 @@ const Subscriptions = () => {
                     <p className={Styles.SubscriptionsInputCartText}>
                       Date of Amount Paid
                     </p>
-
                     <InputStyled
                       id="outlined-basic"
                       type="date"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50 }}
-                      defaultValue={subscriptionbyId.dateofamountpaid}
+                      value ={subscriptionbyId.dateofamountpaid}
                       onChange={(e)=> setUpdateSubscription({...updateSubscription, dateofamountpaid:e.target.value})}
 
                       name="dateofamountpaid"
@@ -802,6 +922,47 @@ const Subscriptions = () => {
           </div>
         </Box>
       </Modal>
+
+
+        <Modal
+              open={deleteConfimationModelOpen}
+              onClose={handlesetDeleteConfimationModelClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box class="modal">
+              
+                <div className={Styles.ProducersPageModelPopupContainer}>
+                  <div className="ModelPopupHeader">
+                    <p className="ModelPopupHeaderText">Delete Producers</p>
+                    <CloseOutlinedIcon
+                      onClick={() => handlesetDeleteConfimationModelClose()}
+                      className="ModelPopupHeaderIcon"
+                    />
+                  </div>
+                  <div className="ModelPopupbody">
+                  <p className={Styles.ProducersPageModelPopupContainerDeteleText}>
+                    Do you really want to remove {subscriptionbyId.producersname}'s Subscription Plan:  <span className={Styles.ProducersPageModelPopupContainerDeteleTextProducerName}>{subscriptionbyId.subscriptionplan}</span> 
+                    </p>
+                  </div>
+                  <div className="ModelPopupfooter">
+                    <button
+                      className={Styles.SubscriptionsCancelButton}
+                      onClick={() => handlesetDeleteConfimationModelClose()}
+                    >
+                      No !
+                    </button>
+                    <button
+                      className={Styles.SubscriptionsSubmitButton}
+                      onClick={() => handleDeleteSubscription()}
+                    >
+                      Yes !
+                    </button>
+                  </div>
+                </div>
+                
+              </Box>
+            </Modal>
     </div>
   );
 };

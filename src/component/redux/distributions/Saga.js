@@ -25,7 +25,7 @@ function* getAllDistributionsByProjectId({payload : id}) {
 
 function* getAllDistributionsByProducerId({payload : id}) {
     try {
-      const response = yield call(Service.commonFetch, `/distributions/producer/${id}`, "GET", null);
+      const response = yield call(Service.commonFetch, `/distributions/project/${id}`, "GET", null);
       yield put(getByProducersIdResponse(response));
       console.log(response);
     } catch (error) {}

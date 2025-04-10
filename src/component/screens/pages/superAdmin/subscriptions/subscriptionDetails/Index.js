@@ -22,7 +22,7 @@ import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import Tooltip from "@mui/material/Tooltip";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addSubscription, editSubscriptiondata, getAllSubscription, getBySubscriptionId } from "../../../../../redux/Action";
+import { addSubscription, editSubscriptiondata, getAllSubscription, getAllUsers, getBySubscriptionId, getByUserId } from "../../../../../redux/Action";
 import { toast } from "react-toastify";
 
 
@@ -139,6 +139,14 @@ const SubscriptionDetails = () => {
           (state) => state.subscription.editSubscriptionSuccessfull
         ); 
       
+  const subscriptionList = useSelector(
+    (state) => state.subscription.getAllSubscriptionSuccessfull
+  );
+
+      const userById = useSelector((state) => state.users.getByUserIdSuccessfull);
+  
+    const userList = useSelector((state) => state.users.getAllUsersSuccessfull);
+
 
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
@@ -146,6 +154,8 @@ const SubscriptionDetails = () => {
   };
 
    useEffect(() => {
+     dispatch(getAllSubscription());
+      dispatch(getAllUsers());
     dispatch(getBySubscriptionId(subscriptionid));
   }, [subscriptionid]);
 
@@ -164,23 +174,33 @@ const SubscriptionDetails = () => {
     setRole(event.target.value);
   };
 
+
+
+   useEffect(() => {
+      if (subscriptionList && subscriptionList.length > 0) {
+        const producersIds = subscriptionList.map((item) => item.producersid);
+        dispatch(getByUserId(producersIds));
+      }
+    }, [subscriptionList]);
+    
+
     const [createsubscription, setCreateSubscription]=useState(
       {      
-        producersid: 1,
-          producersname: subscriptionbyId.producersname,
-          subscriptionplan: subscriptionbyId.subscriptionplan,
-          fromdate: subscriptionbyId.fromdate,
-          todate: subscriptionbyId.todate,
-          paymentmethod: subscriptionbyId.paymentmethod,
-          status:subscriptionbyId.status,
-          amountpaid: subscriptionbyId.amountpaid,
-          dateofamountpaid: subscriptionbyId.dateofamountpaid,
+        producersid: "",
+          producersname:"",
+          subscriptionplan: "",
+          fromdate: '',
+          todate:"",
+          paymentmethod: "",
+          status:"",
+          amountpaid: "",
+          dateofamountpaid: "",
       }
     )
 
       const [updateSubscription, setUpdateSubscription]=useState(
         {      
-          producersid: 1,
+          producersid: subscriptionbyId.producersid,
           producersname: subscriptionbyId.producersname,
           subscriptionplan: subscriptionbyId.subscriptionplan,
           fromdate: subscriptionbyId.fromdate,
@@ -191,6 +211,7 @@ const SubscriptionDetails = () => {
           dateofamountpaid: subscriptionbyId.dateofamountpaid,
         }
       )
+
 
 const handleCreateSubscription=()=>{
     dispatch(addSubscription(createsubscription));
@@ -303,7 +324,7 @@ const handleCreateSubscription=()=>{
                             Styles.SubscriptionDetailsInformationDetailsCardTextdata
                           }
                         >
-                          {subscriptionbyId.producersname}
+                        {userById.firstname} {userById.lastname}
                         </p>
                       </div>
                       <div
@@ -473,14 +494,23 @@ const handleCreateSubscription=()=>{
                   <p className={Styles.SubscriptionDetailsInputCartText}>Producer</p>
 
                   
-                  <select  class="SearchSelectFilterInput"
-                     value={createsubscription.producersname}
-                     onChange={(e)=> setCreateSubscription({...createsubscription, producersname:e.target.value})}
+                    <select
+                        className="SearchSelectFilter"
+                        value={createsubscription.producersname}
+                        onChange={(e)=> setCreateSubscription({...createsubscription, producersid:e.target.value })}
+
                       >
-                      <option value="None">None</option>
-                      <option value="Stew">Stew</option>
-                      <option value="Robbin">Robbin</option>
-                    </select>
+                        <option value="None">None</option>
+                        {Array.isArray(userList) && userList.length > 0 ? (
+                          userList.map((user) => (
+                            <option key={user.userid} value={user.userid}>
+                               {user.firstname} {user.lastname}
+                            </option>
+                          ))
+                        ) : (
+                          <option disabled>No Producers Available</option>
+                        )}
+                      </select>
                   {/* {error?.username && (
               <span className={Styles.registerErrormsg}>{error?.username}</span>
             )} */}
@@ -656,14 +686,15 @@ const handleCreateSubscription=()=>{
                   <p className={Styles.SubscriptionDetailsInputCartText}>Producer</p>
 
                 
-                  <select  class="SearchSelectFilterInput"
-                        defaultValue={subscriptionbyId.producersname}
-                        onChange={(e)=> setUpdateSubscription({...updateSubscription, producersname: e.target.value})}
-                      >
-                      <option value="None">None</option>
-                      <option value="Stew">Stew</option>
-                      <option value="Robbin">Robbin</option>
-                    </select>
+                   <select
+                          className="SearchSelectFilter"
+                          value={`${userById?.firstname ?? ''} ${userById?.lastname ?? ''}`}
+                          onChange={() => {}}
+                        >
+                          <option disabled value={`${userById?.firstname ?? ''} ${userById?.lastname ?? ''}`}>
+                            {userById ? `${userById.firstname} ${userById.lastname}` : "No Producer Selected"}
+                          </option>
+                        </select>
                   {/* {error?.username && (
               <span className={Styles.registerErrormsg}>{error?.username}</span>
             )} */}
@@ -673,8 +704,8 @@ const handleCreateSubscription=()=>{
 
 
                   <select  class="SearchSelectFilterInput"
-                        defaultValue={subscriptionbyId.producersname}
-                        onChange={(e)=> setUpdateSubscription({...updateSubscription, producersname: e.target.value})}
+                        value={subscriptionbyId.subscriptionplan}
+                        onChange={(e)=> setUpdateSubscription({...updateSubscription, subscriptionplan: e.target.value})}
                       >
                       <option value="None">None</option>
                       <option value="Trial">Trial</option>
@@ -695,7 +726,7 @@ const handleCreateSubscription=()=>{
                     className={Styles.LoginPageInputContainerInput}
                     inputProps={{ maxLength: 50 }} // Increased max length for multiline
                     name="firstname"
-                    defaultValue={subscriptionbyId.fromdate}
+                    value={subscriptionbyId.fromdate}
                     onChange={(e)=> setUpdateSubscription({...updateSubscription, fromdate: e.target.value})}
 
                   />
@@ -709,7 +740,7 @@ const handleCreateSubscription=()=>{
                     className={Styles.LoginPageInputContainerInput}
                     inputProps={{ maxLength: 50 }}
                     name="firstname"
-                    defaultValue={subscriptionbyId.todate}
+                    value={subscriptionbyId.todate}
                     onChange={(e)=> setUpdateSubscription({...updateSubscription, todate: e.target.value})}
                   />
                   {/* {error?.username && (
@@ -722,7 +753,7 @@ const handleCreateSubscription=()=>{
                   <p className={Styles.SubscriptionDetailsInputCartText}>Payment Method</p>
 
                   <select  class="SearchSelectFilterInput"
-                        defaultValue={subscriptionbyId.paymentmethod}
+                        value={subscriptionbyId.paymentmethod}
                         onChange={(e)=> setUpdateSubscription({...updateSubscription, paymentmethod: e.target.value})}
                       >
                       <option value="None">None</option>
@@ -738,7 +769,7 @@ const handleCreateSubscription=()=>{
 
                  
                   <select  class="SearchSelectFilterInput"
-                    defaultValue={subscriptionbyId.status}
+                    value={subscriptionbyId.status}
                     onChange={(e)=> setUpdateSubscription({...updateSubscription, status: e.target.value})}
                       >
                       <option value="None">None</option>
@@ -761,7 +792,7 @@ const handleCreateSubscription=()=>{
                     className={Styles.LoginPageInputContainerInput}
                     inputProps={{ maxLength: 50 }}
                     name="firstname"
-                    defaultValue={subscriptionbyId.amountpaid}
+                    value={subscriptionbyId.amountpaid}
 
                     onChange={(e)=> setUpdateSubscription({...updateSubscription, amountpaid: e.target.value})}
                   />
@@ -778,7 +809,7 @@ const handleCreateSubscription=()=>{
                     className={Styles.LoginPageInputContainerInput}
                     inputProps={{ maxLength: 20 }}
                     name="firstname"
-                    defaultValue={subscriptionbyId.dateofamountpaid}
+                    value={subscriptionbyId.dateofamountpaid}
 
                     onChange={(e)=> setUpdateSubscription({...updateSubscription, dateofamountpaid: e.target.value})}
                   />

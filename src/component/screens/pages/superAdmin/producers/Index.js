@@ -135,6 +135,7 @@ const Producers = () => {
 
   const editUsersSuccessfull = useSelector((state) => state.users.editUsersSuccessfull);
 
+  const deleteProducer = useSelector((state) => state.users.deleteUserIdSuccessfull);
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -152,6 +153,18 @@ const [updateId,setUpdateId]=useState();
   const handleStatusChange = (event) => {
     setSelectedStatus(event.target.value);
   };
+
+
+  const [deleteConfimationModelOpen, setDeleteConfimationModelOpen] = useState(false);
+  const handlesetDeleteConfimationModelOpen = (id) => 
+    {
+      setUpdateId(id)
+      setDeleteConfimationModelOpen(true);
+      dispatch(getByUserId(id));
+    }
+  const handlesetDeleteConfimationModelClose = () => setDeleteConfimationModelOpen(false);
+
+  
 
   const [allData, setAllData] = useState([]);
 
@@ -192,16 +205,36 @@ const [updateId,setUpdateId]=useState();
   }
   )
 
-  console.log(producerUser,"producerUser")
+  console.log(producerUser,"producerUser") 
+  
+  // const handleGetByID = async (id) => {
+  //   try {
+  //     setUpdateId(id);
+  //     const response = await dispatch(getByUserId(id)); 
+  
+  //     // You can also check response.meta.requestStatus === 'fulfilled'
+  //     if (response?.payload) {
+  //       setUpdateProducerUser(response.payload); 
+  //       setOpenEdit(true); // Open modal only on success
+  //     } else {
+  //       throw new Error("No data received");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching user data:", error);
+  //     toast.error("Failed to load user data");
+  //   }
+  // };
   
   const handleGetByID = async (id) => {
-    try {
-      setUpdateId(id);
-      const response = await dispatch(getByUserId(id)); // Ensure data is fetched
+    setOpenEdit(false); // Close modal first (optional)
+    setUpdateProducerUser({}); // Clear previous data
+    setUpdateId(id); // Set new ID
   
+    try {
+      const response = await dispatch(getByUserId(id));
       if (response?.payload) {
-        setUpdateProducerUser(response.payload); // Set fetched data in form state
-        setOpenEdit(true);
+        setUpdateProducerUser(response.payload);
+        setOpenEdit(true); // Open modal only on success
       } else {
         throw new Error("No data received");
       }
@@ -211,12 +244,18 @@ const [updateId,setUpdateId]=useState();
     }
   };
   
+  
+  
   // Close the edit modal and reset the form
+  // const handleCloseEdit = () => {
+  //   setOpenEdit(false);
+  //   setUpdateProducerUser({});
+  // };
   const handleCloseEdit = () => {
     setOpenEdit(false);
+    setUpdateId(null);
     setUpdateProducerUser({});
   };
-  
   // Sync updateProducerUser state when userById updates
   useEffect(() => {
     if (userById) {
@@ -238,19 +277,12 @@ const [updateId,setUpdateId]=useState();
     }
   }, [userById]);
   
-  
-
-    
-
-
     // const handleCloseEdit = (id) => {
     //   dispatch(getByUserId(id))
     //   setOpenEdit(false);
     // }
 
     
-    
-   
     useEffect(() => {
       if (userList) {
         const mappedData = userList.map((item, index) => ({
@@ -273,7 +305,7 @@ const [updateId,setUpdateId]=useState();
               </Link>
               <DeleteOutlineOutlinedIcon
                 className="TableActionDeleteIcon"
-                onClick={() => handleDeleteEdit(item.userid)}
+                onClick={() => handlesetDeleteConfimationModelOpen(item.userid)}
               />
             </div>
           ),
@@ -299,17 +331,18 @@ const [updateId,setUpdateId]=useState();
           }
     }
     
-    const handleDeleteEdit = async (id) => {
-      dispatch(deleteUser(id))
-          setOpenEdit(false);
-          if (editUsersSuccessfull !== "" || editUsersSuccessfull !== undefined || editUsersSuccessfull !== null){
-            setTimeout(() => {
-            dispatch(getAllUsers());
-            toast.success("Producer delete successfully")
-          }, 300);
+    const handleDeleteEdit = async () => {
+      
+      dispatch(deleteUser(updateId))
+     
+          if(deleteProducer.message === "Error deleting user"){
+            toast.error("You can't remove the producers until you've deleted their projects.")
           }else{
-            toast.error("Something Error While delete the Producer")
+            toast.success("Producer delete successfully")
+            dispatch(getAllUsers());
+            setDeleteConfimationModelOpen(false);
           }
+       
     };
     
   const tableHead = [
@@ -443,6 +476,52 @@ const [updateId,setUpdateId]=useState();
     ));
   };
 
+  const handleExportCSV = () => {
+    if (!userList || userList.length === 0) {
+      toast.warn("No users to export");
+      return;
+    }
+  
+    // Step 1: Collect all unique keys from userList
+    const allKeys = Array.from(
+      new Set(userList.flatMap(user => Object.keys(user)))
+    );
+  
+    // Step 2: Create CSV header row
+    const headers = allKeys;
+  
+    // Step 3: Create CSV data rows
+    const rows = userList.map(user =>
+      allKeys.map(key => {
+        const value = user[key];
+        // Convert objects or arrays to JSON string
+        if (typeof value === "object" && value !== null) {
+          return `"${JSON.stringify(value)}"`;
+        }
+        return `"${value !== undefined ? value : ""}"`;
+      })
+    );
+  
+    // Step 4: Combine header and rows
+    const csvContent = [headers, ...rows]
+      .map(row => row.join(","))
+      .join("\n");
+  
+    // Step 5: Trigger download
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+  
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", "producersList.csv");
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+  
+  
+
   return (
     <div className={Styles.ProducersMainContainer}>
       <SuperAdminHeaderPage />
@@ -457,9 +536,13 @@ const [updateId,setUpdateId]=useState();
             Producers
           </p>
           <div className={Styles.ProducersPageNavButtonContainer}>
-            <button className={Styles.ProducersPageNavExportButton}>
-              Export
-            </button>
+          <button
+            className={Styles.ProducersPageNavExportButton}
+            onClick={handleExportCSV}
+          >
+            Export
+          </button>
+
             <button
               className={Styles.ProducersPageNavAddProducersButton}
               onClick={() => handleOpen()}
@@ -778,7 +861,7 @@ const [updateId,setUpdateId]=useState();
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50 }}
-                      defaultValue={userById.username}
+                      value={updateProducerUser.username || ""}
                       name="firstname"
                       onChange={(e) => setUpdateProducerUser({ ...updateProducerUser, username: e.target.value })}
                     />
@@ -795,7 +878,7 @@ const [updateId,setUpdateId]=useState();
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50 }}
-                      defaultValue={userById.password}
+                      value={updateProducerUser.password || ""}
                       name="lastname"
                       onChange={(e) => setUpdateProducerUser({ ...updateProducerUser, password: e.target.value })}                    />
                     {/* {error?.username && (
@@ -817,7 +900,7 @@ const [updateId,setUpdateId]=useState();
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50 }}
-                      defaultValue={userById.firstname}
+                      value={updateProducerUser.firstname || ""}
                       name="firstname"
                       onChange={(e) => setUpdateProducerUser({ ...updateProducerUser, firstname: e.target.value })}
                       />
@@ -834,7 +917,7 @@ const [updateId,setUpdateId]=useState();
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50 }}
-                      defaultValue={userById.lastname}
+                      value={updateProducerUser.lastname || ""}
                       name="firstname"
                       onChange={(e) => setUpdateProducerUser({ ...updateProducerUser, lastname: e.target.value })}                    />
                     {/* {error?.username && (
@@ -851,7 +934,7 @@ const [updateId,setUpdateId]=useState();
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50 }}
-                      defaultValue={userById.phone}
+                      value={updateProducerUser.phone || ""}
                       name="phone"
                       onChange={(e) => setUpdateProducerUser({ ...updateProducerUser, phone: e.target.value })}
                     />
@@ -871,7 +954,7 @@ const [updateId,setUpdateId]=useState();
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50 }}
                       name="legalentity"
-                      defaultValue={userById.legalentity}
+                      value={updateProducerUser.legalentity || ""}
                       onChange={(e) => setUpdateProducerUser({ ...updateProducerUser, legalentity: e.target.value })}
                     />
                     {/* {error?.username && (
@@ -886,7 +969,7 @@ const [updateId,setUpdateId]=useState();
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50 }}
                       name="street"
-                      defaultValue={userById.street}
+                      value={updateProducerUser.street || ""}
                       onChange={(e) => setUpdateProducerUser({ ...updateProducerUser, street: e.target.value })}
                     />
                     {/* {error?.username && (
@@ -904,7 +987,7 @@ const [updateId,setUpdateId]=useState();
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50 }}
                       name="city"
-                      defaultValue={userById.city }
+                      value={updateProducerUser.city || ""}
                       onChange={(e) => setUpdateProducerUser({ ...updateProducerUser, city: e.target.value })}
                     />
                     {/* {error?.username && (
@@ -919,7 +1002,7 @@ const [updateId,setUpdateId]=useState();
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50 }}
                       name="firstname"
-                      defaultValue={userById.state}
+                      value={updateProducerUser.state || ""}
                       onChange={(e) => setUpdateProducerUser({ ...updateProducerUser, state: e.target.value })}
                     />
                     {/* {error?.username && (
@@ -938,7 +1021,7 @@ const [updateId,setUpdateId]=useState();
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50 }}
                       name="zipcode"
-                      defaultValue={userById.zipcode }
+                      value={updateProducerUser.zipcode || ""}
                       onChange={(e) => setUpdateProducerUser({ ...updateProducerUser, zipcode: e.target.value })}
                     />
                     {/* {error?.username && (
@@ -949,7 +1032,7 @@ const [updateId,setUpdateId]=useState();
                     <p className={Styles.ProducersPageInputCartText}>Status</p>
                    
                     <select  class="SearchSelectFilterInput"
-                     defaultValue={userById?.status}
+                    value={updateProducerUser.status || ""}
                      key={userById.status}
                        onChange={(e) => setUpdateProducerUser({ ...updateProducerUser, status: e.target.value })}
                       >
@@ -973,6 +1056,46 @@ const [updateId,setUpdateId]=useState();
                 onClick={() => handleUpdateProducer()}
               >
                 Save
+              </button>
+            </div>
+          </div>
+          
+        </Box>
+      </Modal>
+
+      <Modal
+        open={deleteConfimationModelOpen}
+        onClose={handlesetDeleteConfimationModelClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box class="modal">
+        
+          <div className={Styles.ProducersPageModelPopupContainer}>
+            <div className="ModelPopupHeader">
+              <p className="ModelPopupHeaderText">Delete Producers</p>
+              <CloseOutlinedIcon
+                onClick={() => handlesetDeleteConfimationModelClose()}
+                className="ModelPopupHeaderIcon"
+              />
+            </div>
+            <div className="ModelPopupbody">
+            <p className={Styles.ProducersPageModelPopupContainerDeteleText}>
+              Do you really want to remove the producer : <span className={Styles.ProducersPageModelPopupContainerDeteleTextProducerName}>{updateProducerUser.firstname} {updateProducerUser.lastname}</span> 
+              </p>
+            </div>
+            <div className="ModelPopupfooter">
+              <button
+                className={Styles.ProducersPageCancelButton}
+                onClick={() => handlesetDeleteConfimationModelClose()}
+              >
+                No !
+              </button>
+              <button
+                className={Styles.ProducersPageSubmitButton}
+                onClick={() => handleDeleteEdit()}
+              >
+                Yes !
               </button>
             </div>
           </div>

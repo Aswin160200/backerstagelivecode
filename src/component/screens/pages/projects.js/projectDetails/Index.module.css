@@ -81,6 +81,7 @@
   font-family: var(--defaultFontFamily);
   font-size: var(--font-size_18);
   font-weight: var(--font-weight_500);
+  color: var(--darkBlue)
 }
 .ProjectDetailsNavCartHeaderContentButton {
   padding: 0.5rem 1.5rem;
@@ -404,6 +405,7 @@
 }
 .ProjectDetailsPAtiesAndNotesIcon{
     cursor: pointer;
+    fill: var(--darkColor);
 }
 .ProjectDetailsPartiesContainer{
     display: flex;
@@ -498,6 +500,7 @@
   right: 10px;
   position: absolute;
   top: 10px;
+  color: var(--darkBlue);
 }
 
 .CreateProjetsTitle{

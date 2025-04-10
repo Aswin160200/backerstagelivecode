@@ -124,7 +124,6 @@ function* getProjectByProducerId({ payload: id }) {
 }
 
 function* createPartysProject({ payload: createPartysProject }) {
-
   try {
     const response = yield call(
       Service.commonFetch,
@@ -138,9 +137,14 @@ function* createPartysProject({ payload: createPartysProject }) {
   } catch (error) {}
 }
 
-function* getallPartysProject() {
+function* getallPartysProject({ payload: id }) {
   try {
-    const response = yield call(Service.commonFetch, "/partysprojects", "GET", null);
+    const response = yield call(
+      Service.commonFetch,
+      `/partysprojects/project/${id}`,
+      "GET",
+      null
+    );
     yield put(getAllPartysProjectResponse(response));
     console.log(response);
   } catch (error) {}
@@ -161,7 +165,6 @@ function* getPartysProjectByID({ payload: id }) {
     console.error("Update project failed:", error);
   }
 }
-
 
 function* projects() {
   yield takeEvery(PROJECTS, getallProjects);

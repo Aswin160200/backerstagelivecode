@@ -7,6 +7,7 @@ import login from "./Login/Reducers";
 import subscription from "./subscription/Reducers";
 import distributions from "./distributions/Reducers";
 import projectCost from "./projectCost/Reducers";
+import notes from "./notes/Reducers";
 
 const reducers = combineReducers({
     projects,
@@ -17,6 +18,7 @@ const reducers = combineReducers({
     subscription,
     distributions,
     projectCost,
+    notes,
 
 });
 export default reducers;

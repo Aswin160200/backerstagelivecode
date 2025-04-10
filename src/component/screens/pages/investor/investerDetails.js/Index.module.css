@@ -142,6 +142,7 @@
 }
 .InvestorDetailsPAtiesAndNotesIcon {
   cursor: pointer;
+  fill:var(--darkColor);
 }
 .InvestorDetailsPartiesContainer {
   display: flex;

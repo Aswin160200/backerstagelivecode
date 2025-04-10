@@ -406,6 +406,34 @@ const CoProducers = () => {
     ));
   };
 
+  const exportRawCoProducersToCSV = () => {
+    if (!coProducers?.data || coProducers.data.length === 0) {
+      toast.warning("No CoProducers data available to export.");
+      return;
+    }
+  
+    const rawData = coProducers.data;
+    const header = Object.keys(rawData[0]).filter(key => typeof rawData[0][key] !== "object");
+  
+    const replacer = (key, value) => (value === null || value === undefined ? "" : value);
+    const csv = [
+      header.join(","),
+      ...rawData.map(row =>
+        header.map(field => JSON.stringify(row[field], replacer)).join(",")
+      ),
+    ].join("\r\n");
+  
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.setAttribute("download", "CoProducers_FullData.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+  
+
+  
   return (
    <div className={Styles.CoProducersPageMainContainer}>
       <HeaderPage />
@@ -420,9 +448,13 @@ const CoProducers = () => {
             <p className={Styles.CoProducersPagenavCartText}>CoProducers</p>
           </div>
           <div className={Styles.CreateCoProducersButtonContent}>
-            <button className={Styles.CreateCoProducersButtonContentExportButton}>
-              Export
-            </button>
+          <button
+            className={Styles.CreateCoProducersButtonContentExportButton}
+            onClick={exportRawCoProducersToCSV}
+          >
+            Export
+          </button>
+
             <button
               className={Styles.ViewCoProducersPageNavContainerButton}
               onClick={handleOpen}

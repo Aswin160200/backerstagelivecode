@@ -71,21 +71,40 @@ function* addUsers({payload : addUsers}) {
     }
   }
 
-  function* deleteUser({payload : deleteUser}) {
+  // function* deleteUser({payload : deleteUser}) {
+  //   console.log(deleteUser)
+  //   try {
+  //     const response = yield call(
+  //       Service.commonFetch,
+  //       `/users/user?userid=${deleteUser}`,
+  //       "DELETE",
+  //       null
+  //     );
+  //     yield put(deleteUserResponse(response));
+  //     console.log(response)
+  
+  //   } catch (error) {
+  
+  //   }
+  // }
+  function* deleteUser({ payload }) {
     try {
       const response = yield call(
         Service.commonFetch,
-        `/users/user?userid=${deleteUser}`,
+        `/users/user?userid=${payload}`,
         "DELETE",
-        null
+        null 
       );
+  
       yield put(deleteUserResponse(response));
-      console.log(response)
+      console.log("Delete response:", response);
   
     } catch (error) {
-  
+      console.error("Delete user error:", error);
     }
   }
+  
+  
 
 function* users() {
   yield takeEvery(USERS, getallUsers);

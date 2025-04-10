@@ -324,7 +324,7 @@ const MasterAdminDetails = () => {
                             Styles.MasterAdminDetailsInformationDetailsCardTextdata
                           }
                         >
-                          {userById?.email}
+                          {userById?.username}
                         </p>
                       </div>
                     </div>
