@@ -599,7 +599,7 @@ console.log(fetchedUsers,"fetchedUsers")
                    
                     <select
                         className="SearchSelectFilter"
-                        value={createsubscription.producersname}
+                        defaultValue={createsubscription.producersname}
                         onChange={(e)=> setCreateSubscription({...createsubscription, producersid:e.target.value })}
 
                       >
