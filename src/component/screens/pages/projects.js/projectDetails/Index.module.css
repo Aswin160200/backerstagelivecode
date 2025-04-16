@@ -577,3 +577,23 @@
   letter-spacing: 0.3px;
   text-align: center;
 }
+.PartisProjectPageModelPopupContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.PartisProjectPageModelPopupContainerDeteleText{
+  color: var(--darkColor);
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_16);
+  font-weight: var(--font-weight_400);
+  letter-spacing: 0.3px;
+}
+.PartisProjectPageModelPopupContainerDeteleTextProducerName{
+color: var(--redColor);
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_16);
+  font-weight: var(--font-weight_600);
+  letter-spacing: 0.3px;
+}

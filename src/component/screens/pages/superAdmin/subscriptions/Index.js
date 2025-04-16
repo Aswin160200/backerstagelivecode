@@ -180,7 +180,7 @@ const Subscriptions = () => {
   const [fetchedUsers, setFetchedUsers] = useState([]);
   const [userMap, setUserMap] = useState({});
 
-
+console.log(fetchedUsers,"fetchedUsers")
   // get all subscriptions
   useEffect(() => {
     dispatch(getAllSubscription());
@@ -194,19 +194,28 @@ const Subscriptions = () => {
           ...new Set(subscriptionList.map((item) => item.producersid)),
         ];
   
+        console.log("Unique Producer IDs:", uniqueProducerIds);
+  
         const users = [];
   
-        // Wait for all user fetch promises in parallel
-        const userFetches = await Promise.all(
-          uniqueProducerIds.map((id) => dispatch(getByUserId(id)))
+        const fetches = await Promise.all(
+          uniqueProducerIds.map(async (id) => {
+            try {
+              const res = await dispatch(getByUserId(id));
+              console.log(`Fetched user for ID ${id}:`, res);
+  
+              if (res?.payload) {
+                users.push(res.payload);
+              } else {
+                console.warn(`No payload for ID ${id}`);
+              }
+            } catch (err) {
+              console.error(`Error fetching user for ID ${id}:`, err);
+            }
+          })
         );
   
-        userFetches.forEach((res) => {
-          if (res?.payload) {
-            users.push(res.payload);
-          }
-        });
-  
+        console.log("Final Users Array:", users);
         setFetchedUsers(users);
       }
     };
@@ -293,9 +302,11 @@ const Subscriptions = () => {
       setTimeout(() => {
       dispatch(getAllSubscription());
       toast.success("subscription delete successfully")
+      setDeleteConfimationModelOpen(false);
     }, 300);
     }else{
       toast.error("Something Error While deleting Subscription")
+      setDeleteConfimationModelOpen(false);
     }
   }
 
@@ -385,14 +396,23 @@ const Subscriptions = () => {
   //   }
   // }, [subscriptionList, userById]);
   
+ 
+  
   useEffect(() => {
     if (subscriptionList && fetchedUsers.length > 0) {
+      const userMap = {};
+      fetchedUsers.forEach(user => {
+        userMap[String(user.userid)] = user;
+      });
+  
       const mappedData = subscriptionList.map((item, index) => {
-      
+        const matchedUser = userMap[String(item.producersid)];
   
         return {
           no: index + 1,
-          name: `${fetchedUsers.firstname} ${fetchedUsers.lastname}`,
+          name: matchedUser
+            ? `${matchedUser.firstname} ${matchedUser.lastname}`
+            : "N/A",
           subscriptionPlan: item.subscriptionplan,
           from: item.fromdate,
           to: item.todate,
@@ -404,12 +424,17 @@ const Subscriptions = () => {
                 className="TableActionEditIcon"
                 onClick={() => handleOpenEdit(item.subscriptionid)}
               />
-              <Link to={`/subscription_details/${item.subscriptionid}`} className="Link">
+              <Link
+                to={`/subscription_details/${item.subscriptionid}`}
+                className="Link"
+              >
                 <RemoveRedEyeOutlinedIcon className="TableActionViewIcon" />
               </Link>
               <DeleteOutlineOutlinedIcon
                 className="TableActionDeleteIcon"
-                onClick={() => handlesetDeleteConfimationModelOpen(item.subscriptionid)}
+                onClick={() =>
+                  handlesetDeleteConfimationModelOpen(item.subscriptionid)
+                }
               />
             </div>
           ),
@@ -420,6 +445,8 @@ const Subscriptions = () => {
       setCollection(cloneDeep(mappedData.slice(0, countPerPage)));
     }
   }, [subscriptionList, fetchedUsers]);
+  
+  
   
   const searchData = useRef(
     throttle((val) => {
@@ -934,7 +961,7 @@ const Subscriptions = () => {
               
                 <div className={Styles.ProducersPageModelPopupContainer}>
                   <div className="ModelPopupHeader">
-                    <p className="ModelPopupHeaderText">Delete Producers</p>
+                    <p className="ModelPopupHeaderText">Delete Subscription</p>
                     <CloseOutlinedIcon
                       onClick={() => handlesetDeleteConfimationModelClose()}
                       className="ModelPopupHeaderIcon"

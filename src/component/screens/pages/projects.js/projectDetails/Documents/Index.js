@@ -323,18 +323,20 @@ const DcoumentsPage = () => {
               <span className={Styles.registerErrormsg}>{error?.username}</span>
             )} */}
                     <p className="InputCartText">Document Category</p>
-
-                    <SelectStyled
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={role}
-                      onChange={handleChangeRole}
-                    >
-                      <MenuItem value={10}>-None-</MenuItem>
-                      <MenuItem value={20}>Agreements</MenuItem>
-                      <MenuItem value={30}>Completed Documents</MenuItem>
-                      <MenuItem value={40}>Financials</MenuItem>
-                    </SelectStyled>
+                    
+                    <select
+                        className="SearchSelectFilter"
+                        // value={addPartysProject.investorid || "None"}
+                        // onChange={(e) =>
+                        //   setAddPartysProject({ ...addPartysProject, investorid: e.target.value })
+                        // }
+                      >
+                        <option value="None">-None-</option>
+                        <option value="Agreements">Agreements</option>
+                        <option value="Completed Documents">Completed Documents</option>
+                        <option value="Financials">Financials</option>
+                       
+                      </select>
 
                     <p className={Styles.CreateProjectsInputCartText}>
                       Upload OA & Subscription Documents as one file

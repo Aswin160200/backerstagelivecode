@@ -394,6 +394,17 @@ useEffect(() => {
             setOpenEdit(false)
       }
 
+
+
+      const [deleteConfimationModelOpenPartysProject, setDeleteConfimationModelOpenPartysProject] = useState(false);
+          const handlesetDeleteConfimationModelOpenPartysProject = (id) => 
+            {
+              // setUpdateID(id)
+              setDeleteConfimationModelOpenPartysProject(true);
+             
+            }
+          const handlesetDeleteConfimationModelClosePartysProject = () => setDeleteConfimationModelOpenPartysProject(false);
+        
     
 //   View Investor Docuents end
   const [allData, setAllData] = useState([]);
@@ -537,7 +548,7 @@ useEffect(() => {
             <div className="TableActionContainer">
               <EditOutlinedIcon className="TableActionEditIcon" onClick={()=> handleEditOpenPartisProject(item.partysprojectid)}/>
               <RemoveRedEyeOutlinedIcon className="TableActionViewIcon" onClick={()=> handleViewOpenPartisProject(item.partysprojectid)}/>
-              <DeleteOutlineOutlinedIcon className="TableActionDeleteIcon" />
+              <DeleteOutlineOutlinedIcon className="TableActionDeleteIcon" onClick={()=> handlesetDeleteConfimationModelOpenPartysProject(item.partysprojectid)}/>
             </div>
           ),
           investorsDoc: (
@@ -1193,28 +1204,7 @@ useEffect(() => {
                     <p className={Styles.CreateProjetsdetailsAddPartysInputCartText}>
                       Investor
                     </p>
-                      {/* <SelectStyled
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={addPartysProject.investorid}
-                    onChange={(e)=> setAddPartysProject({...addPartysProject, investorid:e.target.value})}
-                    slotProps={{
-                      input: {
-                        endAdornment: <InputAdornment position="start"><SearchIcon/></InputAdornment>,
-                      },
-                    }}
-                  >
-                     <MenuItem value="-None-">-None-</MenuItem>
-                     {Array.isArray(investorsByProjectId?.data) && investorsByProjectId?.data.length > 0 ? (
-                        investorsByProjectId?.data.map((investor) => (
-                          <MenuItem key={investor.investorid} value={investor.investorid}>
-                            {investor.firstname} {investor.lastname}
-                          </MenuItem>
-                        ))
-                      ) : (
-                        <MenuItem disabled>No Investors Available</MenuItem>
-                      )}
-                  </SelectStyled> */}
+                    
 
                       <select
                         className="SearchSelectFilter"
@@ -1259,17 +1249,7 @@ useEffect(() => {
                     Status
                     </p>
 
-                    {/* <SelectStyled
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={addPartysProject.status}
-                    onChange={(e)=> setAddPartysProject({...addPartysProject, status:e.target.value})}
-                  >
-                     <MenuItem value="-None-">-None-</MenuItem>
-                    <MenuItem value="Interested">Interested</MenuItem>
-                    <MenuItem value="Investing In Project">Investing In Project</MenuItem>
-                    <MenuItem value="Passing On Project">Passing On Project</MenuItem>
-                  </SelectStyled> */}
+                    
                   <select  class="SearchSelectFilter"
                   value={addPartysProject.status}
                   onChange={(e)=> setAddPartysProject({...addPartysProject, status:e.target.value})}>
@@ -1335,30 +1315,7 @@ useEffect(() => {
                       Project
                     </p>
 
-                    {/* <SelectStyled
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={addPartysProject.investoridprojectid}
-                    onChange={(e)=> setAddPartysProject({...addPartysProject, projectid:e.target.value})}
-                    slotProps={{
-                      input: {
-                        endAdornment: <InputAdornment position="start"><SearchIcon/></InputAdornment>,
-                      },
-                    }}
-                  >
-                     <MenuItem value="-None-">-None-</MenuItem>
-                     {Array.isArray(projectList?.data) && projectList?.data.length > 0 ? (
-                        projectList?.data.map((project) => (
-                          <MenuItem key={project.projectid} value={project.projectid}>
-                            {project.projectname}
-                          </MenuItem>
-                        ))
-                      ) : (
-                        <MenuItem disabled>No Projects Available</MenuItem>
-                      )}
-                  </SelectStyled> */}
-
-                  <select
+                   <select
                         className="SearchSelectFilter"
                         value={addPartysProject.investoridprojectid}
                     onChange={(e)=> setAddPartysProject({...addPartysProject, projectid:e.target.value})}
@@ -1683,7 +1640,7 @@ useEffect(() => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50000 }}
-                      defaultValue= {getPartysProjectDataByID.data?.investorcommands}
+                      value= {getPartysProjectDataByID.data?.investorcommands}
                       name="lastname"
                       onChange={(e)=> setEditPartysProject({...editPartysProject, investorcommands:e.target.value})}
                       multiline
@@ -1778,7 +1735,7 @@ useEffect(() => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50 }}
-                      defaultValue= {getPartysProjectDataByID.data?.interestedamount}
+                      value= {getPartysProjectDataByID.data?.interestedamount}
                       name="lastname"
                       onChange={(e)=> setEditPartysProject({...editPartysProject, interestedamount:e.target.value})}
 
@@ -1794,7 +1751,7 @@ useEffect(() => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50 }}
-                      defaultValue= {getPartysProjectDataByID.data?.finalamount}
+                      value= {getPartysProjectDataByID.data?.finalamount}
                       name="firstname"
                       onChange={(e)=> setEditPartysProject({...editPartysProject, finalamount:e.target.value})}
                     />
@@ -1809,7 +1766,7 @@ useEffect(() => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50000 }}
-                      defaultValue= {getPartysProjectDataByID.data?.investorcommands}
+                      value= {getPartysProjectDataByID.data?.investorcommands}
                       name="lastname"
                       multiline
                       onChange={(e)=> setEditPartysProject({...editPartysProject, investorcommands:e.target.value})}
@@ -1827,7 +1784,7 @@ useEffect(() => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50 }}
-                      defaultValue= {getPartysProjectDataByID.data?.bonusandperks}
+                     value= {getPartysProjectDataByID.data?.bonusandperks}
                       name="lastname"
                       onChange={(e)=> setEditPartysProject({...editPartysProject, bonusandperks:e.target.value})}
                     />
@@ -2234,27 +2191,22 @@ useEffect(() => {
                     Project
                     </p>
 
-                    <SelectStyled
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    onChange={(e) => setAddDistribution({ ...addDistribution, projectname: e.target.value })}
-                    slotProps={{
-                      input: {
-                        endAdornment: <InputAdornment position="start"><SearchIcon/></InputAdornment>,
-                      },
-                    }}
-                  >
-                     <MenuItem value="-None-">-None-</MenuItem>
-                     {Array.isArray(projectList?.data) && projectList?.data.length > 0 ? (
-                        projectList?.data.map((project) => (
-                          <MenuItem key={project.projectid} value={project.projectname}>
-                            {project.projectname}
-                          </MenuItem>
-                        ))
-                      ) : (
-                        <MenuItem disabled>No Projects Available</MenuItem>
-                      )}
-                  </SelectStyled>
+                  
+                  <select
+                        className="SearchSelectFilter"
+                        onChange={(e) => setAddDistribution({ ...addDistribution, projectname: e.target.value })}
+                      >
+                        <option value="None">None</option>
+                        {Array.isArray(projectList?.data) && projectList.data.length > 0 ? (
+                          projectList.data.map((project) => (
+                            <option key={project.projectid} value={project.projectid}>
+                               {project.projectname}
+                            </option>
+                          ))
+                        ) : (
+                          <option disabled>No Projects Available</option>
+                        )}
+                      </select>
                     <p className="InputCartText">
                     Amount of Destribution
                     </p>
@@ -2366,18 +2318,17 @@ useEffect(() => {
                   <p className="InputCartText">
                     Status
                     </p>   
-                  <SelectStyled
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={addProjectCost.status}
+                  <select
+                        className="SearchSelectFilter"
+                        value={addProjectCost.status}
                     onChange={(e) => setAddProjectCost({ ...addProjectCost, status: e.target.value })}
 
-                  >
-                   <MenuItem value="None">-None-</MenuItem>
-                    <MenuItem value="Unreimbursed">Unreimbursed</MenuItem>
-                    <MenuItem value="Reimbursed">Reimbursed</MenuItem>
-                  </SelectStyled>
-
+                      >
+                        <option value="None">None</option>
+                        <option value="Unreimbursed">Unreimbursed</option>
+                        <option value="Reimbursed">Reimbursed</option>
+                       
+                      </select>
                 <p className="InputCartText">
                     Date of Reimbursement
                     </p>
@@ -2426,14 +2377,22 @@ useEffect(() => {
                   <p className="InputCartText">
                     Project
                   </p>
-                  <InputStyled
-                      id="outlined-basic"
-                      type="text"
-                      className={Styles.LoginPageInputContainerInput}
-                      inputProps={{ maxLength: 20 }}
-                      name="firstname"
-                      onChange={(e) => setAddProjectCost({ ...addProjectCost, projectname: e.target.value })}
-                    />
+                  
+                     <select
+                        className="SearchSelectFilter"
+                        onChange={(e) => setAddProjectCost({ ...addProjectCost, projectname: e.target.value })}
+                        >
+                        <option value="None">None</option>
+                        {Array.isArray(projectList?.data) && projectList.data.length > 0 ? (
+                          projectList.data.map((project) => (
+                            <option key={project.projectid} value={project.projectid}>
+                               {project.projectname}
+                            </option>
+                          ))
+                        ) : (
+                          <option disabled>No Projects Available</option>
+                        )}
+                      </select>
                 </div> 
               </div>
                
@@ -3209,6 +3168,46 @@ useEffect(() => {
               </div>
             </div>
           </Box>
+        </Modal>
+
+        <Modal
+                open={deleteConfimationModelOpenPartysProject}
+                onClose={handlesetDeleteConfimationModelClosePartysProject}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box class="modal">
+                
+                  <div className={Styles.PartisProjectPageModelPopupContainer}>
+                    <div className="ModelPopupHeader">
+                      <p className="ModelPopupHeaderText">Delete Party's Project</p>
+                      <CloseOutlinedIcon
+                        onClick={() => handlesetDeleteConfimationModelClosePartysProject()}
+                        className="ModelPopupHeaderIcon"
+                      />
+                    </div>
+                    <div className="ModelPopupbody">
+                    <p className={Styles.PartisProjectPageModelPopupContainerDeteleText}>
+                      Do you really want to remove this Party's Project 
+                      </p>
+                    </div>
+                    <div className="ModelPopupfooter">
+                      <button
+                        className="CancelButton"
+                        onClick={() => handlesetDeleteConfimationModelClosePartysProject()}
+                      >
+                        No !
+                      </button>
+                      <button
+                        className="SubmitButton"
+                        // onClick={() => handleDeleteEdit()}
+                      >
+                        Yes !
+                      </button>
+                    </div>
+                  </div>
+                  
+                </Box>
         </Modal>
     </div>
   );

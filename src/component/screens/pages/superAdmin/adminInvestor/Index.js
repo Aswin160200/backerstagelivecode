@@ -21,7 +21,7 @@ import { InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { FormControl } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllInvestors, getAllUsers, getInvestorById } from "../../../../redux/Action";
+import { getAllInvestors, getAllUsers, getInvestorById, getInvestorbyProducerId } from "../../../../redux/Action";
 
 const style = {
   position: "absolute",
@@ -135,6 +135,10 @@ const AdminInvestor = () => {
       (state) => state.investors.getInvestorsByIdDetails
     );
 
+    const investorByIdProducer = useSelector(
+      (state) => state.investors.getInvestorsProducersIdSuccessfull
+    );
+
     const userList = useSelector((state) => state.users.getAllUsersSuccessfull);
   
 
@@ -157,8 +161,8 @@ const AdminInvestor = () => {
   const [filterProducerInvestors, setFilterProducerInvestors]= useState();
 
   const handleChangeFilterProducerbyInvestors = (investorId) => {
-    // dispatch(getInvestorById(investorId));
-    alert(investorId);
+    dispatch(getInvestorbyProducerId(investorId));
+  
   };
   const [role, setRole] = useState(10);
 
@@ -225,8 +229,8 @@ const AdminInvestor = () => {
   }, []);
 
   useEffect(() => {
-    if (investorList?.data) {
-      const mappedData = investorList?.data.map((item, index) => ({
+    if (investorByIdProducer?.data) {
+      const mappedData = investorByIdProducer?.data.map((item, index) => ({
         S_no: index + 1,
         investor_Name: `${item.firstname} ${item.lastname}`,
         email: item.emailid,
@@ -249,7 +253,10 @@ const AdminInvestor = () => {
       setAllData(mappedData);
       setCollection(cloneDeep(mappedData.slice(0, countPerPage)));
     }
-  }, [investorList]);
+  }, [investorByIdProducer]);
+
+
+
   const searchData = useRef(
     throttle((val) => {
       const query = val.toLowerCase();
@@ -298,6 +305,69 @@ const AdminInvestor = () => {
     ));
   };
 
+  const exportToCSV = () => {
+    if (!investorByIdProducer?.data || investorByIdProducer.data.length === 0) {
+      alert("No data available to export.");
+      return;
+    }
+  
+    const headers = [
+      "S.no",
+      "First Name",
+      "Last Name",
+      "Email",
+      "Phone",
+      "Address",
+      "City",
+      "State",
+      "Zip Code",
+      "County",
+      "Accredited",
+      "Date Added",
+      "General Comments",
+      "Co-Producers Probability",
+      "Co-Producers Projects",
+      "Project Name",
+      "Status",
+      "Final Amount",
+      "Investment Method"
+    ];
+  
+    const rows = investorByIdProducer.data.map((item, index) => [
+      index + 1,
+      item.firstname,
+      item.lastname,
+      item.emailid,
+      item.mobilenumber,
+      item.addtess,
+      item.city,
+      item.state,
+      item.zipcode,
+      item.county,
+      item.accredited,
+      item.date_added,
+      item.general_comments,
+      item.CoProducers_probability,
+      item.CoProducers_projects,
+      item.projectname,
+      item.status,
+      item.final_amount,
+      item.invesment_method,
+    ]);
+  
+    const csvContent =
+      "data:text/csv;charset=utf-8," +
+      [headers.join(","), ...rows.map((e) => e.map(v => `"${v ?? ""}"`).join(","))].join("\n");
+  
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "all_investors_data.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+  
   return (
     <div className={Styles.AdminInvestorMainContainer}>
       <SuperAdminHeaderPage />
@@ -312,9 +382,13 @@ const AdminInvestor = () => {
             Investors
           </p>
           <div className={Styles.AdminInvestorPageNavButtonContainer}>
-            <button className={Styles.AdminInvestorPageNavExportButton}>
-              Export
-            </button>
+          <button
+            className={Styles.AdminInvestorPageNavExportButton}
+            onClick={exportToCSV}
+          >
+            Export
+          </button>
+
           </div>
         </div>
         <div className={Styles.AdminInvestorPageTitleCart}>
@@ -322,14 +396,13 @@ const AdminInvestor = () => {
             <span className={Styles.AdminInvestorPageTitleCartText}>Producer</span>
             <select  
               className="SearchSelectFilterInput"
-              defaultValue={investorById.data?.referralsource}
               onChange={(e) => handleChangeFilterProducerbyInvestors(e.target.value)} 
             >
               <option value="Show">none</option>
               {Array.isArray(userList) && userList.length > 0 ? (
-                userList.map((investor) => (
-                  <option key={investor.investorid} value={investor.investorid}>
-                    {investor.firstname} {investor.lastname}
+                userList.map((user) => (
+                  <option key={user.userid} value={user.userid}>
+                    {user.firstname} {user.lastname}
                   </option>
                 ))
               ) : (
@@ -337,9 +410,10 @@ const AdminInvestor = () => {
               )}
             </select>
 
+
           </p>
         </div>
-
+          {investorByIdProducer.status === 200 ?
         <div className={Styles.AdminInvestorPageTabsContainerTable}>
           <div className="TableFilter">
             <div class="Search">
@@ -386,7 +460,9 @@ const AdminInvestor = () => {
               total={allData.length}
             />
           </div>
-        </div>
+        </div>:<div className={Styles.AdminInvestorPageTabsContainerTablewithoutProducer}>
+                  <p className={Styles.AdminInvestorTableNoneText}>There are no investors for this producer.</p>
+        </div>}
       </div>
 
       <Modal
@@ -417,7 +493,7 @@ const AdminInvestor = () => {
                     <InputStyled
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
-                      defaultValue={investorById.data?.firstname}
+                      value={investorById.data?.firstname}
                       inputProps={{ maxLength: 20 }}
                       name="firstname"
                     />
@@ -432,7 +508,7 @@ const AdminInvestor = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 20 }}
-                      defaultValue={investorById.data?.lastname}
+                      value={investorById.data?.lastname}
                       name="lastname"
                     />
                     {/* {error?.username && (
@@ -448,7 +524,7 @@ const AdminInvestor = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 20 }}
-                      defaultValue={investorById.data?.emailid}
+                      value={investorById.data?.emailid}
                       name="emailid"
                     />
                     {/* {error?.username && (
@@ -462,7 +538,7 @@ const AdminInvestor = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 20 }}
-                      defaultValue={investorById.data?.mobilenumber}
+                      value={investorById.data?.mobilenumber}
                       name="mobilenumber"
                     />
                     {/* {error?.username && (
@@ -478,7 +554,7 @@ const AdminInvestor = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 20 }}
-                      defaultValue={investorById.data?.address}
+                      value={investorById.data?.address}
                       name="addtess"
                     />
                     {/* {error?.username && (
@@ -492,7 +568,7 @@ const AdminInvestor = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 20 }}
-                      defaultValue={investorById.data?.city}
+                      value={investorById.data?.city}
                       name="city"
                     />
                     {/* {error?.username && (
@@ -508,7 +584,7 @@ const AdminInvestor = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 20 }}
-                      defaultValue={investorById.data?.state}
+                      value={investorById.data?.state}
                       name="state"
                     />
                     {/* {error?.username && (
@@ -522,7 +598,7 @@ const AdminInvestor = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 20 }}
-                      defaultValue={investorById.data?.zipcode}
+                      value={investorById.data?.zipcode}
                       name="zipcode"
                     />
                     {/* {error?.username && (
@@ -564,7 +640,7 @@ const AdminInvestor = () => {
 
                     
                     <select  class="SearchSelectFilterInput"
-                     defaultValue={investorById.data?.referralsource}
+                     value={investorById.data?.referralsource}
                      onChange={handleChangeRole}
                       >
                       <option value="Show">Show</option>
@@ -584,7 +660,7 @@ const AdminInvestor = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 20 }}
-                      defaultValue={investorById.data?.dateadded}
+                      value={investorById.data?.dateadded}
                       name="dateadded"
                       type="date"
                     />
@@ -599,7 +675,7 @@ const AdminInvestor = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 20 }}
-                      defaultValue={investorById.data?.investorprobability}
+                      value={investorById.data?.investorprobability}
                       name="investorprobability"
                     />
                     {/* {error?.username && (
@@ -614,7 +690,7 @@ const AdminInvestor = () => {
                     className={Styles.LoginPageInputContainerInput}
                     inputProps={{ maxLength: 200 }}
                     name="generalcomments"
-                    defaultValue={investorById.data?.generalcomments}
+                    value={investorById.data?.generalcomments}
                     multiline
                     rows={4}
                   />

@@ -183,6 +183,17 @@ const CoProducers = () => {
             const handleStatusChange = (event) => {
               setSelectedStatus(event.target.value);
             };
+
+  const [deleteConfimationModelOpen, setDeleteConfimationModelOpen] = useState(false);
+      const handlesetDeleteConfimationModelOpen = (id) => 
+        {
+          setUpdateID(id)
+          setDeleteConfimationModelOpen(true);
+          dispatch(getByCoProducersId(id));
+        }
+      const handlesetDeleteConfimationModelClose = () => setDeleteConfimationModelOpen(false);
+    
+          
   const [createCoProducers, setCreateCoProducers] = useState({
     producersid:storedUser.userid,
     firstname: "",
@@ -254,7 +265,8 @@ const CoProducers = () => {
                 <Link to={`/co_producers_details/${response.co_producersid}`} className="Link">
                   <RemoveRedEyeOutlinedIcon className="TableActionViewIcon" />
                 </Link>
-                <DeleteOutlineOutlinedIcon className="TableActionDeleteIcon" />
+                <DeleteOutlineOutlinedIcon className="TableActionDeleteIcon" 
+              />
               </div>
             ),
           },
@@ -349,6 +361,7 @@ const CoProducers = () => {
               </Link>
               <DeleteOutlineOutlinedIcon
                 className="TableActionDeleteIcon"
+                onClick={()=> handlesetDeleteConfimationModelOpen(item.co_producersid)}
               />
             </div>
             ),
@@ -859,7 +872,7 @@ const CoProducers = () => {
                     id="outlined-basic"
                     className={Styles.LoginPageInputContainerInput}
                     inputProps={{ maxLength: 50 }}
-                    defaultValue={coProducersId.data?.firstname}
+                    value={coProducersId.data?.firstname}
                     name="firstname"
                     onChange={(e) =>
                       setUpdateCoProducers({
@@ -881,7 +894,7 @@ const CoProducers = () => {
                     id="outlined-basic"
                     className={Styles.LoginPageInputContainerInput}
                     inputProps={{ maxLength: 50 }}
-                    defaultValue={coProducersId.data?.lastname}
+                    value={coProducersId.data?.lastname}
                     name="lastname"
                     onChange={(e) =>
                       setUpdateCoProducers({
@@ -903,7 +916,7 @@ const CoProducers = () => {
                     id="outlined-basic"
                     className={Styles.LoginPageInputContainerInput}
                     inputProps={{ maxLength: 50 }}
-                    defaultValue={coProducersId.data?.emailid}
+                    value={coProducersId.data?.emailid}
                     name="emailid"
                     onChange={(e) =>
                       setUpdateCoProducers({
@@ -923,7 +936,7 @@ const CoProducers = () => {
                     id="outlined-basic"
                     className={Styles.LoginPageInputContainerInput}
                     inputProps={{ maxLength: 50 }}
-                    defaultValue={coProducersId.data?.phone}
+                   value={coProducersId.data?.phone}
                     name="phone"
                     onChange={(e) =>
                       setUpdateCoProducers({
@@ -947,7 +960,7 @@ const CoProducers = () => {
                     id="outlined-basic"
                     className={Styles.LoginPageInputContainerInput}
                     inputProps={{ maxLength: 50 }}
-                    defaultValue={coProducersId.data?.legalentity}
+                    value={coProducersId.data?.legalentity}
                     name="legalentity"
                     onChange={(e) =>
                       setUpdateCoProducers({
@@ -969,7 +982,7 @@ const CoProducers = () => {
                     id="outlined-basic"
                     className={Styles.LoginPageInputContainerInput}
                     inputProps={{ maxLength: 50 }}
-                    defaultValue={coProducersId.data?.street}
+                    value={coProducersId.data?.street}
                     name="street"
                     onChange={(e) =>
                       setUpdateCoProducers({
@@ -991,7 +1004,7 @@ const CoProducers = () => {
                     id="outlined-basic"
                     className={Styles.LoginPageInputContainerInput}
                     inputProps={{ maxLength: 50 }}
-                    defaultValue={coProducersId.data?.city}
+                    value={coProducersId.data?.city}
                     name="city"
                     onChange={(e) =>
                       setUpdateCoProducers({
@@ -1011,7 +1024,7 @@ const CoProducers = () => {
                     id="outlined-basic"
                     className={Styles.LoginPageInputContainerInput}
                     inputProps={{ maxLength: 50 }}
-                    defaultValue={coProducersId.data?.state}
+                    value={coProducersId.data?.state}
                     name="state"
                     onChange={(e) =>
                       setUpdateCoProducers({
@@ -1035,7 +1048,7 @@ const CoProducers = () => {
                     className={Styles.LoginPageInputContainerInput}
                     inputProps={{ maxLength: 50 }}
                     name="totalallocation"
-                    defaultValue={coProducersId.data?.totalallocation}
+                   value={coProducersId.data?.totalallocation}
                     onChange={(e) =>
                       setUpdateCoProducers({
                         ...updateCoProducers,
@@ -1057,7 +1070,7 @@ const CoProducers = () => {
                   <SelectStyled
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    defaultValue={coProducersId.data?.status}
+                    dvalue={coProducersId.data?.status}
                     onChange={(e) =>
                       setUpdateCoProducers({
                         ...updateCoProducers,
@@ -1083,7 +1096,7 @@ const CoProducers = () => {
                     id="outlined-basic"
                     className={Styles.LoginPageInputContainerInput}
                     inputProps={{ maxLength: 50 }}
-                    defaultValue={coProducersId.data?.total_raised}
+                    value={coProducersId.data?.total_raised}
                     name="total_raised"
                     onChange={(e) =>
                       setUpdateCoProducers({
@@ -1108,7 +1121,7 @@ const CoProducers = () => {
                     id="outlined-basic"
                     className={Styles.LoginPageInputContainerInput}
                     inputProps={{ maxLength: 50 }}
-                    defaultValue={coProducersId.data?.entityelements}
+                   value={coProducersId.data?.entityelements}
                     name="entityelements"
                     onChange={(e) =>
                       setUpdateCoProducers({
@@ -1129,7 +1142,7 @@ const CoProducers = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50000 }}
-                      defaultValue={coProducersId.data?.generalcomments}
+                      value={coProducersId.data?.generalcomments}
                       name="generalcomments"
                       multiline
                       rows={4}
@@ -1164,7 +1177,46 @@ const CoProducers = () => {
           </div>
         </Box>
       </Modal>
-     
+
+            <Modal
+                      open={deleteConfimationModelOpen}
+                      onClose={handlesetDeleteConfimationModelClose}
+                      aria-labelledby="modal-modal-title"
+                      aria-describedby="modal-modal-description"
+                    >
+                      <Box class="modal">
+                      
+                        <div className={Styles.coProducerPageModelPopupContainer}>
+                          <div className="ModelPopupHeader">
+                            <p className="ModelPopupHeaderText">Delete Co-Producers</p>
+                            <CloseOutlinedIcon
+                              onClick={() => handlesetDeleteConfimationModelClose()}
+                              className="ModelPopupHeaderIcon"
+                            />
+                          </div>
+                          <div className="ModelPopupbody">
+                          <p className={Styles.coProducerPageModelPopupContainerDeteleText}>
+                            Do you really want to remove the Co-producer : <span className={Styles.coProducersPageModelPopupContainerDeteleTextProducerName}>{coProducersId.data?.firstname}{ coProducersId.data?.lastname}</span> 
+                            </p>
+                          </div>
+                          <div className="ModelPopupfooter">
+                            <button
+                              className={Styles.CreateCoProducersCancelButton}
+                              onClick={() => handlesetDeleteConfimationModelClose()}
+                            >
+                              No !
+                            </button>
+                            <button
+                              className={Styles.CreateCoProducersSubmitButton}
+                              // onClick={() => handleDeleteEdit()}
+                            >
+                              Yes !
+                            </button>
+                          </div>
+                        </div>
+                        
+                      </Box>
+            </Modal>
     </div>
   );
 };

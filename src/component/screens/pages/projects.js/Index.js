@@ -166,6 +166,17 @@ const ProjectsPage = () => {
     setRole(event.target.value);
   };
 
+    const [deleteConfimationModelOpen, setDeleteConfimationModelOpen] = useState(false);
+    const handlesetDeleteConfimationModelOpen = (id) => 
+      {
+        setUpdateID(id)
+        setDeleteConfimationModelOpen(true);
+        dispatch(getProjectsByID(id));
+      }
+    const handlesetDeleteConfimationModelClose = () => setDeleteConfimationModelOpen(false);
+  
+    
+
   const [selectedStatus, setSelectedStatus] = useState("Status");
 
   const [createProject, setCreateProject] = useState({
@@ -239,6 +250,7 @@ const ProjectsPage = () => {
                 />
               </Link>
               <DeleteOutlineOutlinedIcon
+             
                 className={Styles.ProjectsTableActionDeleteIcon}
               />
             </div>
@@ -359,6 +371,7 @@ const ProjectsPage = () => {
               />
             </Link>
             <DeleteOutlineOutlinedIcon
+             onClick={()=> handlesetDeleteConfimationModelOpen(item.projectid)}
               className={Styles.ProjectsTableActionDeleteIcon}
             />
           </div>
@@ -945,7 +958,7 @@ const ProjectsPage = () => {
                         id="outlined-basic"
                         className={Styles.LoginPageInputContainerInput}
                         inputProps={{ maxLength: 50 }}
-                        defaultValue={projectIdList.data?.projectname}
+                        value={projectIdList.data?.projectname}
                         name="projectname"
                         onChange={(e) =>
                           setUpdateProject({
@@ -986,7 +999,7 @@ const ProjectsPage = () => {
                         <MenuItem value="Other">Other</MenuItem>
                       </SelectStyled> */}
                       <select  class="SearchSelectFilter"
-                            defaultValue={projectIdList.data?.status}
+                            value={projectIdList.data?.status}
                             onChange={(e) =>
                               setUpdateProject({
                                 ...updateProject,
@@ -1013,7 +1026,7 @@ const ProjectsPage = () => {
                         type="date"
                         className={Styles.LoginPageInputContainerInput}
                         inputProps={{ maxLength: 50 }}
-                        defaultValue={projectIdList.data?.startdate}
+                        value={projectIdList.data?.startdate}
                         name="startdate"
                         onChange={(e) =>
                           setUpdateProject({
@@ -1056,7 +1069,7 @@ const ProjectsPage = () => {
                         id="outlined-basic"
                         className={Styles.LoginPageInputContainerInput}
                         inputProps={{ maxLength: 50000 }}
-                        defaultValue={projectIdList.data?.projectsummary}
+                        value={projectIdList.data?.projectsummary}
                         name="projectsummary"
                         multiline
                         rows={4}
@@ -1079,7 +1092,7 @@ const ProjectsPage = () => {
                         type="date"
                         className={Styles.LoginPageInputContainerInput}
                         inputProps={{ maxLength: 50 }}
-                        defaultValue={projectIdList.data?.deadline}
+                        value={projectIdList.data?.deadline}
                         name="deadline"
                         onChange={(e) =>
                           setUpdateProject({
@@ -1109,7 +1122,7 @@ const ProjectsPage = () => {
                         id="outlined-basic"
                         className={Styles.LoginPageInputContainerInput}
                         inputProps={{ maxLength: 50 }}
-                        defaultValue={projectIdList.data?.billedname}
+                        value={projectIdList.data?.billedname}
                         name="billedname"
                         onChange={(e) =>
                           setUpdateProject({
@@ -1129,7 +1142,7 @@ const ProjectsPage = () => {
                         id="outlined-basic"
                         className={Styles.LoginPageInputContainerInput}
                         inputProps={{ maxLength: 50 }}
-                        defaultValue={projectIdList.data?.totalallocation}
+                        value={projectIdList.data?.totalallocation}
                         name="totalallocation"
                         onChange={(e) =>
                           setUpdateProject({
@@ -1149,7 +1162,7 @@ const ProjectsPage = () => {
                         id="outlined-basic"
                         className={Styles.LoginPageInputContainerInput}
                         inputProps={{ maxLength: 50 }}
-                        defaultValue={projectIdList.data?.houseticketlink}
+                        value={projectIdList.data?.houseticketlink}
                         name="houseticketlink"
                         onChange={(e) =>
                           setUpdateProject({
@@ -1169,7 +1182,7 @@ const ProjectsPage = () => {
                         id="outlined-basic"
                         className={Styles.LoginPageInputContainerInput}
                         inputProps={{ maxLength: 50000 }}
-                        defaultValue={projectIdList.data?.generalcomments}
+                        value={projectIdList.data?.generalcomments}
                         name="generalcomments"
                         multiline
                         rows={4}
@@ -1193,7 +1206,7 @@ const ProjectsPage = () => {
                         id="outlined-basic"
                         className={Styles.LoginPageInputContainerInput}
                         inputProps={{ maxLength: 50 }}
-                        defaultValue={projectIdList.data?.totalcapitalization}
+                        value={projectIdList.data?.totalcapitalization}
                         name="totalcapitalization"
                         onChange={(e) =>
                           setUpdateProject({
@@ -1213,7 +1226,7 @@ const ProjectsPage = () => {
                         id="outlined-basic"
                         className={Styles.LoginPageInputContainerInput}
                         inputProps={{ maxLength: 50 }}
-                        defaultValue={projectIdList.data?.totalraised}
+                        value={projectIdList.data?.totalraised}
                         name="totalraised"
                         onChange={(e) =>
                           setUpdateProject({
@@ -1233,7 +1246,7 @@ const ProjectsPage = () => {
                         id="outlined-basic"
                         className={Styles.LoginPageInputContainerInput}
                         inputProps={{ maxLength: 50000 }}
-                        defaultValue={projectIdList.data?.houseticketcomments}
+                        value={projectIdList.data?.houseticketcomments}
                         name="houseticketcomments"
                         multiline
                         rows={4}
@@ -1267,6 +1280,46 @@ const ProjectsPage = () => {
               </div>
             </div>
           </Box>
+        </Modal>
+
+         <Modal
+                open={deleteConfimationModelOpen}
+                onClose={handlesetDeleteConfimationModelClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box class="modal">
+                
+                  <div className={Styles.ProducersPageModelPopupContainer}>
+                    <div className="ModelPopupHeader">
+                      <p className="ModelPopupHeaderText">Delete Project</p>
+                      <CloseOutlinedIcon
+                        onClick={() => handlesetDeleteConfimationModelClose()}
+                        className="ModelPopupHeaderIcon"
+                      />
+                    </div>
+                    <div className="ModelPopupbody">
+                    <p className={Styles.ProjectsPageModelPopupContainerDeteleText}>
+                      Do you really want to remove the Project : <span className={Styles.ProjectsPageModelPopupContainerDeteleTextProducerName}>{projectIdList.data?.projectname}</span> 
+                      </p>
+                    </div>
+                    <div className="ModelPopupfooter">
+                      <button
+                        className={Styles.CreateProjectsCancelButton}
+                        onClick={() => handlesetDeleteConfimationModelClose()}
+                      >
+                        No !
+                      </button>
+                      <button
+                        className={Styles.CreateProjectsSubmitButton}
+                        // onClick={() => handleDeleteEdit()}
+                      >
+                        Yes !
+                      </button>
+                    </div>
+                  </div>
+                  
+                </Box>
         </Modal>
       </div>
     </div>

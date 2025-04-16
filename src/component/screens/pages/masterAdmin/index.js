@@ -167,6 +167,7 @@ const MasterAdmin = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [openEdit, setOpenEdit] = useState(false);
+   const [updateID, setUpdateID] = useState();
  
   const handleOpenEdit = (id) => {
     dispatch(getByUserId(id));
@@ -179,6 +180,16 @@ const MasterAdmin = () => {
   const handleChangeRole = (event) => {
     setRole(event.target.value);
   };
+
+   const [deleteConfimationModelOpen, setDeleteConfimationModelOpen] = useState(false);
+        const handlesetDeleteConfimationModelOpen = (id) => 
+          {
+            setUpdateID(id)
+            setDeleteConfimationModelOpen(true);
+            dispatch(getByUserId(id));
+          }
+        const handlesetDeleteConfimationModelClose = () => setDeleteConfimationModelOpen(false);
+      
 
   useEffect(() => {
     dispatch(getAllUsers());
@@ -220,7 +231,8 @@ const MasterAdmin = () => {
             <Link to={`/admin_details/${item.userid}`} className="Link">
               <RemoveRedEyeOutlinedIcon className="TableActionViewIcon" />
             </Link>
-            <DeleteOutlineOutlinedIcon className="TableActionDeleteIcon" />
+            <DeleteOutlineOutlinedIcon className="TableActionDeleteIcon" 
+            onClick={()=> handlesetDeleteConfimationModelOpen(item.userid)}/>
           </div>
         ),
       }));
@@ -700,7 +712,7 @@ const MasterAdmin = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 20 }}
-                      defaultValue={userById.username}
+                      value={userById.username}
                       name="username"
                       onChange={(e) =>
                         setCreateMsterAdmin({
@@ -720,7 +732,7 @@ const MasterAdmin = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 20 }}
-                      defaultValue={userById.password}
+                      value={userById.password}
                       name="password"
                       onChange={(e) =>
                         setCreateMsterAdmin({
@@ -745,7 +757,7 @@ const MasterAdmin = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 20 }}
-                      defaultValue={userById.firstname}
+                      value={userById.firstname}
                       name="firstname"
 
                       onChange={(e) =>
@@ -766,7 +778,7 @@ const MasterAdmin = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 20 }}
-                      defaultValue={userById.lastname}
+                      value={userById.lastname}
                       name="lastname"
                       onChange={(e) =>
                         setCreateMsterAdmin({
@@ -788,7 +800,7 @@ const MasterAdmin = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 20 }}
-                      defaultValue={userById.email}
+                      value={userById.email}
                       name="email"
                       onChange={(e) =>
                         setCreateMsterAdmin({
@@ -808,7 +820,7 @@ const MasterAdmin = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 20 }}
-                      defaultValue={userById.phone}
+                      value={userById.phone}
                       name="phone"
                       onChange={(e) =>
                         setCreateMsterAdmin({
@@ -830,7 +842,7 @@ const MasterAdmin = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 20 }}
-                      defaultValue={userById.legalentity}
+                     value={userById.legalentity}
                       name="legalentity"
                       onChange={(e) =>
                         setCreateMsterAdmin({
@@ -850,7 +862,7 @@ const MasterAdmin = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 20 }}
-                      defaultValue={userById.street}
+                      value={userById.street}
                       name="street"
                       onChange={(e) =>
                         setCreateMsterAdmin({
@@ -872,7 +884,7 @@ const MasterAdmin = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 20 }}
-                      defaultValue={userById.city}
+                      value={userById.city}
                       name="city"
                       onChange={(e) =>
                         setCreateMsterAdmin({
@@ -892,7 +904,7 @@ const MasterAdmin = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 20 }}
-                      defaultValue={userById.state}
+                      value={userById.state}
                       name="state"
                       onChange={(e) =>
                         setCreateMsterAdmin({
@@ -913,7 +925,7 @@ const MasterAdmin = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 20 }}
-                      defaultValue={userById.zipcode}
+                      value={userById.zipcode}
                       name="zipcode"
                       onChange={(e) =>
                         setCreateMsterAdmin({
@@ -933,7 +945,7 @@ const MasterAdmin = () => {
                     <SelectStyled
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
-                      defaultValue={userById.status}
+                      value={userById.status}
                       onChange={handleChangeRole}
                     >
                       <MenuItem value={10}>-None-</MenuItem>
@@ -952,7 +964,7 @@ const MasterAdmin = () => {
                     <SelectStyled
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
-                      defaultValue={userById.role}
+                      value={userById.role}
                       onChange={handleChangeRole}
                     >
                       <MenuItem value={10}>-None-</MenuItem>
@@ -983,6 +995,46 @@ const MasterAdmin = () => {
           </div>
         </Box>
       </Modal>
+
+         <Modal
+                            open={deleteConfimationModelOpen}
+                            onClose={handlesetDeleteConfimationModelClose}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                          >
+                            <Box class="modal">
+                            
+                              <div className={Styles.MasterAdminPageModelPopupContainer}>
+                                <div className="ModelPopupHeader">
+                                  <p className="ModelPopupHeaderText">Delete Admin User</p>
+                                  <CloseOutlinedIcon
+                                    onClick={() => handlesetDeleteConfimationModelClose()}
+                                    className="ModelPopupHeaderIcon"
+                                  />
+                                </div>
+                                <div className="ModelPopupbody">
+                                <p className={Styles.MasterAdminPageModelPopupContainerDeteleText}>
+                                  Do you really want to remove the Admin User : <span className={Styles.MasterAdminsPageModelPopupContainerDeteleTextProducerName}>{userById.firstname}{userById.lastname}</span> 
+                                  </p>
+                                </div>
+                                <div className="ModelPopupfooter">
+                                  <button
+                                    className="CancelButton"
+                                    onClick={() => handlesetDeleteConfimationModelClose()}
+                                  >
+                                    No !
+                                  </button>
+                                  <button
+                                    className="SubmitButton"
+                                    // onClick={() => handleDeleteEdit()}
+                                  >
+                                    Yes !
+                                  </button>
+                                </div>
+                              </div>
+                              
+                            </Box>
+                  </Modal>
     </div>
   );
 };

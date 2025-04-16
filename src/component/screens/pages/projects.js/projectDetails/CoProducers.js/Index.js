@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 import Styles from "./Index.module.css";
 import cloneDeep from "lodash/cloneDeep";
 import throttle from "lodash/throttle";
@@ -15,29 +15,44 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from "@mui/material/styles";
-import { getProjectByCoProducers } from '../../../../../redux/Action';
+import {
+  getByCoProducersId,
+  getProjectByCoProducers,
+} from "../../../../../redux/Action";
+import { Box, Modal } from "@mui/material";
 
-const CoProducersTable=()=>{
+const CoProducersTable = () => {
+  let dispatch = useDispatch();
+  const theme = useTheme();
+  const { projectid } = useParams();
 
-  
-      let dispatch = useDispatch();
-    const theme = useTheme();
-    const { projectid } = useParams();
+  const projectIdcoproducersList = useSelector(
+    (state) => state.projects.getprojectsBycoProducersId
+  );
 
-     const projectIdcoproducersList = useSelector(
-          (state) => state.projects.getprojectsBycoProducersId
-        );
-    
-         useEffect(() => {
-          dispatch(getProjectByCoProducers(projectid));
-        }, [projectid]);
-        
-          const [allData, setAllData] = useState([]);
-        
-  
+  const coProducersId = useSelector(
+    (state) => state.coProducers.getByCoProducersIdSuccessfull
+  );
+
+  useEffect(() => {
+    dispatch(getProjectByCoProducers(projectid));
+  }, [projectid]);
+
+  const [allData, setAllData] = useState([]);
+  const [updateID, setUpdateID] = useState("");
+
+  const [deleteConfimationModelOpen, setDeleteConfimationModelOpen] =
+    useState(false);
+  const handlesetDeleteConfimationModelOpen = (id) => {
+    setUpdateID(id);
+    setDeleteConfimationModelOpen(true);
+    dispatch(getByCoProducersId(id));
+  };
+  const handlesetDeleteConfimationModelClose = () =>{
+    setDeleteConfimationModelOpen(false);}
 
   const tableHead = {
-    no:"No",
+    no: "No",
     name: "Name",
     emailID: "EmailID",
     viewInvestors: "View Investors",
@@ -51,25 +66,34 @@ const CoProducersTable=()=>{
   );
 
   useEffect(() => {
-      if (projectIdcoproducersList?.data) {
-        const mappedData = projectIdcoproducersList.data?.map((item, index) => ({
-          no: index + 1,
-          name: `${item.firstname}${item.lastname}`,
-          emailID: item.emailid,
-          viewInvestors: <Link to={`/investors_details/:${item.investorid}`} className={Styles.LinkAddress} >View</Link>,
-          action: (
-                    <div className="TableActionContainer">
-                    <DeleteOutlineOutlinedIcon
-                      className="TableActionDeleteIcon"
-                     />
-                  </div>
-                ),
-        }));
-        setAllData(mappedData);
-        setCollection(cloneDeep(mappedData.slice(0, countPerPage)));
-      }
-    }, [projectIdcoproducersList]);
-
+    if (projectIdcoproducersList?.data) {
+      const mappedData = projectIdcoproducersList.data?.map((item, index) => ({
+        no: index + 1,
+        name: `${item.firstname}${item.lastname}`,
+        emailID: item.emailid,
+        viewInvestors: (
+          <Link
+            to={`/investors_details/:${item.investorid}`}
+            className={Styles.LinkAddress}
+          >
+            View
+          </Link>
+        ),
+        action: (
+          <div className="TableActionContainer">
+            <DeleteOutlineOutlinedIcon
+              className="TableActionDeleteIcon"
+              onClick={() =>
+                handlesetDeleteConfimationModelOpen(item.co_producersid)
+              }
+            />
+          </div>
+        ),
+      }));
+      setAllData(mappedData);
+      setCollection(cloneDeep(mappedData.slice(0, countPerPage)));
+    }
+  }, [projectIdcoproducersList]);
 
   const searchData = useRef(
     throttle((val) => {
@@ -118,26 +142,73 @@ const CoProducersTable=()=>{
       <th key={index}>{title}</th>
     ));
   };
-    return (
-        <div>
+  return (
+    <div>
+      <div className={Styles.CoProducersTablePageTabsContainerTable}>
+        <table>
+          <thead>
+            <tr>{headRow()}</tr>
+          </thead>
+          <tbody className="trhover">{tableData()}</tbody>
+        </table>
+        <div className={Styles.CoProducersTablePageTablePagination}>
+          <Pagination
+            pageSize={countPerPage}
+            onChange={updatePage}
+            current={currentPage}
+            total={allData.length}
+          />
+        </div>
+      </div>
 
-<div className={Styles.CoProducersTablePageTabsContainerTable}>
-          <table>
-            <thead>
-              <tr>{headRow()}</tr>
-            </thead>
-            <tbody className="trhover">{tableData()}</tbody>
-          </table>
-          <div className={Styles.CoProducersTablePageTablePagination}>
-            <Pagination
-              pageSize={countPerPage}
-              onChange={updatePage}
-              current={currentPage}
-              total={allData.length}
-            />
+      <Modal
+        open={deleteConfimationModelOpen}
+        onClose={handlesetDeleteConfimationModelClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box class="modal">
+          <div className={Styles.coProducersPageModelPopupContainer}>
+            <div className="ModelPopupHeader">
+              <p className="ModelPopupHeaderText">Delete Co-Producers</p>
+              <CloseOutlinedIcon
+                onClick={() => handlesetDeleteConfimationModelClose()}
+                className="ModelPopupHeaderIcon"
+              />
+            </div>
+            <div className="ModelPopupbody">
+              <p
+                className={Styles.coProducersPageModelPopupContainerDeteleText}
+              >
+                Do you really want to remove this Co-Producers {" "}
+                <span
+                  className={
+                    Styles.coProducersPageModelPopupContainerDeteleTextProducerName
+                  }
+                >
+                  {coProducersId.data?.firstname}
+                  {coProducersId.data?.lastname}
+                </span> from This Project
+              </p>
+            </div>
+            <div className="ModelPopupfooter">
+              <button
+                className="CancelButton"
+                onClick={() => handlesetDeleteConfimationModelClose()}
+              >
+                No !
+              </button>
+              <button
+                className="SubmitButton"
+                // onClick={() => handleDeleteEdit()}
+              >
+                Yes !
+              </button>
+            </div>
           </div>
-        </div>
-        </div>
-    )
-}
-export default CoProducersTable
+        </Box>
+      </Modal>
+    </div>
+  );
+};
+export default CoProducersTable;

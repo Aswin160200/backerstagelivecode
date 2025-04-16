@@ -232,3 +232,21 @@
 {
   font-weight: var(--font-weight_400);
 }
+.AdminInvestorPageTabsContainerTablewithoutProducer{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 90%;
+  margin: 1rem;
+  background-color: var(--whitecolor);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 0 8px 4px var(--boxShadow);
+}
+.AdminInvestorTableNoneText{
+  font-family: var(--defaultFontFamily);
+  font-size: var(--font-size_22);
+  font-weight: var(--font-weight_600);
+  color: var(--darkColor);
+  margin: 0rem 0.5rem;
+}

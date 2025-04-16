@@ -213,6 +213,16 @@ const InvestorPage = () => {
     setSelectedStatus(event.target.value);
   };
 
+  const [deleteConfimationModelOpen, setDeleteConfimationModelOpen] = useState(false);
+      const handlesetDeleteConfimationModelOpen = (id) => 
+        {
+          setUpdateID(id)
+          setDeleteConfimationModelOpen(true);
+          dispatch(getInvestorById(id));
+        }
+      const handlesetDeleteConfimationModelClose = () => setDeleteConfimationModelOpen(false);
+    
+
   const [createInvestor, setCreateInvestor] = useState({
     producersid: storedUser.userid,
     firstname: "",
@@ -304,7 +314,8 @@ const InvestorPage = () => {
             <Link to={`/investors_details/${item.investorid}`} className="Link">
               <RemoveRedEyeOutlinedIcon className="TableActionViewIcon" />
             </Link>
-            <DeleteOutlineOutlinedIcon className="TableActionDeleteIcon" />
+            <DeleteOutlineOutlinedIcon className="TableActionDeleteIcon" 
+            onClick={()=> handlesetDeleteConfimationModelOpen(item.investorid)}/>
           </div>
         ),
       }));
@@ -948,7 +959,7 @@ const InvestorPage = () => {
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50 }}
                       name="firstname"
-                      defaultValue={investorById.data?.firstname}
+                      value={investorById.data?.firstname}
                       onChange={(e) =>
                         setUpdateInvestor({
                           ...updateInvestor,
@@ -967,7 +978,7 @@ const InvestorPage = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50 }}
-                      defaultValue={investorById.data?.lastname}
+                      value={investorById.data?.lastname}
                       name="lastname"
                       onChange={(e) =>
                         setUpdateInvestor({
@@ -989,7 +1000,7 @@ const InvestorPage = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50 }}
-                      defaultValue={investorById.data?.emailid}
+                      value={investorById.data?.emailid}
                       name="emailid"
                       onChange={(e) =>
                         setUpdateInvestor({
@@ -1009,7 +1020,7 @@ const InvestorPage = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50 }}
-                      defaultValue={investorById.data?.mobilenumber}
+                      value={investorById.data?.mobilenumber}
                       name="mobilenumber"
                       onChange={(e) =>
                         setUpdateInvestor({
@@ -1031,7 +1042,7 @@ const InvestorPage = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50 }}
-                      defaultValue={investorById.data?.address}
+                      value={investorById.data?.address}
                       name="address"
                       onChange={(e) =>
                         setUpdateInvestor({
@@ -1051,7 +1062,7 @@ const InvestorPage = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50 }}
-                      defaultValue={investorById.data?.city}
+                      value={investorById.data?.city}
                       name="city"
                       onChange={(e) =>
                         setUpdateInvestor({
@@ -1073,7 +1084,7 @@ const InvestorPage = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50 }}
-                      defaultValue={investorById.data?.state}
+                      value={investorById.data?.state}
                       name="state"
                       onChange={(e) =>
                         setUpdateInvestor({
@@ -1093,7 +1104,7 @@ const InvestorPage = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50 }}
-                      defaultValue={investorById.data?.zipcode}
+                      value={investorById.data?.zipcode}
                       name="zipcode"
                       onChange={(e) =>
                         setUpdateInvestor({
@@ -1154,7 +1165,7 @@ const InvestorPage = () => {
                     <SelectStyled
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
-                      defaultValue={investorById.data?.referralsource}
+                      value={investorById.data?.referralsource}
                       onChange={(e) =>
                         setUpdateInvestor({
                           ...updateInvestor,
@@ -1178,7 +1189,7 @@ const InvestorPage = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50 }}
-                      defaultValue={investorById.data?.dateadded}
+                      value={investorById.data?.dateadded}
                       name="date_added"
                       type="date"
                       onChange={(e) =>
@@ -1199,7 +1210,7 @@ const InvestorPage = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50 }}
-                      defaultValue={investorById.data?.investorprobability}
+                      value={investorById.data?.investorprobability}
                       name="investorprobability"
                       onChange={(e) =>
                         setUpdateInvestor({
@@ -1219,7 +1230,7 @@ const InvestorPage = () => {
                     id="outlined-basic"
                     className={Styles.LoginPageInputContainerInput}
                     inputProps={{ maxLength: 50000 }}
-                    defaultValue={investorById.data?.generalcomments}
+                    value={investorById.data?.generalcomments}
                     name="generalcomments"
                     multiline
                     rows={4}
@@ -1253,6 +1264,46 @@ const InvestorPage = () => {
           </div>
         </Box>
       </Modal>
+
+          <Modal
+                      open={deleteConfimationModelOpen}
+                      onClose={handlesetDeleteConfimationModelClose}
+                      aria-labelledby="modal-modal-title"
+                      aria-describedby="modal-modal-description"
+                    >
+                      <Box class="modal">
+                      
+                        <div className={Styles.InvestorsPageModelPopupContainer}>
+                          <div className="ModelPopupHeader">
+                            <p className="ModelPopupHeaderText">Delete Investors</p>
+                            <CloseOutlinedIcon
+                              onClick={() => handlesetDeleteConfimationModelClose()}
+                              className="ModelPopupHeaderIcon"
+                            />
+                          </div>
+                          <div className="ModelPopupbody">
+                          <p className={Styles.InvestorsPageModelPopupContainerDeteleText}>
+                            Do you really want to remove the Investor : <span className={Styles.InvestorsPageModelPopupContainerDeteleTextProducerName}>{investorById.data?.firstname}{investorById.data?.lastname}</span> 
+                            </p>
+                          </div>
+                          <div className="ModelPopupfooter">
+                            <button
+                              className={Styles.CreateInvestorCancelButton}
+                              onClick={() => handlesetDeleteConfimationModelClose()}
+                            >
+                              No !
+                            </button>
+                            <button
+                              className={Styles.CreateInvestorSubmitButton}
+                              // onClick={() => handleDeleteEdit()}
+                            >
+                              Yes !
+                            </button>
+                          </div>
+                        </div>
+                        
+                      </Box>
+                    </Modal>
     </div>
   );
 };

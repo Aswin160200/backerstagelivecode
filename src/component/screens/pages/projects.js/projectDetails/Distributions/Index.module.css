@@ -122,3 +122,24 @@
     color: var(--whitecolor);
     cursor: pointer;
 }
+
+
+.distributionPageModelPopupContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .distributionPageModelPopupContainerDeteleText{
+    color: var(--darkColor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_400);
+    letter-spacing: 0.3px;
+}
+.distributionPageModelPopupContainerDeteleTextProducerName{
+  color: var(--redColor);
+    font-family: var(--defaultFontFamily);
+    font-size: var(--font-size_16);
+    font-weight: var(--font-weight_600);
+    letter-spacing: 0.3px;
+}

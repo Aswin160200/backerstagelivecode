@@ -137,6 +137,8 @@ const Producers = () => {
 
   const deleteProducer = useSelector((state) => state.users.deleteUserIdSuccessfull);
 
+  const [deleteTriggered, setDeleteTriggered] = useState(false);
+
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -331,19 +333,29 @@ const [updateId,setUpdateId]=useState();
           }
     }
     
-    const handleDeleteEdit = async () => {
-      
-      dispatch(deleteUser(updateId))
-     
-          if(deleteProducer.message === "Error deleting user"){
-            toast.error("You can't remove the producers until you've deleted their projects.")
-          }else{
-            toast.success("Producer delete successfully")
-            dispatch(getAllUsers());
-            setDeleteConfimationModelOpen(false);
-          }
-       
-    };
+   
+    
+   const handleDeleteEdit = () => {
+  dispatch(deleteUser(updateId));
+  setDeleteTriggered(true);
+};
+
+useEffect(() => {
+  if (!deleteTriggered) return;
+
+  if (deleteProducer.message === "Error deleting user") {
+    toast.error("You can't remove the producers until you've deleted their projects.");
+    setDeleteConfimationModelOpen(false);
+    setDeleteTriggered(false);
+  } else if (deleteProducer.message === "User deleted successfully") {
+    toast.success("Producer deleted successfully");
+    dispatch(getAllUsers());
+    setDeleteConfimationModelOpen(false);
+    setDeleteTriggered(false);
+  }
+}, [deleteProducer.message, deleteTriggered]);
+
+    
     
   const tableHead = [
     "No.",
@@ -377,6 +389,7 @@ const [updateId,setUpdateId]=useState();
   
       if (response?.payload) {
         toast.success("Producer Added Successfully!!!")
+        window.location.reload();
         const newUser = {
           S_no: allData.length + 1,
           name: `${response.payload.firstname} ${response.payload.lastname}`,
@@ -416,7 +429,10 @@ const [updateId,setUpdateId]=useState();
           zipcode: "",
           status: "",
         });
+
+
       }
+     
     } catch (error) {
       // console.error("Error adding user:", error);
       toast.error("Failed to add Producer. Please try again.");

@@ -127,6 +127,19 @@ const DistributionsPage = () => {
     setOpenDocumentUpload(false)
     dispatch(getByProducersId(storedUser.userid));
 };
+
+const [deleteConfimationModelOpen, setDeleteConfimationModelOpen] =useState(false);
+// start delete distribution
+ const handlesetDeleteConfimationModelOpen = (id) => {
+      setupdateID(id);
+    setDeleteConfimationModelOpen(true);
+    dispatch(getByDistributionId(id));
+  };
+  const handlesetDeleteConfimationModelClose = () =>{
+    setDeleteConfimationModelOpen(false);
+  }
+
+// end delete distribtion
   //   end Documents Upload doc start
 
   //   view Distributions
@@ -175,7 +188,8 @@ const DistributionsPage = () => {
               className="TableActionViewIcon"
               onClick={() => handleOpenViewDistribution(item.distributionid)}
             />
-            <DeleteOutlineOutlinedIcon className="TableActionDeleteIcon" />
+            <DeleteOutlineOutlinedIcon className="TableActionDeleteIcon" 
+            onClick={()=> handlesetDeleteConfimationModelOpen(item.distributionid)}/>
           </div>
         ),
       }));
@@ -303,7 +317,7 @@ const DistributionsPage = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50 }}
-                      defaultValue={distributionById?.data?.distributionname}
+                      value={distributionById?.data?.distributionname}
                       name="distributionname"
                       onChange={(e) => setEditDistribution({ ...editDistribution, distributionname: e.target.value })}
                     />
@@ -317,7 +331,7 @@ const DistributionsPage = () => {
                       type="date"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50 }}
-                      defaultValue={distributionById?.data?.dateofdistribution}
+                      value={distributionById?.data?.dateofdistribution}
                       name="dateofdistribution"
                       onChange={(e) => setEditDistribution({ ...editDistribution, dateofdistribution: e.target.value })}
                     />
@@ -327,8 +341,7 @@ const DistributionsPage = () => {
                       id="outlined-basic"
                       type="date"
                       className={Styles.LoginPageInputContainerInput}
-                      defaultValue={distributionById?.data?.totalrecoupedtodate}
-                      inputProps={{ maxLength: 50 }}
+                      value={distributionById?.data?.totalrecoupedtodate}
                       name="totalrecoupedtodate"
                       onChange={(e) => setEditDistribution({ ...editDistribution, totalrecoupedtodate: e.target.value })}
                     />
@@ -336,43 +349,31 @@ const DistributionsPage = () => {
                   <div className="InputCart">
                     <p className="InputCartText">Project</p>
 
-                    <SelectStyled
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      defaultValue={distributionById?.data?.projectid}
-                      onChange={(e) => setEditDistribution({ ...editDistribution, projectname: e.target.value })}
-                      slotProps={{
-                        input: {
-                          endAdornment: (
-                            <InputAdornment position="start">
-                              <SearchIcon />
-                            </InputAdornment>
-                          ),
-                        },
-                      }}
-                    >
-                      <MenuItem value="-None-">-None-</MenuItem>
-                      {Array.isArray(projectList?.data) &&
-                      projectList?.data.length > 0 ? (
-                        projectList?.data.map((project) => (
-                          <MenuItem
-                            key={project.projectid}
-                            value={project.projectname}
-                          >
-                            {project.projectname}
-                          </MenuItem>
-                        ))
-                      ) : (
-                        <MenuItem disabled>No Projects Available</MenuItem>
-                      )}
-                    </SelectStyled>
+           
+                    <select
+                        className="SearchSelectFilter"
+                        value={distributionById?.data?.projectid}
+                        onChange={(e) => setEditDistribution({ ...editDistribution, projectname: e.target.value })}
+                       
+                      >
+                        <option value="None">None</option>
+                        {Array.isArray(projectList?.data) && projectList.data.length > 0 ? (
+                          projectList.data.map((project) => (
+                            <option key={project.projectid} value={project.projectid}>
+                               {project.projectname}
+                            </option>
+                          ))
+                        ) : (
+                          <option disabled>No Projects Available</option>
+                        )}
+                      </select>
                     <p className="InputCartText">Amount of Destribution</p>
 
                     <InputStyled
                       id="outlined-basic"
                       type="text"
                       className={Styles.LoginPageInputContainerInput}
-                      defaultValue={
+                      value={
                         distributionById?.data?.amountofdistribution
                       }
                       inputProps={{ maxLength: 50 }}
@@ -488,6 +489,53 @@ const DistributionsPage = () => {
           </div>
         </Box>
       </Modal>
+
+      <Modal
+              open={deleteConfimationModelOpen}
+              onClose={handlesetDeleteConfimationModelClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box class="modal">
+                <div className={Styles.distributionPageModelPopupContainer}>
+                  <div className="ModelPopupHeader">
+                    <p className="ModelPopupHeaderText">Delete Distribution</p>
+                    <CloseOutlinedIcon
+                      onClick={() => handlesetDeleteConfimationModelClose()}
+                      className="ModelPopupHeaderIcon"
+                    />
+                  </div>
+                  <div className="ModelPopupbody">
+                    <p
+                      className={Styles.distributionPageModelPopupContainerDeteleText}
+                    >
+                      Do you really want to remove this distribution :{" "}
+                      <span
+                        className={
+                          Styles.distributionPageModelPopupContainerDeteleTextProducerName
+                        }
+                      >
+                       {distributionById?.data?.distributionname}
+                      </span> 
+                    </p>
+                  </div>
+                  <div className="ModelPopupfooter">
+                    <button
+                      className="CancelButton"
+                      onClick={() => handlesetDeleteConfimationModelClose()}
+                    >
+                      No !
+                    </button>
+                    <button
+                      className="SubmitButton"
+                      // onClick={() => handleDeleteEdit()}
+                    >
+                      Yes !
+                    </button>
+                  </div>
+                </div>
+              </Box>
+            </Modal>
     </div>
   );
 };

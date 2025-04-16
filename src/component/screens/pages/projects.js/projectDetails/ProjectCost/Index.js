@@ -138,8 +138,17 @@ const ProjectCostPage = () => {
     dispatch(getProjectCostByProducersId(storedUser.userid));
   };
 
-  //   Add New Distribution end
-  //   end Documents Upload doc start
+ const [deleteConfimationModelOpen, setDeleteConfimationModelOpen] =useState(false);
+   const handlesetDeleteConfimationModelOpen = (id) => {
+        setupdateID(id);
+      setDeleteConfimationModelOpen(true);
+      dispatch(getByProjectCostId(id));
+    };
+    const handlesetDeleteConfimationModelClose = () =>{
+      setDeleteConfimationModelOpen(false);
+    }
+  
+  
 
   //   view ProjectCost
   const [openViewProjectCost, setOpenViewProjectCost] = useState(false);
@@ -186,7 +195,8 @@ const ProjectCostPage = () => {
               className="TableActionViewIcon"
               onClick={() => handleOpenViewDistribution(item.projectcostid)}
             />
-            <DeleteOutlineOutlinedIcon className="TableActionDeleteIcon" />
+            <DeleteOutlineOutlinedIcon className="TableActionDeleteIcon" 
+            onClick={()=> handlesetDeleteConfimationModelOpen(item.projectcostid)}/>
           </div>
         ),
       }));
@@ -314,7 +324,7 @@ const ProjectCostPage = () => {
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 5000 }}
-                      defaultValue={projectCostById?.data?.costdescription}
+                      value={projectCostById?.data?.costdescription}
                       name="costdescription"
                       multiline
                       rows={4}
@@ -336,7 +346,7 @@ const ProjectCostPage = () => {
                       id="outlined-basic"
                       type="text"
                       className={Styles.LoginPageInputContainerInput}
-                      defaultValue={projectCostById?.data?.totalcost}
+                      value={projectCostById?.data?.totalcost}
                       inputProps={{ maxLength: 50 }}
                       name="totalcost"
                       onChange={(e) =>
@@ -352,7 +362,7 @@ const ProjectCostPage = () => {
                       id="outlined-basic"
                       type="date"
                       className={Styles.LoginPageInputContainerInput}
-                      defaultValue={projectCostById?.data?.dateofcost}
+                      value={projectCostById?.data?.dateofcost}
                       inputProps={{ maxLength: 50 }}
                       name="dateofcost"
                       onChange={(e) =>
@@ -378,22 +388,22 @@ const ProjectCostPage = () => {
                 <div className="InputContent">
                   <div className="InputCart">
                     <p className="InputCartText">Status</p>
-                    <SelectStyled
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      defaultValue={projectCostById?.data?.status}
-                      onChange={(e) =>
-                        setEditProjectCost({
-                          ...editProjectCost,
-                          status: e.target.value,
-                        })
-                      }
-                    >
-                      <MenuItem value="None">-None-</MenuItem>
-                      <MenuItem value="Unreimbursed">Unreimbursed</MenuItem>
-                      <MenuItem value="Reimbursed">Reimbursed</MenuItem>
-                    </SelectStyled>
-
+                   
+                    <select
+                        className="SearchSelectFilter"
+                        value={projectCostById?.data?.status}
+                        onChange={(e) =>
+                          setEditProjectCost({
+                            ...editProjectCost,
+                            status: e.target.value,
+                          })
+                        }
+                      >
+                        <option value="None">None</option>
+                        <option value="Unreimbursed">Unreimbursed</option>
+                        <option value="Reimbursed">Reimbursed</option>
+                       
+                      </select>
                     <p className="InputCartText">Date of Reimbursement</p>
 
                     <InputStyled
@@ -401,7 +411,7 @@ const ProjectCostPage = () => {
                       type="date"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 50 }}
-                      defaultValue={projectCostById?.data?.dateofreimbursement}
+                      value={projectCostById?.data?.dateofreimbursement}
                       name="dateofreimbursement"
                       onChange={(e) =>
                         setEditProjectCost({
@@ -416,7 +426,7 @@ const ProjectCostPage = () => {
                       id="outlined-basic"
                       type="text"
                       className={Styles.LoginPageInputContainerInput}
-                      defaultValue={projectCostById?.data?.expensecomments}
+                      value={projectCostById?.data?.expensecomments}
                       inputProps={{ maxLength: 500000 }}
                       name="expensecomments"
                       multiline
@@ -435,7 +445,7 @@ const ProjectCostPage = () => {
                       id="outlined-basic"
                       type="search"
                       className={Styles.LoginPageInputContainerInput}
-                      defaultValue={projectCostById?.data?.costincuredby}
+                      value={projectCostById?.data?.costincuredby}
                       inputProps={{ maxLength: 50 }}
                       name="costincuredby"
                       slotProps={{
@@ -455,41 +465,30 @@ const ProjectCostPage = () => {
                       }
                     />
                     <p className="InputCartText">Project</p>
-                    <SelectStyled
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      defaultValue={projectCostById?.data?.projectname}
+                   
+
+                    <select
+                        className="SearchSelectFilter"
+                        value={projectCostById?.data?.projectname}
                       onChange={(e) =>
                         setEditProjectCost({
                           ...editProjectCost,
                           projectname: e.target.value,
                         })
                       }
-                      slotProps={{
-                        input: {
-                          endAdornment: (
-                            <InputAdornment position="start">
-                              <SearchIcon />
-                            </InputAdornment>
-                          ),
-                        },
-                      }}
-                    >
-                      <MenuItem value="-None-">-None-</MenuItem>
-                      {Array.isArray(projectList?.data) &&
-                      projectList?.data.length > 0 ? (
-                        projectList?.data.map((project) => (
-                          <MenuItem
-                            key={project.projectname}
-                            value={project.projectname}
-                          >
-                            {project.projectname}
-                          </MenuItem>
-                        ))
-                      ) : (
-                        <MenuItem disabled>No Projects Available</MenuItem>
-                      )}
-                    </SelectStyled>
+                     
+                      >
+                        <option value="None">None</option>
+                        {Array.isArray(projectList?.data) && projectList.data.length > 0 ? (
+                          projectList.data.map((project) => (
+                            <option key={project.projectid} value={project.projectid}>
+                               {project.projectname}
+                            </option>
+                          ))
+                        ) : (
+                          <option disabled>No Projects Available</option>
+                        )}
+                      </select>
                   </div>
                 </div>
               </div>
@@ -631,6 +630,53 @@ const ProjectCostPage = () => {
           </div>
         </Box>
       </Modal>
+
+         <Modal
+                    open={deleteConfimationModelOpen}
+                    onClose={handlesetDeleteConfimationModelClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                  >
+                    <Box class="modal">
+                      <div className={Styles.projectCostPageModelPopupContainer}>
+                        <div className="ModelPopupHeader">
+                          <p className="ModelPopupHeaderText">Delete Project Cost</p>
+                          <CloseOutlinedIcon
+                            onClick={() => handlesetDeleteConfimationModelClose()}
+                            className="ModelPopupHeaderIcon"
+                          />
+                        </div>
+                        <div className="ModelPopupbody">
+                          <p
+                            className={Styles.projectCostPageModelPopupContainerDeteleText}
+                          >
+                            Do you really want to remove this Project Cost :{" "}
+                            <span
+                              className={
+                                Styles.projectCostPageModelPopupContainerDeteleTextProducerName
+                              }
+                            >
+                             {projectCostById?.data?.costdescription}
+                            </span> 
+                          </p>
+                        </div>
+                        <div className="ModelPopupfooter">
+                          <button
+                            className="CancelButton"
+                            onClick={() => handlesetDeleteConfimationModelClose()}
+                          >
+                            No !
+                          </button>
+                          <button
+                            className="SubmitButton"
+                            // onClick={() => handleDeleteEdit()}
+                          >
+                            Yes !
+                          </button>
+                        </div>
+                      </div>
+                    </Box>
+                  </Modal>
     </div>
   );
 };
