@@ -389,7 +389,7 @@ useEffect(() => {
   
       if (response?.payload) {
         toast.success("Producer Added Successfully!!!")
-        window.location.reload();
+       
         const newUser = {
           S_no: allData.length + 1,
           name: `${response.payload.firstname} ${response.payload.lastname}`,
