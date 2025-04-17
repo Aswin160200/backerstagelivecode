@@ -603,6 +603,7 @@ console.log(fetchedUsers,"fetchedUsers")
                         onChange={(e)=> setCreateSubscription({...createsubscription, producersid:e.target.value })}
 
                       >
+                         <option >None</option>
                         {Array.isArray(userList) && userList.length > 0 ? (
                           userList.map((user) => (
                             <option key={user.userid} value={user.userid}>

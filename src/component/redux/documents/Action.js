@@ -1,15 +1,15 @@
 import {
-    EDIT_DISRIBUTION_BY_ID,
-    EDIT_DISRIBUTION_BY_ID_RESPONSE,
-
+  CREATE_DOCUMENTS,
+  CREATE_DOCUMENTS_RESPONSE,
+   
 } from "./ActionTypes";
 
-export const getAllDistributions = (allDistributions) => ({
-  type: GET_ALL_DISTRIBUTIONS,
-  payload: allDistributions,
+export const createDocumetsFiles = (createDocumets) => ({
+  type: CREATE_DOCUMENTS,
+  payload: createDocumets,
 });
 
-export const getAllDistributionsResponse = (allDistributionsResponse) => ({
-  type: GET_ALL_DISTRIBUTIONS_RESPONSE,
-  payload: allDistributionsResponse,
+export const createDocumetsResponse = (createDocumetsResponse) => ({
+  type: CREATE_DOCUMENTS_RESPONSE,
+  payload: createDocumetsResponse,
 });

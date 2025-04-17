@@ -87,6 +87,10 @@ const DistributionsPage = () => {
     (state) => state.projects.getProjectbyProducerId
   );
 
+   const projectIdList = useSelector(
+        (state) => state.projects.getProjectByIdSuccessfull
+      );
+
   const DistributionByProducer = useSelector(
     (state) => state.distributions.getByProducersIdSuccessfull
   );
@@ -98,6 +102,7 @@ const DistributionsPage = () => {
   useEffect(() => {
     dispatch(getByProducersId(projectid));
     dispatch(getProjectByProducerId(storedUser.userid));
+    dispatch(getProjectsByID(projectid));
   }, []);
 
   const [allData, setAllData] = useState([]);
@@ -349,24 +354,16 @@ const [deleteConfimationModelOpen, setDeleteConfimationModelOpen] =useState(fals
                   <div className="InputCart">
                     <p className="InputCartText">Project</p>
 
-           
-                    <select
-                        className="SearchSelectFilter"
-                        value={distributionById?.data?.projectid}
-                        onChange={(e) => setEditDistribution({ ...editDistribution, projectname: e.target.value })}
-                       
-                      >
-                        <option value="None">None</option>
-                        {Array.isArray(projectList?.data) && projectList.data.length > 0 ? (
-                          projectList.data.map((project) => (
-                            <option key={project.projectid} value={project.projectid}>
-                               {project.projectname}
-                            </option>
-                          ))
-                        ) : (
-                          <option disabled>No Projects Available</option>
-                        )}
-                      </select>
+                    <InputStyled
+                      id="outlined-basic"
+                       type="text"
+                      className={Styles.LoginPageInputContainerInput}
+                      inputProps={{ maxLength: 20 }}
+                      value={projectIdList.data?.projectname}
+                      name="firstname"
+                      onChange={(e) => setEditDistribution({ ...editDistribution, projectname: e.target.value })}
+                    />
+                   
                     <p className="InputCartText">Amount of Destribution</p>
 
                     <InputStyled

@@ -1,20 +1,20 @@
 import {
-    GET_ALL_DISTRIBUTIONS_RESPONSE,
+  CREATE_DOCUMENTS_RESPONSE,
 
 } from "./ActionTypes";
 
 const initialState = {
   error: "",
-  getAllDistributionsData: "",
+  createDocumentSuccessfully: "",
   
 };
 
-const distributions = (state = initialState, action) => {
+const documents = (state = initialState, action) => {
   switch (action.type) {
-    case GET_ALL_DISTRIBUTIONS_RESPONSE:
+    case CREATE_DOCUMENTS_RESPONSE:
       state = {
         ...state,
-        getAllDistributionsData: action.payload,
+        createDocumentSuccessfully: action.payload,
       };
       break;
      
@@ -25,4 +25,4 @@ const distributions = (state = initialState, action) => {
   return state;
 };
 
-export default distributions;
+export default documents;

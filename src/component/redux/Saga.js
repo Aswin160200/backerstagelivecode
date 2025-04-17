@@ -8,6 +8,8 @@ import subscription from "./subscription/Saga";
 import distributions from "./distributions/Saga";
 import projectCost from "./projectCost/Saga";
 import notes from "./notes/Saga";
+import documents from "./documents/Saga";
+
 
 export default function* rootSaga() {
     yield all([
@@ -20,5 +22,6 @@ export default function* rootSaga() {
         distributions(),
         projectCost(),
         notes(),
+        documents(),
     ])
 }

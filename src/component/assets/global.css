@@ -389,3 +389,10 @@ border-bottom: 1px solid var(--darkBlue);
     padding: 0rem 0.9rem;
     font-family: var(--defaultFontFamily);
   }
+  .validationErrorMsg {
+    font-size: var(--font-size_14);
+    /* font-weight: var(--font-weight_400); */
+    color: var(--lightRed);
+    letter-spacing: 2 0.3rem;
+    letter-spacing: 0.1rem;
+  }

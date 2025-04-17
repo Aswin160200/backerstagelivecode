@@ -20,7 +20,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getProjectsByID } from "../../../../../redux/Action";
+import { createDocumetsFiles, getProjectsByID } from "../../../../../redux/Action";
 
 export const InputStyled = styled(TextField)`
   & .MuiOutlinedInput-root {
@@ -77,54 +77,27 @@ const DcoumentsPage = () => {
     (state) => state.projects.getProjectByIdSuccessfull
   );
 
+  const storedUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
+
+
   useEffect(() => {
     dispatch(getProjectsByID(projectid));
   }, [projectid]);
 
   const [allData, setAllData] = useState([]);
 
-  // const allData = [
-  //   {
-  //       fileName: <p><InsertPageBreakOutlinedIcon  style={{color: "red"}}/>vividinfortech Agr...</p>,
-  //       createddate: "03/22/2025",
-  //       updatedOn: "03/27/2025",
-  //       reletedTo:"VIVID Project",
-  //       parentFlow:"VIVID Ho..",
-  //       action: (
-  //         <div className="TableActionContainer">
-  //         <EditOutlinedIcon className="TableActionEditIcon" />
-  //         <SaveAltOutlinedIcon
-  //           className="TableActionViewIcon"
-  //         />
-  //         <DeleteOutlineOutlinedIcon
-  //           className="TableActionDeleteIcon"
-  //         />
-  //       </div>
-  //     ),
-  //     generate:<button className={Styles.DcoumentsPageGenerateButton} onClick={()=> handlecOpenWaterMarkDoc()}>Generate</button>,
-  //   },
-
-  //     {
-  //       fileName: <p><InsertPageBreakOutlinedIcon  style={{color: "red"}}/> backerstge Agr...</p>,
-  //       createddate: "03/19/2025",
-  //       updatedOn: "03/25/2025",
-  //       reletedTo:"BACKERSTAGE ",
-  //       parentFlow:"backerstage Ho..",
-  //       action: (
-  //        <div className="TableActionContainer">
-  //        <EditOutlinedIcon className="TableActionEditIcon" />
-  //        <SaveAltOutlinedIcon
-  //          className="TableActionViewIcon"
-  //        />
-  //        <DeleteOutlineOutlinedIcon
-  //          className="TableActionDeleteIcon"
-  //        />
-  //      </div>
-  //     ),
-  //     generate:<button className={Styles.DcoumentsPageGenerateButton} onClick={()=> handlecOpenWaterMarkDoc()}>Generate</button>,
-  //   },
-
-  // ];
+  const [createDocuments, setDreateDocuments]=useState(
+    
+      {
+        projectid: projectid,
+        investorid:null,
+        producersid: storedUser.userid,
+        filename:"",
+        filetype: "",
+        choosefile:"",
+        filedata:"",
+      }   
+  )
 
   const tableHead = {
     fileName: "File Name",
@@ -241,6 +214,13 @@ const DcoumentsPage = () => {
     setRole(event.target.value);
   };
 
+  const handleCreateDocumentUpload = () => {
+  
+    dispatch(createDocumetsFiles(createDocuments));
+    
+  }
+
+
   return (
     <div>
       <div className={Styles.DcoumentsPagePageTabsContainerTable}>
@@ -317,7 +297,7 @@ const DcoumentsPage = () => {
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 20 }}
                       name="firstname"
-                      // onChange={(e) => setCreateInvestor({ ...createInvestor, firstname: e.target.value })}
+                      onChange={(e) => setDreateDocuments({ ...createDocuments, filename: e.target.value })}
                     />
                     {/* {error?.username && (
               <span className={Styles.registerErrormsg}>{error?.username}</span>
@@ -326,10 +306,12 @@ const DcoumentsPage = () => {
                     
                     <select
                         className="SearchSelectFilter"
-                        // value={addPartysProject.investorid || "None"}
+                        value={createDocuments.choosefile || "None"}
                         // onChange={(e) =>
                         //   setAddPartysProject({ ...addPartysProject, investorid: e.target.value })
                         // }
+                        onChange={(e) => setDreateDocuments({ ...createDocuments, choosefile: e.target.value })}
+
                       >
                         <option value="None">-None-</option>
                         <option value="Agreements">Agreements</option>
@@ -348,12 +330,8 @@ const DcoumentsPage = () => {
                         className=""
                         inputProps={{ maxLength: 50 }}
                         name="uploadeddocument"
-                        // onChange={(e) =>
-                        //   setCreateProject({
-                        //     ...createProject,
-                        //     uploadeddocument: e.target.files[0],
-                        //   })
-                        // }
+                        onChange={(e) => setDreateDocuments({ ...createDocuments, filedata: e.target.value })}
+
                       />
                     </div>
                   </div>
@@ -368,8 +346,8 @@ const DcoumentsPage = () => {
                       multiline
                       rows={4}
 
-                      // onChange={(e) => setCreateInvestor({ ...createInvestor, lastname: e.target.value })}
-                    />
+                      onChange={(e) => setDreateDocuments({ ...createDocuments, filetype: e.target.value })}
+                      />
                     {/* {error?.username && (
               <span className={Styles.registerErrormsg}>{error?.username}</span>
             )} */}
@@ -386,7 +364,7 @@ const DcoumentsPage = () => {
               </button>
               <button
                 className="SubmitButton"
-                onClick={() => handleCloseDocumentUpload()}
+                onClick={() => handleCreateDocumentUpload()}
               >
                 Upload
               </button>

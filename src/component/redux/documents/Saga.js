@@ -1,28 +1,24 @@
 import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
-import {
-    GET_ALL_DISTRIBUTIONS,
-  
-} from "./ActionTypes";
+import { CREATE_DOCUMENTS } from "./ActionTypes";
 import { Service } from "../../service/Helper";
-import {
-    getAllDistributionsResponse,
-  
-} from "./Action";
+import { createDocumetsResponse } from "./Action";
 
-function* getDocumentsByProjectID({payload : id}) {
+function* createDocuments({ payload: createDocumets }) {
   try {
-    const response = yield call(Service.commonFetch, `/distributions/project/${id}`, "GET", null);
-    yield put(getAllDistributionsResponse(response));
+    const response = yield call(
+      Service.commonFetch,
+      "/documents",
+      "POST",
+      createDocumets,
+      null
+    );
+    yield put(createDocumetsResponse(response));
     console.log(response);
   } catch (error) {}
 }
 
-
-
-
-function* distributions() {
-  yield takeEvery(GET_ALL_DISTRIBUTIONS, getDocumentsByProjectID);
- 
+function* documents() {
+  yield takeEvery(CREATE_DOCUMENTS, createDocuments);
 }
 
-export default distributions;
+export default documents;

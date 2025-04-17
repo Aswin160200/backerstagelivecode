@@ -1,2 +1,3 @@
 export const CREATE_NOTE = "CREATE_NOTE"
 export const CREATE_NOTE_RESPONSE = "CREATE_NOTE_RESPONSE"
+

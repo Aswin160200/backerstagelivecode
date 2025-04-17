@@ -141,7 +141,10 @@ const Producers = () => {
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false)
+    setError(initialErrorMessage)
+  };
 
   const [openEdit, setOpenEdit] = useState(false);
 
@@ -166,6 +169,23 @@ const [updateId,setUpdateId]=useState();
     }
   const handlesetDeleteConfimationModelClose = () => setDeleteConfimationModelOpen(false);
 
+  const initialErrorMessage =  {
+    username: "",
+    password: "",
+    firstname: "",
+    lastname: "",
+    email: "",
+    phone: "",
+    legalentity: "",
+    street: "",
+    city: "",
+    state: "",
+    role: "",
+    zipcode: "",
+    status: "",
+};
+
+    const [error, setError] = useState(initialErrorMessage);
   
 
   const [allData, setAllData] = useState([]);
@@ -377,19 +397,164 @@ useEffect(() => {
     cloneDeep(allData.slice(0, countPerPage))
   );
 
-  // const handleAddUser = () => {
-  //   dispatch(addUsers(producerUser));
-  //   setOpen(false);
-  // }
+ 
 
 
+  // const handleAddUser = async () => {
+
+  //   let errors =  {
+  //     username: "",
+  //     password: "",
+  //     firstname: "",
+  //     lastname: "",
+  //     email: "",
+  //     phone: "",
+  //     legalentity: "",
+  //     street: "",
+  //     city: "",
+  //     state: "",
+  //     role: "",
+  //     zipcode: "",
+  //     status: "",
+  // };
+  //   setError(errors);
+
+  //   if (producerUser.username === "") {
+  //     errors.username = "*Please enter the username";
+  //   }
+  //   if (producerUser.password === "") {
+  //     errors.password = "*Please enter the password";
+  //   }
+
+  //   if (errors.username || errors.password) {
+  //     setError(errors);
+  //     return;
+  //   }
+  //   try {
+  //     const response = await dispatch(addUsers(producerUser));
+  
+  //     if (response?.payload) {
+  //       toast.success("Producer Added Successfully!!!")
+       
+  //       const newUser = {
+  //         S_no: allData.length + 1,
+  //         name: `${response.payload.firstname} ${response.payload.lastname}`,
+  //         email: response.payload.username,
+  //         phone: response.payload.phone,
+  //         state: response.payload.state,
+  //         city: response.payload.city,
+  //         zip: response.payload.zipcode,
+  //         status: response.payload.status,
+  //         action: (
+  //           <div className="TableActionContainer">
+  //             <EditOutlinedIcon className="TableActionEditIcon" />
+  //             <Link to="/producers_details" className="Link">
+  //               <RemoveRedEyeOutlinedIcon className="TableActionViewIcon" />
+  //             </Link>
+  //             <DeleteOutlineOutlinedIcon className="TableActionDeleteIcon" />
+  //           </div>
+  //         ),
+  //       };
+  
+  //       setAllData((prevData) => [newUser, ...prevData]);
+  //       setCollection((prevCollection) => [newUser, ...prevCollection]);
+       
+  //       setOpen(false);
+  //       setProducerUser({
+  //         username: "",
+  //         password: "",
+  //         firstname: "",
+  //         lastname: "",
+  //         email: "",
+  //         phone: "",
+  //         legalentity: "",
+  //         street: "",
+  //         city: "",
+  //         state: "",
+  //         role: "",
+  //         zipcode: "",
+  //         status: "",
+  //       });
+
+  //     }
+     
+  //   } catch (error) {
+  //     // console.error("Error adding user:", error);
+  //     toast.error("Failed to add Producer. Please try again.");
+  //   }
+  // };
+  
   const handleAddUser = async () => {
+    let error = {
+      username: "",
+      password: "",
+      firstname: "",
+      lastname: "",
+      email: "",
+      phone: "",
+      legalentity: "",
+      street: "",
+      city: "",
+      state: "",
+      role: "",
+      zipcode: "",
+      status: "",
+    };
+  
+    // Validate required fields
+    if (producerUser.username === "") {
+      error.username = "*Please enter the username";
+    }
+    if (producerUser.password === "") {
+      error.password = "*Please enter the password";
+    }
+    if (producerUser.firstname === "") {
+      error.firstname = "*Please enter the firstname";
+    }
+    if (producerUser.lastname === "") {
+      error.lastname = "*Please enter the lastname";
+    }
+    if (producerUser.email === "") {
+      error.email = "*Please enter the email";
+    }
+    if (producerUser.phone === "") {
+      error.phone = "*Please enter the phone";
+    }
+    if (producerUser.legalentity === "") {
+      error.legalentity = "*Please enter the legal entity";
+    }
+    if (producerUser.street === "") {
+      error.street = "*Please enter the street";
+    }
+    if (producerUser.city === "") {
+      error.city = "*Please enter the city";
+    }
+    if (producerUser.state === "") {
+      error.state = "*Please enter the state";
+    }
+    if (producerUser.role === "") {
+      error.role = "*Please select the role";
+    }
+    if (producerUser.zipcode === "") {
+      error.zipcode = "*Please enter the zipcode";
+    }
+    if (producerUser.status === "") {
+      error.status = "*Please select the status";
+    }
+  
+    // Check if there are any error
+    const hasError = Object.values(error).some((val) => val !== "");
+    if (hasError) {
+      setError(error);
+      return;
+    }
+  
     try {
       const response = await dispatch(addUsers(producerUser));
   
       if (response?.payload) {
-        toast.success("Producer Added Successfully!!!")
-       
+        toast.success("Producer Added Successfully!!!");
+  
         const newUser = {
           S_no: allData.length + 1,
           name: `${response.payload.firstname} ${response.payload.lastname}`,
@@ -412,7 +577,7 @@ useEffect(() => {
   
         setAllData((prevData) => [newUser, ...prevData]);
         setCollection((prevCollection) => [newUser, ...prevCollection]);
-       
+  
         setOpen(false);
         setProducerUser({
           username: "",
@@ -429,11 +594,8 @@ useEffect(() => {
           zipcode: "",
           status: "",
         });
-
       }
-     
     } catch (error) {
-      // console.error("Error adding user:", error);
       toast.error("Failed to add Producer. Please try again.");
     }
   };
@@ -658,9 +820,9 @@ useEffect(() => {
                       name="username"
                       onChange={(e) => setProducerUser({ ...producerUser, username: e.target.value })}
                     />
-                    {/* {error?.username && (
-              <span className={Styles.registerErrormsg}>{error?.username}</span>
-            )} */}
+                    {error?.username && (
+                      <span className="validationErrorMsg">{error?.username}</span>
+                    )}
                   </div>
                   <div className={Styles.ProducersPageInputCart}>
                     <p className={Styles.ProducersPageInputCartText}>
@@ -674,9 +836,9 @@ useEffect(() => {
                       name="password"
                       onChange={(e) => setProducerUser({ ...producerUser, password: e.target.value })}
                     />
-                    {/* {error?.username && (
-              <span className={Styles.registerErrormsg}>{error?.username}</span>
-            )} */}
+                    {error?.username && (
+                        <span className="validationErrorMsg">{error?.password}</span>
+                      )}
                   </div>
                 </div>
 
@@ -696,9 +858,9 @@ useEffect(() => {
                       name="firstname"
                       onChange={(e) => setProducerUser({ ...producerUser, firstname: e.target.value })}
                     />
-                    {/* {error?.username && (
-                      <span className={Styles.registerErrormsg}>{error?.username}</span>
-                    )} */}
+                    {error?.username && (
+                      <span className="validationErrorMsg">{error?.firstname}</span>
+                    )}
                   </div>
                   <div className={Styles.ProducersPageInputCart}>
                     <p className={Styles.ProducersPageInputCartText}>
@@ -712,9 +874,9 @@ useEffect(() => {
                       name="lastname"
                       onChange={(e) => setProducerUser({ ...producerUser, lastname: e.target.value })}
                     />
-                    {/* {error?.username && (
-                      <span className={Styles.registerErrormsg}>{error?.username}</span>
-                    )} */}
+                    {error?.username && (
+                      <span className="validationErrorMsg">{error?.lastname}</span>
+                    )}
                   </div>
                 </div>
                 <div className={Styles.ProducersPageInputContent}>
@@ -728,9 +890,9 @@ useEffect(() => {
                       name="phone"
                       onChange={(e) => setProducerUser({ ...producerUser, phone: e.target.value })}
                     />
-                    {/* {error?.username && (
-                      <span className={Styles.registerErrormsg}>{error?.username}</span>
-                    )} */}
+                    {error?.username && (
+                      <span className="validationErrorMsg">{error?.phone}</span>
+                    )}
                   </div>
                 </div>
                 <div className={Styles.ProducersPageInputContent}>
@@ -746,9 +908,9 @@ useEffect(() => {
                       name="legalentity"
                       onChange={(e) => setProducerUser({ ...producerUser, legalentity: e.target.value })}
                     />
-                    {/* {error?.username && (
-                      <span className={Styles.registerErrormsg}>{error?.username}</span>
-                    )} */}
+                    {error?.username && (
+                      <span className="validationErrorMsg">{error?.legalentity}</span>
+                    )}
                   </div>
                   <div className={Styles.ProducersPageInputCart}>
                     <p className={Styles.ProducersPageInputCartText}>Street</p>
@@ -760,9 +922,9 @@ useEffect(() => {
                       name="street"
                       onChange={(e) => setProducerUser({ ...producerUser, street: e.target.value })}
                     />
-                    {/* {error?.username && (
-                      <span className={Styles.registerErrormsg}>{error?.username}</span>
-                    )} */}
+                    {error?.username && (
+                      <span className="validationErrorMsg">{error?.street}</span>
+                    )}
                   </div>
                 </div>
 
@@ -777,9 +939,9 @@ useEffect(() => {
                       name="city"
                       onChange={(e) => setProducerUser({ ...producerUser, city: e.target.value })}
                     />
-                    {/* {error?.username && (
-                      <span className={Styles.registerErrormsg}>{error?.username}</span>
-                    )} */}
+                    {error?.username && (
+                      <span className="validationErrorMsg">{error?.city}</span>
+                    )}
                   </div>
                   <div className={Styles.ProducersPageInputCart}>
                     <p className={Styles.ProducersPageInputCartText}>State</p>
@@ -791,9 +953,9 @@ useEffect(() => {
                       name="state"
                       onChange={(e) => setProducerUser({ ...producerUser, state: e.target.value })}
                     />
-                    {/* {error?.username && (
-                      <span className={Styles.registerErrormsg}>{error?.username}</span>
-                    )} */}
+                    {error?.username && (
+                      <span className="validationErrorMsg">{error?.state}</span>
+                    )}
                   </div>
                 </div>
                 <div className={Styles.ProducersPageInputContent}>
@@ -809,9 +971,9 @@ useEffect(() => {
                       name="zipcode"
                       onChange={(e) => setProducerUser({ ...producerUser, zipcode: e.target.value })}
                     />
-                    {/* {error?.username && (
-                      <span className={Styles.registerErrormsg}>{error?.username}</span>
-                    )} */}
+                    {error?.username && (
+                      <span className="validationErrorMsg">{error?.zipcode}</span>
+                    )}
                   </div>
                   <div className={Styles.ProducersPageInputCart}>
                     <p className={Styles.ProducersPageInputCartText}>Status</p>
@@ -823,6 +985,9 @@ useEffect(() => {
                       <option value="Acitve">acitve</option>
                       <option value="Inacitve">Inacitve</option>
                     </select>
+                    {error?.username && (
+                      <span className="validationErrorMsg">{error?.status}</span>
+                    )}
                   </div>
                 </div>
               </div>

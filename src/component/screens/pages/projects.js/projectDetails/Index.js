@@ -41,6 +41,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from 'react-toastify';
 import DistributionsPage from "./Distributions/Index";
 import ProjectCostPage from "./ProjectCost/Index";
+import NotesPage from "./Notes/Index";
 
 
 
@@ -805,6 +806,10 @@ useEffect(() => {
                   label={<p className={Styles.TabAddIconTExt}>Project Costs</p>}
                   {...a11yProps(1)}
                 />
+                <Tab
+                  label={<p className={Styles.TabAddIconTExt}>Notes</p>}
+                  {...a11yProps(1)}
+                />
               </Tabs>
             </AppBar>
             <TabPanel value={value} index={0} dir={theme.direction}>
@@ -1127,6 +1132,13 @@ useEffect(() => {
             </div>
             <ProjectCostPage/>
             </TabPanel>
+            <TabPanel value={value} index={6} dir={theme.direction}>
+            <div className="PageHeader">
+            <p className="PageTableTitleText">Notes</p>
+            <button className="PageTableNavContentButton" onClick={()=> handleOpenNotesDoc()}>Add New</button>
+            </div>
+            <NotesPage/>
+            </TabPanel>
           </Box>
         </div>
         <div className={Styles.ProjectDetailsPartiesAndNotesContainer}>
@@ -1139,19 +1151,19 @@ useEffect(() => {
                     <ExpandMoreOutlinedIcon className={Styles.ProjectDetailsPAtiesAndNotesIcon} onClick={()=> HandleCahngePatiesAndNotes()}/>
                     </div>
                     {partiesAndNotesOpen === true ? <div className={Styles.ProjectDetailsPartiesContainer}>
-                            <p className={Styles.ProjectDetailsPartiesContainerText}>Mathew   <span onClick={()=> handleOpenPartysProject()}><  AddBoxIcon /></span> </p>
+                            <p className={Styles.ProjectDetailsPartiesContainerText}>{projectIdList.data?.projectname}   <span onClick={()=> handleOpenPartysProject()}><  AddBoxIcon /></span> </p>
                           
                             <div className={Styles.ProjectDetailsPartiesContent}>
                                 <p className={Styles.ProjectDetailsPartiesContentTitle}>Status</p>
-                                <p className={Styles.ProjectDetailsPartiesContentText}>Investing In Deal</p>
+                                <p className={Styles.ProjectDetailsPartiesContentText}>{projectIdList.data?.status}</p>
                             </div>
                             <div className={Styles.ProjectDetailsPartiesContent}>
                                 <p className={Styles.ProjectDetailsPartiesContentTitle}>Interested Amount</p>
-                                <p className={Styles.ProjectDetailsPartiesContentText}>General</p>
+                                <p className={Styles.ProjectDetailsPartiesContentText}>{projectIdList.data?.totalallocation}</p>
                             </div>
                             <div className={Styles.ProjectDetailsPartiesContent}>
                                 <p className={Styles.ProjectDetailsPartiesContentTitle}>Final Amount</p>
-                                <p className={Styles.ProjectDetailsPartiesContentText}>$50,974</p>
+                                <p className={Styles.ProjectDetailsPartiesContentText}>{projectIdList.data?.totalraised}</p>
                             </div>
                     </div>:""}
                 </div>
@@ -2178,7 +2190,7 @@ useEffect(() => {
 
                     <InputStyled
                       id="outlined-basic"
-                       type="text"
+                       type="date"
                       className={Styles.LoginPageInputContainerInput}
                       inputProps={{ maxLength: 20 }}
                       name="firstname"
@@ -2191,22 +2203,16 @@ useEffect(() => {
                     Project
                     </p>
 
-                  
-                  <select
-                        className="SearchSelectFilter"
-                        onChange={(e) => setAddDistribution({ ...addDistribution, projectname: e.target.value })}
-                      >
-                        <option value="None">None</option>
-                        {Array.isArray(projectList?.data) && projectList.data.length > 0 ? (
-                          projectList.data.map((project) => (
-                            <option key={project.projectid} value={project.projectid}>
-                               {project.projectname}
-                            </option>
-                          ))
-                        ) : (
-                          <option disabled>No Projects Available</option>
-                        )}
-                      </select>
+                    <InputStyled
+                      id="outlined-basic"
+                       type="text"
+                      className={Styles.LoginPageInputContainerInput}
+                      inputProps={{ maxLength: 20 }}
+                      value={projectIdList.data?.projectname}
+                      name="firstname"
+                    
+                    />
+                
                     <p className="InputCartText">
                     Amount of Destribution
                     </p>
@@ -2377,22 +2383,16 @@ useEffect(() => {
                   <p className="InputCartText">
                     Project
                   </p>
-                  
-                     <select
-                        className="SearchSelectFilter"
-                        onChange={(e) => setAddProjectCost({ ...addProjectCost, projectname: e.target.value })}
-                        >
-                        <option value="None">None</option>
-                        {Array.isArray(projectList?.data) && projectList.data.length > 0 ? (
-                          projectList.data.map((project) => (
-                            <option key={project.projectid} value={project.projectid}>
-                               {project.projectname}
-                            </option>
-                          ))
-                        ) : (
-                          <option disabled>No Projects Available</option>
-                        )}
-                      </select>
+                  <InputStyled
+                      id="outlined-basic"
+                       type="text"
+                      className={Styles.LoginPageInputContainerInput}
+                      inputProps={{ maxLength: 20 }}
+                      value={projectIdList.data?.projectname}
+                      name="firstname"
+                      onChange={(e) => setAddProjectCost({ ...addProjectCost, projectname: e.target.value })}
+                    />
+                     
                 </div> 
               </div>
                

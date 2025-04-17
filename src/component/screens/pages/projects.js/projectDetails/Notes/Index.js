@@ -81,7 +81,7 @@ export const SelectStyled = styled(Select)`
   }
 `;
 
-const ProjectCostPage = () => {
+const NotesPage = () => {
   let dispatch = useDispatch();
   const { projectid } = useParams();
   const storedUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
@@ -163,11 +163,9 @@ const ProjectCostPage = () => {
   const handleCloseViewDistribution = () => setOpenViewProjectCost(false);
 
   const tableHead = {
-    costdescription: "Cost Description",
-    totalcost: "Total Cost",
-    dateofcost: "Date of Cost",
-    status: "Status",
-    projectname: "Project Name",
+    noteTitle: "Note",
+    noteDiscription: "Note Discription",
+   
     action: "Actions",
   };
   const countPerPage = 5;
@@ -676,4 +674,4 @@ const ProjectCostPage = () => {
     </div>
   );
 };
-export default ProjectCostPage;
+export default NotesPage;

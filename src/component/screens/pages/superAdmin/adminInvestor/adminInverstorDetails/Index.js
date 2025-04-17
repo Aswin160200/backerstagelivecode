@@ -190,7 +190,7 @@ const AdminInvestorsDetails= () => {
                                     </Link>
         </div>
         <div className={Styles.AdminInvestorPageTitleCart}>
-          <p className={Styles.AdminInvestorPageTitleCartText}><span>Producer - </span> {investorById.data?.firstname} {investorById.data?.lastname}</p>
+          <p className={Styles.AdminInvestorPageTitleCartText}><span>Producer / Investor / </span> {investorById.data?.firstname} {investorById.data?.lastname}</p>
          
         </div>
 
