@@ -145,10 +145,29 @@ const ProjectsPage = () => {
 
   const storedUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
 
-
+  const initialErrorMessage =  {
+    projectname: "",
+    projectsummary: "",
+    status: "",
+    startdate: "",
+    deadline: "",
+    uploadeddocument: "",
+    billedname: "",
+    totalcapitalization: "",
+    totalallocation: "",
+    totalraised: "",
+    houseticketlink: "",
+    houseticketcomments: "",
+    generalcomments: "",
+  };
+  
+      const [error, setError] = useState(initialErrorMessage);
 
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    setOpen(true);
+    setError(initialErrorMessage)
+  }
   const handleClose = () => setOpen(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [updateID, setUpdateID] = useState("");
@@ -175,7 +194,7 @@ const ProjectsPage = () => {
       }
     const handlesetDeleteConfimationModelClose = () => setDeleteConfimationModelOpen(false);
   
-    
+
 
   const [selectedStatus, setSelectedStatus] = useState("Status");
 
@@ -220,13 +239,180 @@ const ProjectsPage = () => {
   //   handleClose();
   // };
 
+  // const handleCreateProject = async () => {
+
+  //   let error = {
+  //     projectname: "",
+  //     projectsummary: "",
+  //     status: "",
+  //     startdate: "",
+  //     deadline: "",
+  //     uploadeddocument: "",
+  //     billedname: "",
+  //     totalcapitalization: "",
+  //     totalallocation: "",
+  //     totalraised: "",
+  //     houseticketlink: "",
+  //     houseticketcomments: "",
+  //     generalcomments: "",
+  //   };
+
+  //   let isValid = true;
+  
+  //   if (createProject.projectname === "") {
+  //     error.projectname = "*Please select the project name";
+  //     isValid = false;
+  //   }
+
+  //   setError(error);
+  
+
+  //   try {
+  //     const response = await dispatch(createProjects(createProject));
+
+  //     if (response?.payload) {
+  //       toast.success("Project Created Successfully!!!");
+
+  //       const newProject = {
+  //         S_no: allData.length + 1,
+  //         projectname: response.payload.projectname,
+  //         status: response.payload.status,
+  //         startdate: response.payload.startdate,
+  //         houseticket: response.payload.houseticketlink,
+  //         billedname: response.payload.billedname,
+  //         totalraised: response.payload.totalraised,
+  //         action: (
+  //           <div className={Styles.projectTableActionContainer}>
+  //             <EditOutlinedIcon
+  //               className={Styles.ProjectTableActionEditIcon}
+  //               onClick={() => handleOpenEdit(response.payload.projectid)}
+  //             />
+  //             <Link
+  //               to={`/project_details/${response.payload.projectid}`}
+  //               className="Link"
+  //             >
+  //               <RemoveRedEyeOutlinedIcon
+  //                 className={Styles.ProjectsTableActionViewIcon}
+  //               />
+  //             </Link>
+  //             <DeleteOutlineOutlinedIcon
+             
+  //               className={Styles.ProjectsTableActionDeleteIcon}
+  //             />
+  //           </div>
+  //         ),
+  //       };
+
+  //       setAllData((prevData) => [newProject, ...prevData]);
+  //       setCollection((prevCollection) => [newProject, ...prevCollection]);
+
+  //       setOpen(false);
+  //       setCreateProject({
+  //         producersid: 1,
+  //         projectname: "",
+  //         projectsummary: "",
+  //         status: "",
+  //         startdate: "",
+  //         deadline: "",
+  //         uploadeddocument: "",
+  //         billedname: "",
+  //         totalcapitalization: "",
+  //         totalallocation: "",
+  //         totalraised: "",
+  //         houseticketlink: "",
+  //         houseticketcomments: "",
+  //         generalcomments: "",
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.error("Error creating project:", error);
+  //     toast.error("Failed to create project. Please try again.");
+  //   }
+  // };
+
   const handleCreateProject = async () => {
+    let error = {
+      projectname: "",
+      projectsummary: "",
+      status: "",
+      startdate: "",
+      deadline: "",
+      uploadeddocument: "",
+      billedname: "",
+      totalcapitalization: "",
+      totalallocation: "",
+      totalraised: "",
+      houseticketlink: "",
+      houseticketcomments: "",
+      generalcomments: "",
+    };
+  
+    let isValid = true;
+  
+    if (createProject.projectname === "") {
+      error.projectname = "*Please enter the project name";
+      isValid = false;
+    }
+    if (createProject.projectsummary === "") {
+      error.projectsummary = "*Please enter the project summary";
+      isValid = false;
+    }
+    if (createProject.status === "") {
+      error.status = "*Please select a status";
+      isValid = false;
+    }
+    if (createProject.startdate === "") {
+      error.startdate = "*Please select a start date";
+      isValid = false;
+    }
+    if (createProject.deadline === "") {
+      error.deadline = "*Please select a deadline";
+      isValid = false;
+    }
+    if (createProject.uploadeddocument === "") {
+      error.uploadeddocument = "*Please upload a document";
+      isValid = false;
+    }
+    if (createProject.billedname === "") {
+      error.billedname = "*Please enter the billed name";
+      isValid = false;
+    }
+    if (createProject.totalcapitalization === "") {
+      error.totalcapitalization = "*Please enter total capitalization";
+      isValid = false;
+    }
+    if (createProject.totalallocation === "") {
+      error.totalallocation = "*Please enter total allocation";
+      isValid = false;
+    }
+    if (createProject.totalraised === "") {
+      error.totalraised = "*Please enter total raised";
+      isValid = false;
+    }
+    if (createProject.houseticketlink === "") {
+      error.houseticketlink = "*Please enter house ticket link";
+      isValid = false;
+    }
+    if (createProject.houseticketcomments === "") {
+      error.houseticketcomments = "*Please enter house ticket comments";
+      isValid = false;
+    }
+    if (createProject.generalcomments === "") {
+      error.generalcomments = "*Please enter general comments";
+      isValid = false;
+    }
+  
+    // Set validation error state
+    setError(error);
+  
+    if (!isValid) return; // Skip dispatch if validation fails
+  
     try {
       const response = await dispatch(createProjects(createProject));
-
+  
       if (response?.payload) {
         toast.success("Project Created Successfully!!!");
-
+  
         const newProject = {
           S_no: allData.length + 1,
           projectname: response.payload.projectname,
@@ -250,17 +436,17 @@ const ProjectsPage = () => {
                 />
               </Link>
               <DeleteOutlineOutlinedIcon
-             
                 className={Styles.ProjectsTableActionDeleteIcon}
               />
             </div>
           ),
         };
-
+  
         setAllData((prevData) => [newProject, ...prevData]);
         setCollection((prevCollection) => [newProject, ...prevCollection]);
-
+  
         setOpen(false);
+  
         setCreateProject({
           producersid: 1,
           projectname: "",
@@ -283,6 +469,7 @@ const ProjectsPage = () => {
       toast.error("Failed to create project. Please try again.");
     }
   };
+  
 
   const handleCloseEdit = () => {
     setOpenEdit(false);
@@ -621,7 +808,9 @@ const ProjectsPage = () => {
                             projectname: e.target.value,
                           })
                         }
-                      />
+                      />   {error?.projectname && (
+                        <span className="validationErrorMsg">{error?.projectname}</span>
+                      )}
 
                       <p className={Styles.CreateProjectsInputCartText}>
                         Status
@@ -666,9 +855,9 @@ const ProjectsPage = () => {
                         <option value="Completed">Completed</option>
                         <option value="Other">Other</option>
                         </select>
-                      {/* {error?.username && (
-                      <span className={Styles.registerErrormsg}>{error?.username}</span>
-                    )} */}
+                        {error?.status && (
+                        <span className="validationErrorMsg">{error?.status}</span>
+                      )}
                       <p className={Styles.CreateProjectsInputCartText}>
                         Start Date
                       </p>
@@ -686,9 +875,9 @@ const ProjectsPage = () => {
                           })
                         }
                       />
-                      {/* {error?.username && (
-                      <span className={Styles.registerErrormsg}>{error?.username}</span>
-                    )} */}
+                      {error?.startdate && (
+                        <span className="validationErrorMsg">{error?.startdate}</span>
+                      )}
                       <p className={Styles.CreateProjectsInputCartText}>
                         Upload OA & Subscription Documents as one file
                       </p>
@@ -707,9 +896,9 @@ const ProjectsPage = () => {
                           }
                         />
                       </div>
-                      {/* {error?.username && (
-                      <span className={Styles.registerErrormsg}>{error?.username}</span>
-                    )} */}
+                      {error?.uploadeddocument && (
+                        <span className="validationErrorMsg">{error?.uploadeddocument}</span>
+                      )}
                     </div>
                     <div className={Styles.CreateProjcetsInputCart}>
                       <p className={Styles.CreateProjectsInputCartText}>
@@ -730,9 +919,9 @@ const ProjectsPage = () => {
                           })
                         }
                       />
-                      {/* {error?.username && (
-              <span className={Styles.registerErrormsg}>{error?.username}</span>
-            )} */}
+                        {error?.projectsummary && (
+                        <span className="validationErrorMsg">{error?.projectsummary}</span>
+                      )}
                       <p className={Styles.CreateProjectsInputCartText}>
                         Deadline
                       </p>
@@ -750,9 +939,9 @@ const ProjectsPage = () => {
                           })
                         }
                       />
-                      {/* {error?.username && (
-                      <span className={Styles.registerErrormsg}>{error?.username}</span>
-                    )} */}
+                       {error?.deadline && (
+                        <span className="validationErrorMsg">{error?.deadline}</span>
+                      )}
                     </div>
                   </div>
 
@@ -779,9 +968,9 @@ const ProjectsPage = () => {
                           })
                         }
                       />
-                      {/* {error?.username && (
-                      <span className={Styles.registerErrormsg}>{error?.username}</span>
-                    )} */}
+                       {error?.billedname && (
+                        <span className="validationErrorMsg">{error?.billedname}</span>
+                      )}
                       <p className={Styles.CreateProjectsInputCartText}>
                         Total Allocation
                       </p>
@@ -798,9 +987,9 @@ const ProjectsPage = () => {
                           })
                         }
                       />
-                      {/* {error?.username && (
-                      <span className={Styles.registerErrormsg}>{error?.username}</span>
-                    )} */}
+                      {error?.totalallocation && (
+                        <span className="validationErrorMsg">{error?.totalallocation}</span>
+                      )}
                       <p className={Styles.CreateProjectsInputCartText}>
                         House Ticket Link
                       </p>
@@ -817,9 +1006,9 @@ const ProjectsPage = () => {
                           })
                         }
                       />
-                      {/* {error?.username && (
-                      <span className={Styles.registerErrormsg}>{error?.username}</span>
-                    )} */}
+                       {error?.houseticketlink && (
+                        <span className="validationErrorMsg">{error?.houseticketlink}</span>
+                      )}
                       <p className={Styles.CreateProjectsInputCartText}>
                         General Comments
                       </p>
@@ -838,9 +1027,9 @@ const ProjectsPage = () => {
                           })
                         }
                       />
-                      {/* {error?.username && (
-                      <span className={Styles.registerErrormsg}>{error?.username}</span>
-                    )} */}
+                          {error?.generalcomments && (
+                        <span className="validationErrorMsg">{error?.generalcomments}</span>
+                      )}
                     </div>
                     <div className={Styles.CreateProjcetsInputCart}>
                       <p className={Styles.CreateProjectsInputCartText}>
@@ -859,9 +1048,9 @@ const ProjectsPage = () => {
                           })
                         }
                       />
-                      {/* {error?.username && (
-                      <span className={Styles.registerErrormsg}>{error?.username}</span>
-                    )} */}
+                       {error?.totalcapitalization && (
+                        <span className="validationErrorMsg">{error?.totalcapitalization}</span>
+                      )}
                       <p className={Styles.CreateProjectsInputCartText}>
                         Total Raised
                       </p>
@@ -878,9 +1067,9 @@ const ProjectsPage = () => {
                           })
                         }
                       />
-                      {/* {error?.username && (
-                      <span className={Styles.registerErrormsg}>{error?.username}</span>
-                    )} */}
+                       {error?.totalraised && (
+                        <span className="validationErrorMsg">{error?.totalraised}</span>
+                      )}
                       <p className={Styles.CreateProjectsInputCartText}>
                         House Ticket Comments
                       </p>
@@ -899,9 +1088,9 @@ const ProjectsPage = () => {
                           })
                         }
                       />
-                      {/* {error?.username && (
-                      <span className={Styles.registerErrormsg}>{error?.username}</span>
-                    )} */}
+                      {error?.houseticketcomments && (
+                        <span className="validationErrorMsg">{error?.houseticketcomments}</span>
+                      )}
                     </div>
                   </div>
                 </div>

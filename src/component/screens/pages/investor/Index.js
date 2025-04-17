@@ -187,9 +187,32 @@ const InvestorPage = () => {
   const editinvestorsRespnse = useSelector(
     (state) => state.investors.getEditInvestorsDetails
   );
+
+  const initialErrorMessage =  {
+    firstname: "",
+    lastname: "",
+    emailid: "",
+    address: "",
+    mobilenumber: "",
+    city: "",
+    state: "",
+    zipcode: "",
+    referralsource: "",
+    accredited: "",
+    dateadded: "",
+    generalcomments: "",
+    investorprobability: "",
+    };
+    
+        const [error, setError] = useState(initialErrorMessage);
+
+
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    setError(initialErrorMessage)
+  }
   const [openEdit, setOpenEdit] = useState(false);
 
   const [updateID, setUpdateID] = useState();
@@ -339,7 +362,167 @@ const InvestorPage = () => {
 
   // add investor
 
+  // const addNewInvestor = async () => {
+
+  //   let error = {
+  //     firstname: "",
+  //     lastname: "",
+  //     emailid: "",
+  //     address: "",
+  //     mobilenumber: "",
+  //     city: "",
+  //     state: "",
+  //     zipcode: "",
+  //     referralsource: "",
+  //     accredited: "",
+  //     dateadded: "",
+  //     generalcomments: "",
+  //     investorprobability: "",
+  //   };
+  
+  //   let isValid = true;
+  
+  //   if (createInvestor.firstname === "") {
+  //     error.firstname = "*Please enter the first name";
+  //     isValid = false;
+  //   }
+
+  //   setError(error);
+
+  //   const newInvestorData = {
+  //     ...createInvestor,
+  //     projects: [
+  //       {
+  //         projectname: createInvestor.projectname,
+  //         CoProducers_projects: createInvestor.CoProducers_projects,
+  //         CoProducers_probability: createInvestor.CoProducers_probability,
+  //         status: createInvestor.status,
+  //         final_amount: createInvestor.final_amount,
+  //         invesment_method: createInvestor.invesment_method,
+  //       },
+  //     ],
+  //   };
+
+  //   try {
+  //     const response = await dispatch(addInvestors(newInvestorData)).unwrap(); // Unwrap to get the actual response
+  //     if (response && response.data) {
+  //       const addedInvestor = response.data;
+
+  //       const newEntry = {
+  //         S_no: allData.length + 1,
+  //         investor_Name: `${addedInvestor.firstname} ${addedInvestor.lastname}`,
+  //         email: addedInvestor.emailid,
+  //         phone: addedInvestor.mobilenumber,
+  //         state: addedInvestor.state,
+  //         accredited: addedInvestor.city,
+  //         date: addedInvestor.zipcode,
+  //         action: (
+  //           <div className="TableActionContainer">
+  //             <EditOutlinedIcon
+  //               className="TableActionEditIcon"
+  //               onClick={() => handleOpenEdit(addedInvestor.investorid)}
+  //             />
+  //             <Link
+  //               to={`/investors_details/${addedInvestor.investorid}`}
+  //               className="Link"
+  //             >
+  //               <RemoveRedEyeOutlinedIcon className="TableActionViewIcon" />
+  //             </Link>
+  //             <DeleteOutlineOutlinedIcon className="TableActionDeleteIcon" />
+  //           </div>
+  //         ),
+  //       };
+
+  //       setAllData((prevData) => [newEntry, ...prevData]);
+  //       setCollection((prevCollection) =>
+  //         cloneDeep([newEntry, ...prevCollection.slice(0, countPerPage - 1)])
+  //       );
+  //     }
+  //   } catch (error) {
+  //     console.error("Error adding investor:", error);
+  //   }
+
+  //   handleClose();
+  // };
+
   const addNewInvestor = async () => {
+    let error = {
+      firstname: "",
+      lastname: "",
+      emailid: "",
+      address: "",
+      mobilenumber: "",
+      city: "",
+      state: "",
+      zipcode: "",
+      referralsource: "",
+      accredited: "",
+      dateadded: "",
+      generalcomments: "",
+      investorprobability: "",
+    };
+  
+    let isValid = true;
+  
+    if (createInvestor.firstname === "") {
+      error.firstname = "*Please enter the first name";
+      isValid = false;
+    }
+    if (createInvestor.lastname === "") {
+      error.lastname = "*Please enter the last name";
+      isValid = false;
+    }
+    if (createInvestor.emailid === "") {
+      error.emailid = "*Please enter the email";
+      isValid = false;
+    }
+    if (createInvestor.address === "") {
+      error.address = "*Please enter the address";
+      isValid = false;
+    }
+    if (createInvestor.mobilenumber === "") {
+      error.mobilenumber = "*Please enter the mobile number";
+      isValid = false;
+    }
+    if (createInvestor.city === "") {
+      error.city = "*Please enter the city";
+      isValid = false;
+    }
+    if (createInvestor.state === "") {
+      error.state = "*Please enter the state";
+      isValid = false;
+    }
+    if (createInvestor.zipcode === "") {
+      error.zipcode = "*Please enter the zip code";
+      isValid = false;
+    }
+    if (createInvestor.referralsource === "") {
+      error.referralsource = "*Please enter the referral source";
+      isValid = false;
+    }
+    if (createInvestor.accredited === "") {
+      error.accredited = "*Please select accredited status";
+      isValid = false;
+    }
+    if (createInvestor.dateadded === "") {
+      error.dateadded = "*Please enter the date added";
+      isValid = false;
+    }
+    if (createInvestor.investorprobability === "") {
+      error.investorprobability = "*Please enter investor probability";
+      isValid = false;
+    }
+    if (createInvestor.generalcomments === "") {
+      error.generalcomments = "*Please enter general comments";
+      isValid = false;
+    }
+  
+    // Set the error state
+    setError(error);
+  
+    // Stop function if validation fails
+    if (!isValid) return;
+  
     const newInvestorData = {
       ...createInvestor,
       projects: [
@@ -353,12 +536,13 @@ const InvestorPage = () => {
         },
       ],
     };
-
+  
     try {
-      const response = await dispatch(addInvestors(newInvestorData)).unwrap(); // Unwrap to get the actual response
+      const response = await dispatch(addInvestors(newInvestorData)).unwrap();
+  
       if (response && response.data) {
         const addedInvestor = response.data;
-
+  
         const newEntry = {
           S_no: allData.length + 1,
           investor_Name: `${addedInvestor.firstname} ${addedInvestor.lastname}`,
@@ -383,19 +567,20 @@ const InvestorPage = () => {
             </div>
           ),
         };
-
+  
         setAllData((prevData) => [newEntry, ...prevData]);
         setCollection((prevCollection) =>
           cloneDeep([newEntry, ...prevCollection.slice(0, countPerPage - 1)])
         );
       }
+  
+      handleClose();
     } catch (error) {
       console.error("Error adding investor:", error);
     }
-
-    handleClose();
   };
 
+  
   useEffect(() => {
     if (
       addinvestorsRespnse !== "" ||
@@ -641,9 +826,9 @@ const InvestorPage = () => {
                         })
                       }
                     />
-                    {/* {error?.username && (
-              <span className={Styles.registerErrormsg}>{error?.username}</span>
-            )} */}
+                    {error?.firstname && (
+              <span className="validationErrorMsg">{error?.firstname}</span>
+            )}
                   </div>
                   <div className="InputCart">
                     <p className="InputCartText">Last Name</p>
@@ -660,9 +845,9 @@ const InvestorPage = () => {
                         })
                       }
                     />
-                    {/* {error?.username && (
-              <span className={Styles.registerErrormsg}>{error?.username}</span>
-            )} */}
+                     {error?.lastname && (
+              <span className="validationErrorMsg">{error?.lastname}</span>
+            )}
                   </div>
                 </div>
                 <div className="InputContent">
@@ -681,9 +866,9 @@ const InvestorPage = () => {
                         })
                       }
                     />
-                    {/* {error?.username && (
-              <span className={Styles.registerErrormsg}>{error?.username}</span>
-            )} */}
+                    {error?.emailid && (
+              <span className="validationErrorMsg">{error?.emailid}</span>
+            )}
                   </div>
                   <div className="InputCart">
                     <p className="InputCartText">Phone</p>
@@ -700,9 +885,9 @@ const InvestorPage = () => {
                         })
                       }
                     />
-                    {/* {error?.username && (
-              <span className={Styles.registerErrormsg}>{error?.username}</span>
-            )} */}
+                       {error?.mobilenumber && (
+              <span className="validationErrorMsg">{error?.mobilenumber}</span>
+            )}
                   </div>
                 </div>
                 <div className="InputContent">
@@ -721,9 +906,9 @@ const InvestorPage = () => {
                         })
                       }
                     />
-                    {/* {error?.username && (
-              <span className={Styles.registerErrormsg}>{error?.username}</span>
-            )} */}
+                  {error?.address && (
+              <span className="validationErrorMsg">{error?.address}</span>
+            )}
                   </div>
                   <div className="InputCart">
                     <p className="InputCartText">City</p>
@@ -740,9 +925,9 @@ const InvestorPage = () => {
                         })
                       }
                     />
-                    {/* {error?.username && (
-              <span className={Styles.registerErrormsg}>{error?.username}</span>
-            )} */}
+                     {error?.city && (
+              <span className="validationErrorMsg">{error?.city}</span>
+            )}
                   </div>
                 </div>
                 <div className="InputContent">
@@ -761,9 +946,9 @@ const InvestorPage = () => {
                         })
                       }
                     />
-                    {/* {error?.username && (
-              <span className={Styles.registerErrormsg}>{error?.username}</span>
-            )} */}
+                    {error?.state && (
+              <span className="validationErrorMsg">{error?.state}</span>
+            )}
                   </div>
                   <div className="InputCart">
                     <p className="InputCartText">Zip Code</p>
@@ -780,9 +965,9 @@ const InvestorPage = () => {
                         })
                       }
                     />
-                    {/* {error?.username && (
-              <span className={Styles.registerErrormsg}>{error?.username}</span>
-            )} */}
+                     {error?.zipcode && (
+              <span className="validationErrorMsg">{error?.zipcode}</span>
+            )}
                   </div>
                 </div>
                 <div className="InputContent">
@@ -822,8 +1007,8 @@ const InvestorPage = () => {
                         No
                       </label>
                     </div>
-                    {/* {error?.username && (
-              <span className={Styles.registerErrormsg}>{error?.username}</span>
+                    {/* {error?.accredited && (
+              <span className="validationErrorMsg">{error?.accredited}</span>
             )} */}
                   </div>
                   <div className="InputCart">
@@ -843,9 +1028,9 @@ const InvestorPage = () => {
                       <MenuItem value="None">-None-</MenuItem>
                       <MenuItem value="Co-Producer">Co-Producer</MenuItem>
                     </SelectStyled>
-                    {/* {error?.username && (
-              <span className={Styles.registerErrormsg}>{error?.username}</span>
-            )} */}
+                    {error?.referralsource && (
+              <span className="validationErrorMsg">{error?.referralsource}</span>
+            )}
                   </div>
                 </div>
                 <div className="InputContent">
@@ -865,9 +1050,9 @@ const InvestorPage = () => {
                         })
                       }
                     />
-                    {/* {error?.username && (
-              <span className={Styles.registerErrormsg}>{error?.username}</span>
-            )} */}
+                     {error?.dateadded && (
+              <span className="validationErrorMsg">{error?.dateadded}</span>
+            )}
                   </div>
                   <div className="InputCart">
                     <p className="InputCartText">Investor Probability</p>
@@ -884,9 +1069,9 @@ const InvestorPage = () => {
                         })
                       }
                     />
-                    {/* {error?.username && (
-              <span className={Styles.registerErrormsg}>{error?.username}</span>
-            )} */}
+              {error?.investorprobability && (
+              <span className="validationErrorMsg">{error?.investorprobability}</span>
+            )}
                   </div>
                 </div>
                 <div className={Styles.CreateInvestorInputCartSingleInput}>
@@ -905,9 +1090,9 @@ const InvestorPage = () => {
                       })
                     }
                   />
-                  {/* {error?.username && (
-              <span className={Styles.registerErrormsg}>{error?.username}</span>
-            )} */}
+                    {error?.generalcomments && (
+              <span className="validationErrorMsg">{error?.generalcomments}</span>
+            )}
                 </div>
               </div>
             </div>

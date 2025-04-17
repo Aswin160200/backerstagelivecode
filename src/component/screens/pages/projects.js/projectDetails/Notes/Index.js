@@ -27,6 +27,7 @@ import {
   getByDistributionId,
   getByProducersId,
   getByProjectCostId,
+  getByProjectId,
   getProjectByProducerId,
   getProjectCostByProducersId,
   getProjectsByID,
@@ -90,8 +91,8 @@ const NotesPage = () => {
     (state) => state.projects.getProjectbyProducerId
   );
 
-  const ProjectCostList = useSelector(
-    (state) => state.projectCost.getAllProjectCostData
+  const noteList = useSelector(
+    (state) => state.notes.getNotesByProjectIDSuccessfull
   );
   const ProjectCostByProducer = useSelector(
     (state) => state.projectCost.getByProducersIdSuccessfull
@@ -105,7 +106,7 @@ const NotesPage = () => {
     );
 
   useEffect(() => {
-    dispatch(getAllProjectCost(projectid));
+    dispatch(getByProjectId(projectid));
     dispatch(getProjectCostByProducersId(storedUser.userid));
     dispatch(getProjectByProducerId(storedUser.userid));
      dispatch(getProjectsByID(projectid));
@@ -177,16 +178,13 @@ const NotesPage = () => {
 
   useEffect(() => {
     if (
-      ProjectCostList?.data &&
-      Array.isArray(ProjectCostList.data)
+      noteList?.data &&
+      Array.isArray(noteList.data)
     ) {
-      const mappedData = ProjectCostList?.data.map((item, index) => ({
+      const mappedData = noteList?.data.map((item, index) => ({
         no: index + 1,
-        costdescription: item.costdescription,
-        totalcost: item.totalcost,
-        dateofcost: item.dateofcost,
-        status: item.status,
-        projectname: item.projectname,
+        noteTitle: item.notetitle,
+        noteDiscription: item.notedescription,
         action: (
           <div className="TableActionContainer">
             <EditOutlinedIcon
@@ -208,10 +206,10 @@ const NotesPage = () => {
     } else {
       console.error(
         "Distribution.data is not an array",
-        ProjectCostList?.data
+        noteList?.data
       );
     }
-  }, [ProjectCostList]);
+  }, [noteList]);
 
   const searchData = useRef(
     throttle((val) => {
@@ -301,7 +299,7 @@ const NotesPage = () => {
             }
           >
             <div className="ModelPopupHeader">
-              <p className="ModelPopupHeaderText">Edit Project Cost</p>
+              <p className="ModelPopupHeaderText"></p>
               <CloseOutlinedIcon
                 onClick={() => handleCloseNewProjectCost()}
                 className="ModelPopupHeaderIcon"

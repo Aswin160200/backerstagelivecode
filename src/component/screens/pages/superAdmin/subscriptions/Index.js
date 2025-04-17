@@ -154,6 +154,20 @@ const Subscriptions = () => {
 
   const [updateID, setUpdateID]=useState()
 
+ const initialErrorMessage =  {
+  producersid: "",
+  producersname: "",
+  subscriptionplan: "",
+  fromdate: "",
+  todate: "",
+  paymentmethod:"",
+  status:"",
+  amountpaid: "",
+  dateofamountpaid:"",
+};
+
+    const [error, setError] = useState(initialErrorMessage);
+
   const handleOpenEdit = (id) =>{
     setUpdateID(id)
     dispatch(getBySubscriptionId(id));
@@ -265,20 +279,72 @@ console.log(fetchedUsers,"fetchedUsers")
     }
   )
 
-  const handleCreateSubscription=()=>{
-    dispatch(addSubscription(createsubscription));
-    
-    setOpen(false);
-    if (subscriptionCreate !== "" || subscriptionCreate !== undefined || subscriptionCreate !== null){
-      setTimeout(() => {
-      dispatch(getAllSubscription());
-      toast.success("subscription Added successfully")
-    }, 300);
-    }else{
-      toast.error("Something Error While Creating Subscription")
+  const handleCreateSubscription = () => {
+    let error = {
+      producersid: "",
+      producersname: "",
+      subscriptionplan: "",
+      fromdate: "",
+      todate: "",
+      paymentmethod: "",
+      status: "",
+      amountpaid: "",
+      dateofamountpaid: "",
+    };
+  
+    let isValid = true;
+  
+    if (createsubscription.producersid === "") {
+      error.producersid = "*Please select the producers name";
+      isValid = false;
     }
-  }
-
+    if (createsubscription.subscriptionplan === "") {
+      error.subscriptionplan = "*Please select the subscription plan";
+      isValid = false;
+    }
+    if (createsubscription.fromdate === "") {
+      error.fromdate = "*Please choose the from date";
+      isValid = false;
+    }
+    if (createsubscription.todate === "") {
+      error.todate = "*Please choose the to date";
+      isValid = false;
+    }
+    if (createsubscription.paymentmethod === "") {
+      error.paymentmethod = "*Please select the payment method";
+      isValid = false;
+    }
+    if (createsubscription.status === "") {
+      error.status = "*Please select the status";
+      isValid = false;
+    }
+    if (createsubscription.amountpaid === "") {
+      error.amountpaid = "*Please enter the amount paid";
+      isValid = false;
+    }
+    if (createsubscription.dateofamountpaid === "") {
+      error.dateofamountpaid = "*Please choose the date of amount paid";
+      isValid = false;
+    }
+  
+    // set error state if needed
+    setError(error);
+  
+    if (isValid) {
+      dispatch(addSubscription(createsubscription));
+      setOpen(false);
+  
+      if (subscriptionCreate) {
+        setTimeout(() => {
+          dispatch(getAllSubscription());
+          toast.success("Subscription added successfully");
+        }, 300);
+      } else {
+        toast.error("Something went wrong while creating subscription");
+      }
+    }
+  };
+  
   const handleCloseUpdateSubscription = () => {
     dispatch(editSubscriptiondata({id : updateID , data :updateSubscription }));
     setOpenEdit(false);
@@ -614,9 +680,9 @@ console.log(fetchedUsers,"fetchedUsers")
                           <option disabled>No Producers Available</option>
                         )}
                       </select>
-                    {/* {error?.username && (
-              <span className={Styles.registerErrormsg}>{error?.username}</span>
-            )} */}
+                    { error.producersid && (
+              <span  className="validationErrorMsg">{error?.producersid}</span>
+            )}
                   </div>
                   <div className={Styles.SubscriptionsInputCart}>
                     <p className={Styles.SubscriptionsInputCartText}>
@@ -632,9 +698,9 @@ console.log(fetchedUsers,"fetchedUsers")
                       <option value="Trial">Trial</option>
                       <option value="primimum">primimum</option>
                     </select>
-                    {/* {error?.username && (
-              <span className={Styles.registerErrormsg}>{error?.username}</span>
-            )} */}
+                    {error?.subscriptionplan && (
+              <span className="validationErrorMsg">{error?.subscriptionplan}</span>
+            )}
                   </div>
                 </div>
                 <div className={Styles.SubscriptionsInputContent}>
@@ -657,6 +723,9 @@ console.log(fetchedUsers,"fetchedUsers")
                       //   })
                       // }
                     />
+                      {error?.fromdate && (
+              <span className="validationErrorMsg">{error?.fromdate}</span>
+            )}
                   </div>
                   <div className={Styles.SubscriptionsInputCart}>
                     <p className={Styles.SubscriptionsInputCartText}>To</p>
@@ -672,9 +741,9 @@ console.log(fetchedUsers,"fetchedUsers")
 
                       // onChange={(e) => setCreateInvestor({ ...createInvestor, firstname: e.target.value })}
                     />
-                    {/* {error?.username && (
-                      <span className={Styles.registerErrormsg}>{error?.username}</span>
-                    )} */}
+                    {error?.todate && (
+              <span className="validationErrorMsg">{error?.todate}</span>
+            )}
                   </div>
                 </div>
                 <div className={Styles.SubscriptionsInputContent}>
@@ -692,9 +761,9 @@ console.log(fetchedUsers,"fetchedUsers")
                         <option value="Credit Card">Credit Card</option>
                         <option value="Direct Payment">Direct Payment</option>
                       </select>
-                    {/* {error?.username && (
-                      <span className={Styles.registerErrormsg}>{error?.username}</span>
-                    )} */}
+                      {error?.paymentmethod && (
+              <span className="validationErrorMsg">{error?.paymentmethod}</span>
+            )}
                   </div>
                   <div className={Styles.SubscriptionsInputCart}>
                     <p className={Styles.SubscriptionsInputCartText}>Status</p>
@@ -708,9 +777,9 @@ console.log(fetchedUsers,"fetchedUsers")
                       <option value="Acitve">Acitve</option>
                       <option value="Inactive">Inactive</option>
                     </select>
-                    {/* {error?.username && (
-                      <span className={Styles.registerErrormsg}>{error?.username}</span>
-                    )} */}
+                    {error?.status && (
+              <span className="validationErrorMsg">{error?.status}</span>
+            )}
                   </div>
                 </div>
                 <div className={Styles.SubscriptionsInputContent}>
@@ -727,9 +796,9 @@ console.log(fetchedUsers,"fetchedUsers")
                       value={createsubscription.amountpaid}
                       onChange={(e)=> setCreateSubscription({...createsubscription, amountpaid:e.target.value })}
                     />
-                    {/* {error?.username && (
-                      <span className={Styles.registerErrormsg}>{error?.username}</span>
-                    )} */}
+                       {error?.amountpaid && (
+              <span className="validationErrorMsg">{error?.amountpaid}</span>
+            )}
                   </div>
                   <div className={Styles.SubscriptionsInputCart}>
                     <p className={Styles.SubscriptionsInputCartText}>
@@ -745,9 +814,9 @@ console.log(fetchedUsers,"fetchedUsers")
                       value={createsubscription.dateofamountpaid}
                       onChange={(e)=> setCreateSubscription({...createsubscription, dateofamountpaid:e.target.value })}
                     />
-                    {/* {error?.username && (
-                      <span className={Styles.registerErrormsg}>{error?.username}</span>
-                    )} */}
+                      {error?.dateofamountpaid && (
+              <span className="validationErrorMsg">{error?.dateofamountpaid}</span>
+            )}
                   </div>
                 </div>
               </div>
