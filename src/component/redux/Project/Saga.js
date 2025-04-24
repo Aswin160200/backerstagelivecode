@@ -10,6 +10,7 @@ import {
   CREATE_PARTYS_PROJECT,
   GET_ALL_PARTYS_PROJECT,
   GET_PARTYS_PROJECT_BY_ID,
+  DELETE_PROJECT,
 } from "./ActionTypes";
 import { Service } from "../../service/Helper";
 import {
@@ -23,6 +24,7 @@ import {
   createPartysProjectResponse,
   getAllPartysProjectResponse,
   getPartisProjectByIDResponse,
+  deleteProjectResponse,
 } from "./Action";
 
 function* getallProjects() {
@@ -166,6 +168,22 @@ function* getPartysProjectByID({ payload: id }) {
   }
 }
 
+function* deleteProject({ payload: id }) {
+  try {
+    const response = yield call(
+      Service.commonFetch,
+      `/projects/${id}`,
+      "DELETE",
+      null
+    );
+
+    yield put(deleteProjectResponse(response));
+    console.log(response);
+  } catch (error) {
+    console.error("delete project failed:", error);
+  }
+}
+
 function* projects() {
   yield takeEvery(PROJECTS, getallProjects);
   yield takeEvery(CREATE_PROJECTS, createProject);
@@ -177,6 +195,8 @@ function* projects() {
   yield takeEvery(CREATE_PARTYS_PROJECT, createPartysProject);
   yield takeEvery(GET_ALL_PARTYS_PROJECT, getallPartysProject);
   yield takeEvery(GET_PARTYS_PROJECT_BY_ID, getPartysProjectByID);
+  yield takeEvery(DELETE_PROJECT, deleteProject);
+
 }
 
 export default projects;

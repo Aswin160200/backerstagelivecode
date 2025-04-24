@@ -21,6 +21,7 @@ import Select from "@mui/material/Select";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  deleteProjectcost,
   editByDistributionId,
   editByProjectCostId,
   getAllProjectCost,
@@ -33,6 +34,7 @@ import {
 } from "../../../../../redux/Action";
 import SearchIcon from "@mui/icons-material/Search";
 import { InputAdornment } from "@mui/material";
+import { toast } from "react-toastify";
 
 export const InputStyled = styled(TextField)`
   & .MuiOutlinedInput-root {
@@ -100,6 +102,11 @@ const ProjectCostPage = () => {
   const projectCostById = useSelector(
     (state) => state.projectCost.getByProjectCostIdSuccessfull
   );
+
+  const deleteProjectCostData = useSelector(
+    (state) => state.projectCost.deleteProjectCostSuccessfull
+  );
+
   const projectIdList = useSelector(
       (state) => state.projects.getProjectByIdSuccessfull
     );
@@ -161,6 +168,17 @@ const ProjectCostPage = () => {
     setOpenViewProjectCost(true);
   };
   const handleCloseViewDistribution = () => setOpenViewProjectCost(false);
+
+  const handleDeleteProjectCost=()=>{
+    dispatch(deleteProjectcost(updateID))
+    setDeleteConfimationModelOpen(false);
+
+    if(deleteProjectCostData.message === "Error deleting project cost"){
+      toast.error("Error deleting project cost")
+    }else (
+      toast.success("successfully deleted project cost")
+    )
+  }
 
   const tableHead = {
     costdescription: "Cost Description",
@@ -665,7 +683,7 @@ const ProjectCostPage = () => {
                           </button>
                           <button
                             className="SubmitButton"
-                            // onClick={() => handleDeleteEdit()}
+                            onClick={() => handleDeleteProjectCost()}
                           >
                             Yes !
                           </button>

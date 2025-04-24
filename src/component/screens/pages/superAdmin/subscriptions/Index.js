@@ -425,60 +425,15 @@ console.log(fetchedUsers,"fetchedUsers")
   // }, [subscriptionList]);
 
 
-  // useEffect(() => {
-  //   if (subscriptionList && userById) {
-  //     const mappedData = subscriptionList.map((item, index) => {
-
-  //       // const user = userById[item.firstname];
-  
-  //       return {
-  //         no: index + 1,
-  //         name:  `${userById.firstname} ${userById.lastname}`,
-  //         subscriptionPlan: item.subscriptionplan,
-  //         from: item.fromdate,
-  //         to: item.todate,
-  //         paymentMethod: item.paymentmethod,
-  //         status: item.status,
-  //         action: (
-  //           <div className="TableActionContainer">
-  //             <EditOutlinedIcon
-  //               className="TableActionEditIcon"
-  //               onClick={() => handleOpenEdit(item.subscriptionid)}
-  //             />
-  //             <Link to={`/subscription_details/${item.subscriptionid}`} className="Link">
-  //               <RemoveRedEyeOutlinedIcon className="TableActionViewIcon" />
-  //             </Link>
-  //             <DeleteOutlineOutlinedIcon
-  //               className="TableActionDeleteIcon"
-  //               onClick={() => handlesetDeleteConfimationModelOpen(item.subscriptionid)}
-  //             />
-  //           </div>
-  //         ),
-  //       };
-  //     });
-  
-  //     setAllData(mappedData);
-  //     setCollection(cloneDeep(mappedData.slice(0, countPerPage)));
-  //   }
-  // }, [subscriptionList, userById]);
-  
- 
-  
   useEffect(() => {
-    if (subscriptionList && fetchedUsers.length > 0) {
-      const userMap = {};
-      fetchedUsers.forEach(user => {
-        userMap[String(user.userid)] = user;
-      });
-  
+    if (subscriptionList && userById) {
       const mappedData = subscriptionList.map((item, index) => {
-        const matchedUser = userMap[String(item.producersid)];
+
+        // const user = userById[item.firstname];
   
         return {
           no: index + 1,
-          name: matchedUser
-            ? `${matchedUser.firstname} ${matchedUser.lastname}`
-            : "N/A",
+          name:  `${userById.firstname} ${userById.lastname}`,
           subscriptionPlan: item.subscriptionplan,
           from: item.fromdate,
           to: item.todate,
@@ -490,17 +445,12 @@ console.log(fetchedUsers,"fetchedUsers")
                 className="TableActionEditIcon"
                 onClick={() => handleOpenEdit(item.subscriptionid)}
               />
-              <Link
-                to={`/subscription_details/${item.subscriptionid}`}
-                className="Link"
-              >
+              <Link to={`/subscription_details/${item.subscriptionid}`} className="Link">
                 <RemoveRedEyeOutlinedIcon className="TableActionViewIcon" />
               </Link>
               <DeleteOutlineOutlinedIcon
                 className="TableActionDeleteIcon"
-                onClick={() =>
-                  handlesetDeleteConfimationModelOpen(item.subscriptionid)
-                }
+                onClick={() => handlesetDeleteConfimationModelOpen(item.subscriptionid)}
               />
             </div>
           ),
@@ -510,7 +460,58 @@ console.log(fetchedUsers,"fetchedUsers")
       setAllData(mappedData);
       setCollection(cloneDeep(mappedData.slice(0, countPerPage)));
     }
-  }, [subscriptionList, fetchedUsers]);
+  }, [subscriptionList, userById]);
+
+ 
+  
+  
+  // useEffect(() => {
+  //   if (subscriptionList && fetchedUsers.length > 0) {
+  //     const userMap = {};
+  //     fetchedUsers.forEach(user => {
+  //       userMap[String(user.userid)] = user;
+  //     });
+  
+  //     const mappedData = subscriptionList.map((item, index) => {
+  //       const matchedUser = userMap[String(item.producersid)];
+  
+  //       return {
+  //         no: index + 1,
+  //         name: matchedUser
+  //           ? `${matchedUser.firstname} ${matchedUser.lastname}`
+  //           : "N/A",
+  //         subscriptionPlan: item.subscriptionplan,
+  //         from: item.fromdate,
+  //         to: item.todate,
+  //         paymentMethod: item.paymentmethod,
+  //         status: item.status,
+  //         action: (
+  //           <div className="TableActionContainer">
+  //             <EditOutlinedIcon
+  //               className="TableActionEditIcon"
+  //               onClick={() => handleOpenEdit(item.subscriptionid)}
+  //             />
+  //             <Link
+  //               to={`/subscription_details/${item.subscriptionid}`}
+  //               className="Link"
+  //             >
+  //               <RemoveRedEyeOutlinedIcon className="TableActionViewIcon" />
+  //             </Link>
+  //             <DeleteOutlineOutlinedIcon
+  //               className="TableActionDeleteIcon"
+  //               onClick={() =>
+  //                 handlesetDeleteConfimationModelOpen(item.subscriptionid)
+  //               }
+  //             />
+  //           </div>
+  //         ),
+  //       };
+  //     });
+  
+  //     setAllData(mappedData);
+  //     setCollection(cloneDeep(mappedData.slice(0, countPerPage)));
+  //   }
+  // }, [subscriptionList, fetchedUsers]);
   
   
   

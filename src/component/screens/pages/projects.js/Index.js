@@ -28,6 +28,7 @@ import { FormControl } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createProjects,
+  deleteProject,
   getAllProjects,
   getProjectByProducerId,
   getProjectsByID,
@@ -140,6 +141,10 @@ const ProjectsPage = () => {
 
   const projectIdList = useSelector(
     (state) => state.projects.getProjectByIdSuccessfull
+  );
+
+  const deleteProjectResponse = useSelector(
+    (state) => state.projects.deleteProjectResponse
   );
 
 
@@ -534,7 +539,18 @@ const ProjectsPage = () => {
     dispatch(getProjectByProducerId(storedUser.userid));
   }, []);
 
-  console.log("ProjectList", allData);
+
+  const handleDeleteProjects=()=>{
+    dispatch(deleteProject(updateID));
+   setDeleteConfimationModelOpen(false)
+
+   if(deleteProjectResponse.message === "Error deleting project"){
+    toast.error("You can't remove the Projects until you've deleted their Investors and Co_producers")
+   }
+   else{
+    toast.success("project deleted successfully !!!")
+   }
+  }
 
   useEffect(() => {
     if (projectList?.data) {
@@ -1501,7 +1517,7 @@ const ProjectsPage = () => {
                       </button>
                       <button
                         className={Styles.CreateProjectsSubmitButton}
-                        // onClick={() => handleDeleteEdit()}
+                        onClick={() => handleDeleteProjects()}
                       >
                         Yes !
                       </button>

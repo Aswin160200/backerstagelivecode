@@ -4,6 +4,7 @@ import {
     GET_DISRIBUTION_BY_ID_RESPONSE,
     EDIT_DISRIBUTION_BY_ID_RESPONSE,
     ADD_DISTRIBUTION_RESPONSE,
+    DELETE_DISTRIBUTION_RESPONSE,
 } from "./ActionTypes";
 
 const initialState = {
@@ -13,6 +14,7 @@ const initialState = {
   getByDistributionIdSuccessfull:"",
   editByDistributionIdSuccessfull:"",
   addDistributionSuccessfull:"",
+  deleteDistributionSuccessfull:"",
 };
 
 const distributions = (state = initialState, action) => {
@@ -47,6 +49,12 @@ const distributions = (state = initialState, action) => {
                 addDistributionSuccessfull: action.payload,
               };
               break;
+              case DELETE_DISTRIBUTION_RESPONSE:
+                state = {
+                  ...state,
+                  deleteDistributionSuccessfull: action.payload,
+                };
+                break;
     default:
       state = { ...state };
       break;

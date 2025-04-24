@@ -1,4 +1,4 @@
-import { EDIT_INVESTORS, EDIT_INVESTORS_RESPONSE, GET_INVESTOR_BY_ID, GET_INVESTOR_BY_ID_RESPONSE, GET_INVESTORS_BY_PRODUCER_ID, GET_INVESTORS_BY_PRODUCER_ID_RESPONSE, GET_PROJECT_BY_INVESTORS_ID, GET_PROJECT_BY_INVESTORS_ID_RESPONSE, INVESTORS} from "./ActionTypes";
+import { DELETE_INVESTORS, DELETE_INVESTORS_RESPONSE, EDIT_INVESTORS, EDIT_INVESTORS_RESPONSE, GET_INVESTOR_BY_ID, GET_INVESTOR_BY_ID_RESPONSE, GET_INVESTORS_BY_PRODUCER_ID, GET_INVESTORS_BY_PRODUCER_ID_RESPONSE, GET_PROJECT_BY_INVESTORS_ID, GET_PROJECT_BY_INVESTORS_ID_RESPONSE, INVESTORS} from "./ActionTypes";
 import {INVESTORS_RESPONSE,ADD_INVESTOR,ADD_INVESTOR_RESPONSE} from "./ActionTypes";
 
 export const getAllInvestors = (allinvestors) => ({
@@ -59,4 +59,14 @@ export const getInvestorbyProducerId = (getInvestorbyProducerId) => ({
 export const getInvestorsByProducersIdResponse = (getInvestorsByProducersIdResponse) => ({
     type: GET_INVESTORS_BY_PRODUCER_ID_RESPONSE,
     payload: getInvestorsByProducersIdResponse,
+});
+
+export const deleteInvestors = (deleteInvestors) => ({
+    type: DELETE_INVESTORS,
+    payload: deleteInvestors,
+});
+
+export const deleteInvestorsResponse = (deleteInvestorsResponse) => ({
+    type: DELETE_INVESTORS_RESPONSE,
+    payload: deleteInvestorsResponse,
 });

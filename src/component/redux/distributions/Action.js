@@ -1,6 +1,8 @@
 import {
   ADD_DISTRIBUTION,
     ADD_DISTRIBUTION_RESPONSE,
+    DELETE_DISTRIBUTION,
+    DELETE_DISTRIBUTION_RESPONSE,
     EDIT_DISRIBUTION_BY_ID,
     EDIT_DISRIBUTION_BY_ID_RESPONSE,
   GET_ALL_DISTRIBUTIONS,
@@ -61,4 +63,14 @@ export const editByDistributionId = (distributionId) => ({
   export const addDistributionResponse = (addDistributionResponse) => ({
     type: ADD_DISTRIBUTION_RESPONSE,
     payload: addDistributionResponse,
+  });
+
+  export const deleteDistribution = (deleteDistribution) => ({
+    type: DELETE_DISTRIBUTION,
+    payload: deleteDistribution,
+  });
+  
+  export const deleteDistributionResponse = (deleteDistributionResponse) => ({
+    type: DELETE_DISTRIBUTION_RESPONSE,
+    payload: deleteDistributionResponse,
   });

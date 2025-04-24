@@ -36,7 +36,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import Tooltip from "@mui/material/Tooltip";
 import { useParams } from "react-router-dom";
-import {  addNewDistribution, addNewProjectCost, createNote, createPartysProject, createProjects, getAllDistributions, getAllInvestors, getAllPartysProject, getCoProducerByProducerId, getInvestorById, getInvestorbyProducerId, getInvestorsByProjectId, getPartisProjectByID, getProjectByProducerId, getProjectsByID, updateProjects } from "../../../../redux/Action";
+import {  addNewDistribution, addNewProjectCost, createNote, createPartysProject, createProjects, getAllDistributions, getAllInvestors, getAllPartysProject, getByProjectId, getCoProducerByProducerId, getInvestorById, getInvestorbyProducerId, getInvestorsByProjectId, getPartisProjectByID, getProjectByProducerId, getProjectsByID, updateProjects } from "../../../../redux/Action";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from 'react-toastify';
 import DistributionsPage from "./Distributions/Index";
@@ -197,7 +197,9 @@ const ProjectDetails = () => {
     (state) => state.projects.getPartysProjectByIdSusscessfull
   );
 
-
+  const noteList = useSelector(
+    (state) => state.notes.getNotesByProjectIDSuccessfull
+  );
   
   const [value, setValue] = useState(0);
 
@@ -323,7 +325,7 @@ const [investorID, setInvestorID]=useState()
 
  useEffect(() => {
   dispatch(getProjectsByID(projectid));
-
+  dispatch(getByProjectId(projectid));
   if (updateProjectsData !== "" || updateProjectsData !== undefined || updateProjectsData !== null){
     dispatch(getProjectsByID(projectid));
   
@@ -530,60 +532,60 @@ useEffect(() => {
 
   
 
-  useEffect(() => {
-    if (getCreatePartysProjectData?.data && getallInvestorsList?.data) {
-      const mappedData = getCreatePartysProjectData.data?.map((item, index) => {
+    useEffect(() => {
+      if (getCreatePartysProjectData?.data && getallInvestorsList?.data) {
+        const mappedData = getCreatePartysProjectData.data?.map((item, index) => {
 
-        const matchedInvestor = getallInvestorsList.data?.find(
-          (investor) => String(investor.investorid) === String(item.investorid)
-        );
-  
-        return {
-          no: index + 1,
-          investorname: matchedInvestor
-            ? `${matchedInvestor.firstname} ${matchedInvestor.lastname}`
-            : "N/A", 
-          finalAmount: item.finalamount,
-          status: "active",
-          action: (
-            <div className="TableActionContainer">
-              <EditOutlinedIcon className="TableActionEditIcon" onClick={()=> handleEditOpenPartisProject(item.partysprojectid)}/>
-              <RemoveRedEyeOutlinedIcon className="TableActionViewIcon" onClick={()=> handleViewOpenPartisProject(item.partysprojectid)}/>
-              <DeleteOutlineOutlinedIcon className="TableActionDeleteIcon" onClick={()=> handlesetDeleteConfimationModelOpenPartysProject(item.partysprojectid)}/>
-            </div>
-          ),
-          investorsDoc: (
-            <div className={Styles.ProjectDetailsInvestorTableInvestorDocumentButtonContainer}>
+          const matchedInvestor = getallInvestorsList.data?.find(
+            (investor) => String(investor.investorid) === String(item.investorid)
+          );
+    
+          return {
+            no: index + 1,
+            investorname: matchedInvestor
+              ? `${matchedInvestor.firstname} ${matchedInvestor.lastname}`
+              : "N/A", 
+            finalAmount: item.finalamount,
+            status: "active",
+            action: (
+              <div className="TableActionContainer">
+                <EditOutlinedIcon className="TableActionEditIcon" onClick={()=> handleEditOpenPartisProject(item.partysprojectid)}/>
+                <RemoveRedEyeOutlinedIcon className="TableActionViewIcon" onClick={()=> handleViewOpenPartisProject(item.partysprojectid)}/>
+                <DeleteOutlineOutlinedIcon className="TableActionDeleteIcon" onClick={()=> handlesetDeleteConfimationModelOpenPartysProject(item.partysprojectid)}/>
+              </div>
+            ),
+            investorsDoc: (
+              <div className={Styles.ProjectDetailsInvestorTableInvestorDocumentButtonContainer}>
+                <button
+                  className={Styles.ProjectDetailsInvestorTableInvestorDocumentViewButton}
+                  onClick={() => handleOpenViewInvestorDocument()}
+                >
+                  View
+                </button>
+                <button
+                  className={Styles.ProjectDetailsInvestorTableInvestorDocumentUploadButton}
+                  onClick={() => handleOpenInvestorDocument()}
+                >
+                  Upload
+                </button>
+              </div>
+            ),
+            docs: (
               <button
-                className={Styles.ProjectDetailsInvestorTableInvestorDocumentViewButton}
-                onClick={() => handleOpenViewInvestorDocument()}
+                className={Styles.ProjectDetailsInvestorTableInvestorDocumentGenerateButton}
+                onClick={() => handleOpenGeneratedView()}
               >
                 View
               </button>
-              <button
-                className={Styles.ProjectDetailsInvestorTableInvestorDocumentUploadButton}
-                onClick={() => handleOpenInvestorDocument()}
-              >
-                Upload
-              </button>
-            </div>
-          ),
-          docs: (
-            <button
-              className={Styles.ProjectDetailsInvestorTableInvestorDocumentGenerateButton}
-              onClick={() => handleOpenGeneratedView()}
-            >
-              View
-            </button>
-          ),
-        };
-      });
-  
-      setAllData(mappedData);
-      setCollection(cloneDeep(mappedData.slice(0, countPerPage)));
-    }
-  }, [getCreatePartysProjectData, getallInvestorsList]);
-  
+            ),
+          };
+        });
+    
+        setAllData(mappedData);
+        setCollection(cloneDeep(mappedData.slice(0, countPerPage)));
+      }
+    }, [getCreatePartysProjectData, getallInvestorsList]);
+    
 
     useEffect(() => {
       if (getCreatePartysProjectData?.data) {
@@ -1178,7 +1180,7 @@ useEffect(() => {
                 {notesOpen === true ? <div className={Styles.ProjectDetailsPartiesContainer}>
                             <p className={Styles.ProjectDetailsPartiesContainerText}>Call With Robin <span onClick={()=> handleOpenNotesDoc()}><  AddBoxIcon /></span></p>
                             <div className={Styles.ProjectDetailsPartiesContent}>
-                                <p className={Styles.ProjectDetailsPartiesContentTitle}>Note </p>
+                                <p className={Styles.ProjectDetailsPartiesContentTitle}>{noteList?.data?.notetitle} </p>
                                 <p className={Styles.ProjectDetailsPartiesContentText}>Spoke with Robin</p>
                             </div>
                     </div>:""}

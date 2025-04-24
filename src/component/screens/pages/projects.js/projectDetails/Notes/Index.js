@@ -23,6 +23,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   editByDistributionId,
   editByProjectCostId,
+  editNotesdata,
   getAllProjectCost,
   getByDistributionId,
   getByProducersId,
@@ -101,10 +102,12 @@ const NotesPage = () => {
   const projectCostById = useSelector(
     (state) => state.projectCost.getByProjectCostIdSuccessfull
   );
-  const projectIdList = useSelector(
-      (state) => state.projects.getProjectByIdSuccessfull
+  const notesIdList = useSelector(
+      (state) => state.projects.getNotesByProjectIDSuccessfull
     );
 
+
+    console.log("notesIdList",notesIdList)
   useEffect(() => {
     dispatch(getByProjectId(projectid));
     dispatch(getProjectCostByProducersId(storedUser.userid));
@@ -115,30 +118,28 @@ const NotesPage = () => {
   const [allData, setAllData] = useState([]);
   const [updateID, setupdateID] = useState();
 
-  const [editProjectCost, setEditProjectCost] = useState({
-    projectid: projectid,
+  const [editNotes, setEditNotes] = useState(
+    {
+    projectid:projectid,
+    investorid: null,
     producersid: storedUser.userid,
-    costdescription: projectCostById?.data?.costdescription,
-    totalcost: projectCostById?.data?.totalcost,
-    dateofcost: projectCostById?.data?.dateofcost,
-    status: projectCostById?.data?.status,
-    costincuredby: projectCostById?.data?.costincuredby,
-    dateofreimbursement: projectCostById?.data?.dateofreimbursement,
-    projectname: projectCostById?.data?.projectname,
-    expensecomments: projectCostById?.data?.expensecomments,
-  });
+    co_producersid:null,
+    notetitle: "",
+    notedescription: ""
+  }
+);
 
   //   Add New Project Cost start
   const [openNewProjectCost, setOpenNewProjectCost] = useState(false);
   const handleOpenNewProjectCost = (id) => {
     setupdateID(id);
-    dispatch(getByProjectCostId(id));
+    dispatch(getByProjectId(projectid));
     setOpenNewProjectCost(true);
   };
   const handleCloseNewProjectCost = () => setOpenNewProjectCost(false);
 
   const handleEditProjectCost = () => {
-    dispatch(editByProjectCostId({ id: updateID, data: editProjectCost }));
+    dispatch(editNotesdata({ id: updateID, data: editNotes }));
     setOpenNewProjectCost(false);
     dispatch(getProjectCostByProducersId(storedUser.userid));
   };
@@ -189,14 +190,14 @@ const NotesPage = () => {
           <div className="TableActionContainer">
             <EditOutlinedIcon
               className="TableActionEditIcon"
-              onClick={() => handleOpenNewProjectCost(item.projectcostid)}
+              onClick={() => handleOpenNewProjectCost(item.noteid)}
             />
             <RemoveRedEyeOutlinedIcon
               className="TableActionViewIcon"
-              onClick={() => handleOpenViewDistribution(item.projectcostid)}
+              onClick={() => handleOpenViewDistribution(item.noteid)}
             />
             <DeleteOutlineOutlinedIcon className="TableActionDeleteIcon" 
-            onClick={()=> handlesetDeleteConfimationModelOpen(item.projectcostid)}/>
+            onClick={()=> handlesetDeleteConfimationModelOpen(item.noteid)}/>
           </div>
         ),
       }));
@@ -299,7 +300,7 @@ const NotesPage = () => {
             }
           >
             <div className="ModelPopupHeader">
-              <p className="ModelPopupHeaderText"></p>
+              <p className="ModelPopupHeaderText">Notes</p>
               <CloseOutlinedIcon
                 onClick={() => handleCloseNewProjectCost()}
                 className="ModelPopupHeaderIcon"
@@ -312,178 +313,48 @@ const NotesPage = () => {
                 }
               >
                 <p className={Styles.CreateProjetsdetailsAddPartysProjectTitle}>
-                  Details
+                  Information
                 </p>
               </div>
               <div className="InputContainer">
                 <div className="InputContent">
                   <div className="InputCart">
-                    <p className="InputCartText">Cost Destribution</p>
+                    <p className="InputCartText">
+                    Title
+                    </p>
 
                     <InputStyled
                       id="outlined-basic"
                       className={Styles.LoginPageInputContainerInput}
-                      inputProps={{ maxLength: 5000 }}
-                      value={projectCostById?.data?.costdescription}
-                      name="costdescription"
-                      multiline
-                      rows={4}
-                      onChange={(e) =>
-                        setEditProjectCost({
-                          ...editProjectCost,
-                          costdescription: e.target.value,
-                        })
-                      }
+                      inputProps={{ maxLength: 50 }}
+                      value={notesIdList?.data.notetitle}
+                      name="notetitle"
+                      onChange={(e) => setEditNotes({ ...editNotes, notetitle: e.target.value })}
                     />
                     {/* {error?.username && (
               <span className={Styles.registerErrormsg}>{error?.username}</span>
             )} */}
+
+                 
+             
                   </div>
                   <div className="InputCart">
-                    <p className="InputCartText">Total Cost</p>
+                  <p className="InputCartText">
+                  Notes
+                    </p>
 
                     <InputStyled
                       id="outlined-basic"
-                      type="text"
                       className={Styles.LoginPageInputContainerInput}
-                      value={projectCostById?.data?.totalcost}
-                      inputProps={{ maxLength: 50 }}
-                      name="totalcost"
-                      onChange={(e) =>
-                        setEditProjectCost({
-                          ...editProjectCost,
-                          totalcost: e.target.value,
-                        })
-                      }
-                    />
-                    <p className="InputCartText">Date of Cast</p>
-
-                    <InputStyled
-                      id="outlined-basic"
-                      type="date"
-                      className={Styles.LoginPageInputContainerInput}
-                      value={projectCostById?.data?.dateofcost}
-                      inputProps={{ maxLength: 50 }}
-                      name="dateofcost"
-                      onChange={(e) =>
-                        setEditProjectCost({
-                          ...editProjectCost,
-                          dateofcost: e.target.value,
-                        })
-                      }
-                    />
-                  </div>
-                </div>
-                <div
-                  className={
-                    Styles.CreateProjetsdetailsAddPartysProjectTitleContainer
-                  }
-                >
-                  <p
-                    className={Styles.CreateProjetsdetailsAddPartysProjectTitle}
-                  >
-                    Additional Info
-                  </p>
-                </div>
-                <div className="InputContent">
-                  <div className="InputCart">
-                    <p className="InputCartText">Status</p>
-                   
-                    <select
-                        className="SearchSelectFilter"
-                        value={projectCostById?.data?.status}
-                        onChange={(e) =>
-                          setEditProjectCost({
-                            ...editProjectCost,
-                            status: e.target.value,
-                          })
-                        }
-                      >
-                        <option value="None">None</option>
-                        <option value="Unreimbursed">Unreimbursed</option>
-                        <option value="Reimbursed">Reimbursed</option>
-                       
-                      </select>
-                    <p className="InputCartText">Date of Reimbursement</p>
-
-                    <InputStyled
-                      id="outlined-basic"
-                      type="date"
-                      className={Styles.LoginPageInputContainerInput}
-                      inputProps={{ maxLength: 50 }}
-                      value={projectCostById?.data?.dateofreimbursement}
-                      name="dateofreimbursement"
-                      onChange={(e) =>
-                        setEditProjectCost({
-                          ...editProjectCost,
-                          dateofreimbursement: e.target.value,
-                        })
-                      }
-                    />
-                    <p className="InputCartText">Expense Comments</p>
-
-                    <InputStyled
-                      id="outlined-basic"
-                      type="text"
-                      className={Styles.LoginPageInputContainerInput}
-                      value={projectCostById?.data?.expensecomments}
-                      inputProps={{ maxLength: 500000 }}
-                      name="expensecomments"
+                      inputProps={{ maxLength: 50000 }}
+                      name="notedescription"
                       multiline
                       rows={4}
-                      onChange={(e) =>
-                        setEditProjectCost({
-                          ...editProjectCost,
-                          expensecomments: e.target.value,
-                        })
-                      }
-                    />
+                      onChange={(e) => setEditNotes({ ...editNotes, notedescription: e.target.value })}                    />
+                  
+                      </div>
                   </div>
-                  <div className="InputCart">
-                    <p className="InputCartText">Cost Incurred By</p>
-                    <InputStyled
-                      id="outlined-basic"
-                      type="search"
-                      className={Styles.LoginPageInputContainerInput}
-                      value={projectCostById?.data?.costincuredby}
-                      inputProps={{ maxLength: 50 }}
-                      name="costincuredby"
-                      slotProps={{
-                        input: {
-                          endAdornment: (
-                            <InputAdornment position="start">
-                              <SearchIcon />
-                            </InputAdornment>
-                          ),
-                        },
-                      }}
-                      onChange={(e) =>
-                        setEditProjectCost({
-                          ...editProjectCost,
-                          costincuredby: e.target.value,
-                        })
-                      }
-                    />
-                    <p className="InputCartText">Project</p>
-                   
-                    <InputStyled
-                      id="outlined-basic"
-                       type="text"
-                      className={Styles.LoginPageInputContainerInput}
-                      inputProps={{ maxLength: 20 }}
-                      value={projectIdList.data?.projectname}
-                      name="firstname"
-                      onChange={(e) =>
-                        setEditProjectCost({
-                          ...editProjectCost,
-                          projectname: e.target.value,
-                        })
-                      }
-                    />
-                   
                   </div>
-                </div>
-              </div>
             </div>
             <div className="ModelPopupfooter">
               <button
@@ -520,7 +391,7 @@ const NotesPage = () => {
             }
           >
             <div className="ModelPopupHeader">
-              <p className="ModelPopupHeaderText">View Project Cost</p>
+              <p className="ModelPopupHeaderText">View Notes</p>
               <CloseOutlinedIcon
                 onClick={() => handleCloseViewDistribution()}
                 className="ModelPopupHeaderIcon"
@@ -533,80 +404,54 @@ const NotesPage = () => {
                 }
               >
                 <p className={Styles.CreateProjetsdetailsAddPartysProjectTitle}>
-                  Details
+                  Information
                 </p>
               </div>
               <div className="InputContainer">
                 <div className="InputContent">
                   <div className="InputCart">
-                    <p className="InputCartText">Cost Destribution</p>
-                    <p className="InputCartTextData">
-                      {projectCostById?.data?.costdescription}
+                    <p className="InputCartText">
+                    Title
                     </p>
+
+                    <InputStyled
+                      id="outlined-basic"
+                      className={Styles.LoginPageInputContainerInput}
+                      inputProps={{ maxLength: 50 }}
+                      name="notetitle"
+                      // onChange={(e) => setAddNewNotes({ ...addNewNotes, notetitle: e.target.value })}
+                    />
+                    {/* {error?.username && (
+              <span className={Styles.registerErrormsg}>{error?.username}</span>
+            )} */}
+
+                 
+             
                   </div>
                   <div className="InputCart">
-                    <p className="InputCartText">Total Cost</p>
-                    <p className="InputCartTextData">
-                      {projectCostById?.data?.totalcost}
+                  <p className="InputCartText">
+                  Notes
                     </p>
 
-                    <p className="InputCartText">Date of Cast</p>
-                    <p className="InputCartTextData">
-                      {projectCostById?.data?.dateofcost}
-                    </p>
+                    <InputStyled
+                      id="outlined-basic"
+                      className={Styles.LoginPageInputContainerInput}
+                      inputProps={{ maxLength: 50000 }}
+                      name="notedescription"
+                      multiline
+                      rows={4}
+                      // onChange={(e) => setAddNewNotes({ ...addNewNotes, notedescription: e.target.value })}                    />
+                   />
+                      </div>
                   </div>
-                </div>
-                <div
-                  className={
-                    Styles.CreateProjetsdetailsAddPartysProjectTitleContainer
-                  }
-                >
-                  <p
-                    className={Styles.CreateProjetsdetailsAddPartysProjectTitle}
-                  >
-                    Additional Info
-                  </p>
-                </div>
-                <div className="InputContent">
-                  <div className="InputCart">
-                    <p className="InputCartText">Status</p>
-                    <p className="InputCartTextData">
-                      {projectCostById?.data?.status}
-                    </p>
-                    <p className="InputCartTextData">
-                      {projectCostById?.data?.dateofcost}
-                    </p>
-
-                    <p className="InputCartText">Date of Reimbursement</p>
-                    <p className="InputCartTextData">
-                      {projectCostById?.data?.dateofreimbursement}
-                    </p>
-
-                    <p className="InputCartText">Expense Comments</p>
-                    <p className="InputCartTextData">
-                      {projectCostById?.data?.expensecomments}
-                    </p>
                   </div>
-                  <div className="InputCart">
-                    <p className="InputCartText">Cost Incurred By</p>
-                    <p className="InputCartTextData">
-                      {projectCostById?.data?.costincuredby}
-                    </p>
-
-                    <p className="InputCartText">Project</p>
-                    <p className="InputCartTextData">
-                      {projectCostById?.data?.projectname}
-                    </p>
-                  </div>
-                </div>
-              </div>
             </div>
             <div className="ModelPopupfooter">
               <button
                 className={
                   Styles.CreateProjectDetailsInvestorTableAddPartsProjectsCancelButton
                 }
-                onClick={() => handleCloseNewProjectCost()}
+                onClick={() => handleCloseViewDistribution()}
               >
                 Cancel
               </button>
@@ -614,7 +459,7 @@ const NotesPage = () => {
                 className={
                   Styles.CreateProjectDetailsInvestorTableAddPartsProjectsSubmitButton
                 }
-                onClick={() => handleEditProjectCost()}
+                onClick={() => handleCloseViewDistribution()}
               >
                 Save
               </button>

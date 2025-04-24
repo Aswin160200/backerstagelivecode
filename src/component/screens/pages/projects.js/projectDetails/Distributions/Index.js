@@ -21,6 +21,7 @@ import Select from "@mui/material/Select";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  deleteDistribution,
     editByDistributionId,
   getAllDistributions,
   getByDistributionId,
@@ -156,6 +157,10 @@ const [deleteConfimationModelOpen, setDeleteConfimationModelOpen] =useState(fals
   };
   const handleCloseViewDistribution = () => setOpenViewDistributions(false);
 
+  const  handleDeleteteDistrbution=()=>{
+    // dispatch(deleteDistribution(updateID))
+    setDeleteConfimationModelOpen(false);
+  }
   const tableHead = {
     distributionname: "Distribution Name",
     projectname: "Project Name",
@@ -208,6 +213,8 @@ const [deleteConfimationModelOpen, setDeleteConfimationModelOpen] =useState(fals
       );
     }
   }, [DistributionByProducer]);
+
+
 
   const searchData = useRef(
     throttle((val) => {
@@ -525,7 +532,7 @@ const [deleteConfimationModelOpen, setDeleteConfimationModelOpen] =useState(fals
                     </button>
                     <button
                       className="SubmitButton"
-                      // onClick={() => handleDeleteEdit()}
+                      onClick={() => handleDeleteteDistrbution()}
                     >
                       Yes !
                     </button>

@@ -4,6 +4,7 @@ import {
   GET_PROJECTCOST_BY_ID_RESPONSE,
   EDIT_PROJECTCOST_BY_ID_RESPONSE,
   ADD_NEW_PROJECT_COST_RESPONSE,
+  DELETE_PROJECT_COST_RESPONSE,
 } from "./ActionTypes";
 
 const initialState = {
@@ -13,6 +14,7 @@ const initialState = {
   getByProjectCostIdSuccessfull: "",
   editByProjectCostIdSuccessfull: "",
   addNewProjectCostSuccessfull:"",
+  deleteProjectCostSuccessfull:"",
 };
 
 const projectCost = (state = initialState, action) => {
@@ -47,6 +49,12 @@ const projectCost = (state = initialState, action) => {
         addNewProjectCostSuccessfull: action.payload,
       };
       break;
+      case DELETE_PROJECT_COST_RESPONSE:
+        state = {
+          ...state,
+          deleteProjectCostSuccessfull: action.payload,
+        };
+        break;
     default:
       state = { ...state };
       break;

@@ -9,6 +9,7 @@ import {
   CREATE_PARTYS_PROJECT_RESPONSE,
   GET_ALL_PARTYS_PROJECT_RESPONSE,
   GET_PARTYS_PROJECT_BY_ID_RESPONSE,
+  DELETE_PROJECT_RESPONSE,
 } from "./ActionTypes";
 
 const initialState = {
@@ -23,6 +24,7 @@ const initialState = {
   getCreatePartysProjectData: "",
   getAllPartysProjectListData: "",
   getPartysProjectByIdSusscessfull:"",
+  deleteProjectResponse:"",
 };
 
 const projects = (state = initialState, action) => {
@@ -87,6 +89,12 @@ const projects = (state = initialState, action) => {
             getPartysProjectByIdSusscessfull: action.payload,
           };
           break;
+          case DELETE_PROJECT_RESPONSE:
+            state = {
+              ...state,
+              deleteProjectResponse: action.payload,
+            };
+            break;
     default:
       state = { ...state };
       break;

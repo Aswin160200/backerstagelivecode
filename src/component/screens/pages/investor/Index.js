@@ -13,6 +13,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import {
   addInvestors,
+  deleteInvestors,
   editInvestors,
   getAllInvestors,
   getInvestorById,
@@ -188,7 +189,16 @@ const InvestorPage = () => {
     (state) => state.investors.getEditInvestorsDetails
   );
 
-  const initialErrorMessage =  {
+  const deleteInvestorsResponse = useSelector(
+    (state) => state.investors.deleteInvestorsSuccessfull
+  );
+
+  console.log(
+    "deleteInvestorsResponse.message",
+    deleteInvestorsResponse.message
+  );
+
+  const initialErrorMessage = {
     firstname: "",
     lastname: "",
     emailid: "",
@@ -202,17 +212,16 @@ const InvestorPage = () => {
     dateadded: "",
     generalcomments: "",
     investorprobability: "",
-    };
-    
-        const [error, setError] = useState(initialErrorMessage);
+  };
 
+  const [error, setError] = useState(initialErrorMessage);
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
-    setError(initialErrorMessage)
-  }
+    setError(initialErrorMessage);
+  };
   const [openEdit, setOpenEdit] = useState(false);
 
   const [updateID, setUpdateID] = useState();
@@ -236,15 +245,15 @@ const InvestorPage = () => {
     setSelectedStatus(event.target.value);
   };
 
-  const [deleteConfimationModelOpen, setDeleteConfimationModelOpen] = useState(false);
-      const handlesetDeleteConfimationModelOpen = (id) => 
-        {
-          setUpdateID(id)
-          setDeleteConfimationModelOpen(true);
-          dispatch(getInvestorById(id));
-        }
-      const handlesetDeleteConfimationModelClose = () => setDeleteConfimationModelOpen(false);
-    
+  const [deleteConfimationModelOpen, setDeleteConfimationModelOpen] =
+    useState(false);
+  const handlesetDeleteConfimationModelOpen = (id) => {
+    setUpdateID(id);
+    setDeleteConfimationModelOpen(true);
+    dispatch(getInvestorById(id));
+  };
+  const handlesetDeleteConfimationModelClose = () =>
+    setDeleteConfimationModelOpen(false);
 
   const [createInvestor, setCreateInvestor] = useState({
     producersid: storedUser.userid,
@@ -261,7 +270,6 @@ const InvestorPage = () => {
     dateadded: "",
     generalcomments: "",
     investorprobability: "",
-
   });
 
   const [updateInvestor, setUpdateInvestor] = useState({
@@ -337,8 +345,12 @@ const InvestorPage = () => {
             <Link to={`/investors_details/${item.investorid}`} className="Link">
               <RemoveRedEyeOutlinedIcon className="TableActionViewIcon" />
             </Link>
-            <DeleteOutlineOutlinedIcon className="TableActionDeleteIcon" 
-            onClick={()=> handlesetDeleteConfimationModelOpen(item.investorid)}/>
+            <DeleteOutlineOutlinedIcon
+              className="TableActionDeleteIcon"
+              onClick={() =>
+                handlesetDeleteConfimationModelOpen(item.investorid)
+              }
+            />
           </div>
         ),
       }));
@@ -379,9 +391,9 @@ const InvestorPage = () => {
   //     generalcomments: "",
   //     investorprobability: "",
   //   };
-  
+
   //   let isValid = true;
-  
+
   //   if (createInvestor.firstname === "") {
   //     error.firstname = "*Please enter the first name";
   //     isValid = false;
@@ -461,9 +473,9 @@ const InvestorPage = () => {
       generalcomments: "",
       investorprobability: "",
     };
-  
+
     let isValid = true;
-  
+
     if (createInvestor.firstname === "") {
       error.firstname = "*Please enter the first name";
       isValid = false;
@@ -516,13 +528,13 @@ const InvestorPage = () => {
       error.generalcomments = "*Please enter general comments";
       isValid = false;
     }
-  
+
     // Set the error state
     setError(error);
-  
+
     // Stop function if validation fails
     if (!isValid) return;
-  
+
     const newInvestorData = {
       ...createInvestor,
       projects: [
@@ -536,13 +548,13 @@ const InvestorPage = () => {
         },
       ],
     };
-  
+
     try {
       const response = await dispatch(addInvestors(newInvestorData)).unwrap();
-  
+
       if (response && response.data) {
         const addedInvestor = response.data;
-  
+
         const newEntry = {
           S_no: allData.length + 1,
           investor_Name: `${addedInvestor.firstname} ${addedInvestor.lastname}`,
@@ -567,20 +579,29 @@ const InvestorPage = () => {
             </div>
           ),
         };
-  
+
         setAllData((prevData) => [newEntry, ...prevData]);
         setCollection((prevCollection) =>
           cloneDeep([newEntry, ...prevCollection.slice(0, countPerPage - 1)])
         );
       }
-  
+
       handleClose();
     } catch (error) {
       console.error("Error adding investor:", error);
     }
   };
 
-  
+  const handleDeleteInvestors = () => {
+    dispatch(deleteInvestors(updateID));
+    setDeleteConfimationModelOpen(false);
+
+    if (deleteInvestorsResponse.status === 500) {
+      toast.error("You can't remove the Investors until you've deleted their party's");
+    } else {
+      toast.success("Investors deleted successfully !!!");
+    }
+  };
   useEffect(() => {
     if (
       addinvestorsRespnse !== "" ||
@@ -673,43 +694,46 @@ const InvestorPage = () => {
     ));
   };
 
-
   const handleExportCSV = () => {
     if (!investorList?.data || investorList.data.length === 0) {
       toast.error("No investor data available to export.");
       return;
     }
-  
+
     const allInvestors = investorList.data;
-  
+
     // Dynamically collect all unique keys from all investor objects
     const headersSet = new Set();
-    allInvestors.forEach(investor => {
-      Object.keys(investor).forEach(key => headersSet.add(key));
+    allInvestors.forEach((investor) => {
+      Object.keys(investor).forEach((key) => headersSet.add(key));
     });
-  
+
     const headers = Array.from(headersSet);
-  
+
     const csvRows = [
       headers.join(","), // CSV header row
-      ...allInvestors.map(investor =>
-        headers.map(header =>
-          `"${(investor[header] ?? "").toString().replace(/"/g, '""')}"`
-        ).join(",")
-      )
+      ...allInvestors.map((investor) =>
+        headers
+          .map(
+            (header) =>
+              `"${(investor[header] ?? "").toString().replace(/"/g, '""')}"`
+          )
+          .join(",")
+      ),
     ];
-  
+
     const csvContent = csvRows.join("\n");
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
-  
+
     const a = document.createElement("a");
     a.href = url;
-    a.download = `investors_export_${new Date().toISOString().slice(0, 10)}.csv`;
+    a.download = `investors_export_${new Date()
+      .toISOString()
+      .slice(0, 10)}.csv`;
     a.click();
     URL.revokeObjectURL(url);
   };
-  
 
   return (
     <div className={Styles.InvestorPageMainContainer}>
@@ -725,12 +749,12 @@ const InvestorPage = () => {
             <p className={Styles.InvestorPagenavCartText}>Investor</p>
           </div>
           <div className={Styles.CreateInvestorButtonContent}>
-          <button
-          className={Styles.CreateInvestorButtonContentExportButton}
-          onClick={handleExportCSV}
-        >
-          Export
-        </button> 
+            <button
+              className={Styles.CreateInvestorButtonContentExportButton}
+              onClick={handleExportCSV}
+            >
+              Export
+            </button>
 
             <button
               className={Styles.ViewInvestorPageNavContainerButton}
@@ -827,8 +851,10 @@ const InvestorPage = () => {
                       }
                     />
                     {error?.firstname && (
-              <span className="validationErrorMsg">{error?.firstname}</span>
-            )}
+                      <span className="validationErrorMsg">
+                        {error?.firstname}
+                      </span>
+                    )}
                   </div>
                   <div className="InputCart">
                     <p className="InputCartText">Last Name</p>
@@ -845,9 +871,11 @@ const InvestorPage = () => {
                         })
                       }
                     />
-                     {error?.lastname && (
-              <span className="validationErrorMsg">{error?.lastname}</span>
-            )}
+                    {error?.lastname && (
+                      <span className="validationErrorMsg">
+                        {error?.lastname}
+                      </span>
+                    )}
                   </div>
                 </div>
                 <div className="InputContent">
@@ -867,8 +895,10 @@ const InvestorPage = () => {
                       }
                     />
                     {error?.emailid && (
-              <span className="validationErrorMsg">{error?.emailid}</span>
-            )}
+                      <span className="validationErrorMsg">
+                        {error?.emailid}
+                      </span>
+                    )}
                   </div>
                   <div className="InputCart">
                     <p className="InputCartText">Phone</p>
@@ -885,9 +915,11 @@ const InvestorPage = () => {
                         })
                       }
                     />
-                       {error?.mobilenumber && (
-              <span className="validationErrorMsg">{error?.mobilenumber}</span>
-            )}
+                    {error?.mobilenumber && (
+                      <span className="validationErrorMsg">
+                        {error?.mobilenumber}
+                      </span>
+                    )}
                   </div>
                 </div>
                 <div className="InputContent">
@@ -906,9 +938,11 @@ const InvestorPage = () => {
                         })
                       }
                     />
-                  {error?.address && (
-              <span className="validationErrorMsg">{error?.address}</span>
-            )}
+                    {error?.address && (
+                      <span className="validationErrorMsg">
+                        {error?.address}
+                      </span>
+                    )}
                   </div>
                   <div className="InputCart">
                     <p className="InputCartText">City</p>
@@ -925,9 +959,9 @@ const InvestorPage = () => {
                         })
                       }
                     />
-                     {error?.city && (
-              <span className="validationErrorMsg">{error?.city}</span>
-            )}
+                    {error?.city && (
+                      <span className="validationErrorMsg">{error?.city}</span>
+                    )}
                   </div>
                 </div>
                 <div className="InputContent">
@@ -947,8 +981,8 @@ const InvestorPage = () => {
                       }
                     />
                     {error?.state && (
-              <span className="validationErrorMsg">{error?.state}</span>
-            )}
+                      <span className="validationErrorMsg">{error?.state}</span>
+                    )}
                   </div>
                   <div className="InputCart">
                     <p className="InputCartText">Zip Code</p>
@@ -965,9 +999,11 @@ const InvestorPage = () => {
                         })
                       }
                     />
-                     {error?.zipcode && (
-              <span className="validationErrorMsg">{error?.zipcode}</span>
-            )}
+                    {error?.zipcode && (
+                      <span className="validationErrorMsg">
+                        {error?.zipcode}
+                      </span>
+                    )}
                   </div>
                 </div>
                 <div className="InputContent">
@@ -1014,7 +1050,7 @@ const InvestorPage = () => {
                   <div className="InputCart">
                     <p className="InputCartText">Refferral Source</p>
 
-                    <SelectStyled
+                    {/* <SelectStyled
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       value={createInvestor.referralsource}
@@ -1027,10 +1063,26 @@ const InvestorPage = () => {
                     >
                       <MenuItem value="None">-None-</MenuItem>
                       <MenuItem value="Co-Producer">Co-Producer</MenuItem>
-                    </SelectStyled>
+                    </SelectStyled> */}
+
+                    <select
+                      class="SearchSelectFilter"
+                      value={createInvestor.referralsource}
+                      onChange={(e) =>
+                        setCreateInvestor({
+                          ...createInvestor,
+                          referralsource: e.target.value,
+                        })
+                      }
+                    >
+                      <option value="None">-None-</option>
+                      <option value="Co-Producer">Co-Producer</option>
+                    </select>
                     {error?.referralsource && (
-              <span className="validationErrorMsg">{error?.referralsource}</span>
-            )}
+                      <span className="validationErrorMsg">
+                        {error?.referralsource}
+                      </span>
+                    )}
                   </div>
                 </div>
                 <div className="InputContent">
@@ -1050,9 +1102,11 @@ const InvestorPage = () => {
                         })
                       }
                     />
-                     {error?.dateadded && (
-              <span className="validationErrorMsg">{error?.dateadded}</span>
-            )}
+                    {error?.dateadded && (
+                      <span className="validationErrorMsg">
+                        {error?.dateadded}
+                      </span>
+                    )}
                   </div>
                   <div className="InputCart">
                     <p className="InputCartText">Investor Probability</p>
@@ -1069,9 +1123,11 @@ const InvestorPage = () => {
                         })
                       }
                     />
-              {error?.investorprobability && (
-              <span className="validationErrorMsg">{error?.investorprobability}</span>
-            )}
+                    {error?.investorprobability && (
+                      <span className="validationErrorMsg">
+                        {error?.investorprobability}
+                      </span>
+                    )}
                   </div>
                 </div>
                 <div className={Styles.CreateInvestorInputCartSingleInput}>
@@ -1090,9 +1146,11 @@ const InvestorPage = () => {
                       })
                     }
                   />
-                    {error?.generalcomments && (
-              <span className="validationErrorMsg">{error?.generalcomments}</span>
-            )}
+                  {error?.generalcomments && (
+                    <span className="validationErrorMsg">
+                      {error?.generalcomments}
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
@@ -1347,7 +1405,7 @@ const InvestorPage = () => {
                   <div className="InputCart">
                     <p className="InputCartText">Refferral Source</p>
 
-                    <SelectStyled
+                    {/* <SelectStyled
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       value={investorById.data?.referralsource}
@@ -1360,7 +1418,21 @@ const InvestorPage = () => {
                     >
                       <MenuItem value="none">-None-</MenuItem>
                       <MenuItem value="Google">Co-Producer</MenuItem>
-                    </SelectStyled>
+                    </SelectStyled> */}
+
+                    <select
+                      class="SearchSelectFilter"
+                      value={investorById.data?.referralsource}
+                      onChange={(e) =>
+                        setUpdateInvestor({
+                          ...updateInvestor,
+                          referralsource: e.target.value,
+                        })
+                      }
+                    >
+                      <option value="None">-None-</option>
+                      <option value="Co-Producer">Co-Producer</option>
+                    </select>
                     {/* {error?.username && (
               <span className={Styles.registerErrormsg}>{error?.username}</span>
             )} */}
@@ -1450,45 +1522,51 @@ const InvestorPage = () => {
         </Box>
       </Modal>
 
-          <Modal
-                      open={deleteConfimationModelOpen}
-                      onClose={handlesetDeleteConfimationModelClose}
-                      aria-labelledby="modal-modal-title"
-                      aria-describedby="modal-modal-description"
-                    >
-                      <Box class="modal">
-                      
-                        <div className={Styles.InvestorsPageModelPopupContainer}>
-                          <div className="ModelPopupHeader">
-                            <p className="ModelPopupHeaderText">Delete Investors</p>
-                            <CloseOutlinedIcon
-                              onClick={() => handlesetDeleteConfimationModelClose()}
-                              className="ModelPopupHeaderIcon"
-                            />
-                          </div>
-                          <div className="ModelPopupbody">
-                          <p className={Styles.InvestorsPageModelPopupContainerDeteleText}>
-                            Do you really want to remove the Investor : <span className={Styles.InvestorsPageModelPopupContainerDeteleTextProducerName}>{investorById.data?.firstname}{investorById.data?.lastname}</span> 
-                            </p>
-                          </div>
-                          <div className="ModelPopupfooter">
-                            <button
-                              className={Styles.CreateInvestorCancelButton}
-                              onClick={() => handlesetDeleteConfimationModelClose()}
-                            >
-                              No !
-                            </button>
-                            <button
-                              className={Styles.CreateInvestorSubmitButton}
-                              // onClick={() => handleDeleteEdit()}
-                            >
-                              Yes !
-                            </button>
-                          </div>
-                        </div>
-                        
-                      </Box>
-                    </Modal>
+      <Modal
+        open={deleteConfimationModelOpen}
+        onClose={handlesetDeleteConfimationModelClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box class="modal">
+          <div className={Styles.InvestorsPageModelPopupContainer}>
+            <div className="ModelPopupHeader">
+              <p className="ModelPopupHeaderText">Delete Investors</p>
+              <CloseOutlinedIcon
+                onClick={() => handlesetDeleteConfimationModelClose()}
+                className="ModelPopupHeaderIcon"
+              />
+            </div>
+            <div className="ModelPopupbody">
+              <p className={Styles.InvestorsPageModelPopupContainerDeteleText}>
+                Do you really want to remove the Investor :{" "}
+                <span
+                  className={
+                    Styles.InvestorsPageModelPopupContainerDeteleTextProducerName
+                  }
+                >
+                  {investorById.data?.firstname}
+                  {investorById.data?.lastname}
+                </span>
+              </p>
+            </div>
+            <div className="ModelPopupfooter">
+              <button
+                className={Styles.CreateInvestorCancelButton}
+                onClick={() => handlesetDeleteConfimationModelClose()}
+              >
+                No !
+              </button>
+              <button
+                className={Styles.CreateInvestorSubmitButton}
+                onClick={() => handleDeleteInvestors()}
+              >
+                Yes !
+              </button>
+            </div>
+          </div>
+        </Box>
+      </Modal>
     </div>
   );
 };

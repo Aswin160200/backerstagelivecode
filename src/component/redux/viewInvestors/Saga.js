@@ -1,8 +1,8 @@
 // import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
 import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
-import { INVESTORS,EDIT_INVESTORS ,ADD_INVESTOR,GET_INVESTOR_BY_ID,GET_PROJECT_BY_INVESTORS_ID,GET_INVESTORS_BY_PRODUCER_ID} from "./ActionTypes";
+import {DELETE_INVESTORS, INVESTORS,EDIT_INVESTORS ,ADD_INVESTOR,GET_INVESTOR_BY_ID,GET_PROJECT_BY_INVESTORS_ID,GET_INVESTORS_BY_PRODUCER_ID} from "./ActionTypes";
 import { Service } from "../../service/Helper";
-import { getAllInvestorsResponse,editInvestorsResponse,addInvestorsResponse ,getInvestorByIdResponse,getProjectByInvestorsIdResponse,getInvestorsByProducersIdResponse} from "./Action";
+import {deleteInvestorsResponse, getAllInvestorsResponse,editInvestorsResponse,addInvestorsResponse ,getInvestorByIdResponse,getProjectByInvestorsIdResponse,getInvestorsByProducersIdResponse} from "./Action";
 
 function* getallInvestors() {
   try {
@@ -104,6 +104,22 @@ function* getInvestorsByProducerId({payload :getInvestorbyProducerId}) {
   }
 }
 
+function* deleteInvestors({ payload: id }) {
+  try {
+    const response = yield call(
+      Service.commonFetch,
+      `/investors/${id}`,
+      "DELETE",
+      null
+    );
+
+    yield put(deleteInvestorsResponse(response));
+    console.log(response);
+  } catch (error) {
+    console.error("delete project failed:", error);
+  }
+}
+
 function* investors() {
   yield takeEvery(INVESTORS, getallInvestors);
   yield takeEvery(EDIT_INVESTORS, editInvestors);
@@ -111,6 +127,7 @@ function* investors() {
   yield takeEvery(GET_INVESTOR_BY_ID, getInvestorById);
   yield takeEvery(GET_PROJECT_BY_INVESTORS_ID, getProjectByInvestorsId);
   yield takeEvery(GET_INVESTORS_BY_PRODUCER_ID, getInvestorsByProducerId);
+  yield takeEvery(DELETE_INVESTORS, deleteInvestors);
 
 }
 

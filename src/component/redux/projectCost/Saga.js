@@ -5,6 +5,7 @@ import {
     GET_PROJECTCOST_BY_ID,
     EDIT_PROJECTCOST_BY_ID,
     ADD_NEW_PROJECT_COST,
+    DELETE_PROJECT_COST,
 } from "./ActionTypes";
 import { Service } from "../../service/Helper";
 import {
@@ -13,6 +14,7 @@ import {
     getByProjectCostIdResponse,
     editByProjectCostIdResponse,
     addNewProjectCostResponse,
+    deleteProjectcostResponse,
 } from "./Action";
 
 function* getAllProjectCostByProjectId({payload : id}) {
@@ -75,12 +77,30 @@ function* createProjectCost({ payload: addNewProjectCost }) {
 }
 
 
+function* deleteProjectCost({ payload: id }) {
+  try {
+    const response = yield call(
+      Service.commonFetch,
+      `/projectscost/${id}`,
+      "DELETE",
+      null
+    );
+
+    yield put(deleteProjectcostResponse(response));
+    console.log(response);
+  } catch (error) {
+    console.error("delete  failed:", error);
+  }
+}
+
+
 function* projectCost() {
   yield takeEvery(GET_ALL_PROJECTCOST, getAllProjectCostByProjectId);
   yield takeEvery(GET_PROJECTCOST_BY_PRODUCER_ID, getAllProjectCostByProducerId);
   yield takeEvery(GET_PROJECTCOST_BY_ID, getByProjectCostId);
   yield takeEvery(EDIT_PROJECTCOST_BY_ID, editByProjectCostId);
   yield takeEvery(ADD_NEW_PROJECT_COST, createProjectCost);
+  yield takeEvery(DELETE_PROJECT_COST, deleteProjectCost);
 
 }
 

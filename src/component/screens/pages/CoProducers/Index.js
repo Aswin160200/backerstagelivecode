@@ -27,7 +27,7 @@ import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { FormControl } from "@mui/material";
-import { createNewCoProducers, editCoProducers, getAllCoProducers, getByCoProducersId, getCoProducerByProducerId } from "../../../redux/Action";
+import { createNewCoProducers, deleteCoProducers, editCoProducers, getAllCoProducers, getByCoProducersId, getCoProducerByProducerId } from "../../../redux/Action";
 import { toast } from 'react-toastify';
 
 
@@ -157,6 +157,29 @@ const CoProducers = () => {
             (state) => state.projects.getProjectByIdSuccessfull
           );
 
+          const deleteCoProducersResponse = useSelector(
+            (state) => state.coProducers.deleteCoProducersIdSuccessfull
+          );
+
+           const initialErrorMessage =  {
+            firstname: "",
+            lastname: "",
+            emailid: "",
+            street: "",
+            phone: "",
+            legalentity:"",
+            city: "",
+            state: "",
+            totalallocation:"",
+            status: "",
+            total_raised: "",
+            entityelements: "",
+            generalcomments: "",
+              };
+              
+                  const [error, setError] = useState(initialErrorMessage);
+          
+
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -241,12 +264,178 @@ const CoProducers = () => {
   const [allData, setAllData] = useState([]);
 
 
+  // const addNewCoProducers = async () => {
+  //   let error = {
+  //     firstname: "",
+  //     lastname: "",
+  //     emailid: "",
+  //     address: "",
+  //     mobilenumber: "",
+  //     city: "",
+  //     state: "",
+  //     zipcode: "",
+  //     referralsource: "",
+  //     accredited: "",
+  //     dateadded: "",
+  //     generalcomments: "",
+  //     investorprobability: "",
+  //   };
+  
+  //   let isValid = true;
+  
+  //   if (createInvestor.firstname === "") {
+  //     error.firstname = "*Please enter the first name";
+  //     isValid = false;
+  //   }
+
+  //   setError(error);
+  
+  //   // Stop function if validation fails
+  //   if (!isValid) return;
+
+
+  //   try {
+  //     const response = await dispatch(createNewCoProducers(createCoProducers)).unwrap(); 
+  
+  //     if (response) {
+        
+  //       setAllData((prevData) => [
+  //         ...prevData,
+  //         {
+  //           S_no: prevData.length + 1,
+  //           CoProducers_Name: `${createCoProducers.firstname} ${createCoProducers.lastname}`,
+  //           email: createCoProducers.emailid,
+  //           state: createCoProducers.state,
+  //           status: createCoProducers.status,
+  //           final_Amount: createCoProducers.final_amount,
+  //           action: (
+  //             <div className="TableActionContainer">
+  //               <EditOutlinedIcon
+  //                 className="TableActionEditIcon"
+  //                 onClick={() => handleOpenEdit(response.co_producersid)}
+  //               />
+  //               <Link to={`/co_producers_details/${response.co_producersid}`} className="Link">
+  //                 <RemoveRedEyeOutlinedIcon className="TableActionViewIcon" />
+  //               </Link>
+  //               <DeleteOutlineOutlinedIcon className="TableActionDeleteIcon" 
+  //             />
+  //             </div>
+  //           ),
+  //         },
+  //       ]);
+       
+  //       setCreateCoProducers({
+  //         firstname: "",
+  //         lastname: "",
+  //         emailid: "",
+  //         address: "",
+  //         mobilenumber: "",
+  //         city: "",
+  //         state: "",
+  //         zipcode: "",
+  //         county: "",
+  //         accredited: "",
+  //         date_added: "",
+  //         general_comments: "",
+  //         CoProducers_probability: "",
+  //         CoProducers_projects: "",
+  //         projectname: "",
+  //         status: "",
+  //         final_amount: "",
+  //         invesment_method: "",
+  //       });
+  
+  //       handleClose();
+  //     }
+  //   } catch (error) {
+  //     console.error("Error adding Co-Producer:", error);
+      
+  //   }
+  // };
+  
   const addNewCoProducers = async () => {
+    let error = {
+      firstname: "",
+      lastname: "",
+      emailid: "",
+      street: "",
+      phone: "",
+      legalentity:"",
+      city: "",
+      state: "",
+      totalallocation:"",
+      status: "",
+      total_raised: "",
+      entityelements: "",
+      generalcomments: "",
+    };
+  
+    let isValid = true;
+  
+    if (createCoProducers.firstname === "") {
+      error.firstname = "*Please enter the first name";
+      isValid = false;
+    }
+    if (createCoProducers.lastname === "") {
+      error.lastname = "*Please enter the last name";
+      isValid = false;
+    }
+    if (createCoProducers.emailid === "") {
+      error.emailid = "*Please enter the email-id";
+      isValid = false;
+    }
+    if (createCoProducers.street === "") {
+      error.street = "*Please enter the street";
+      isValid = false;
+    }
+    if (createCoProducers.phone === "") {
+      error.phone = "*Please enter the mobile number";
+      isValid = false;
+    }
+    if (createCoProducers.legalentity === "") {
+      error.legalentity = "*Please enter the legal entity";
+      isValid = false;
+    }
+    if (createCoProducers.city === "") {
+      error.city = "*Please enter the city";
+      isValid = false;
+    }
+    if (createCoProducers.state === "") {
+      error.state = "*Please enter the state";
+      isValid = false;
+    }
+    if (createCoProducers.totalallocation === "") {
+      error.totalallocation = "*Please enter the total allocation";
+      isValid = false;
+    }
+    if (createCoProducers.status === "") {
+      error.status = "*Please slect the status";
+      isValid = false;
+    }
+    if (createCoProducers.total_raised === "") {
+      error.total_raised = "*Please enter the total raised";
+      isValid = false;
+    }
+    if (createCoProducers.entityelements === "") {
+      error.entityelements = "*Please enter the entity elements";
+      isValid = false;
+    }
+    if (createCoProducers.generalcomments === "") {
+      error.generalcomments = "*Please enter the general comments";
+      isValid = false;
+    }
+
+  
+    // Update error state regardless
+    setError(error);
+  
+    // Stop execution if form is invalid
+    if (!isValid) return;
+  
     try {
-      const response = await dispatch(createNewCoProducers(createCoProducers)).unwrap(); 
+      const response = await dispatch(createNewCoProducers(createCoProducers)).unwrap();
   
       if (response) {
-        
         setAllData((prevData) => [
           ...prevData,
           {
@@ -265,13 +454,13 @@ const CoProducers = () => {
                 <Link to={`/co_producers_details/${response.co_producersid}`} className="Link">
                   <RemoveRedEyeOutlinedIcon className="TableActionViewIcon" />
                 </Link>
-                <DeleteOutlineOutlinedIcon className="TableActionDeleteIcon" 
-              />
+                <DeleteOutlineOutlinedIcon className="TableActionDeleteIcon" />
               </div>
             ),
           },
         ]);
-       
+  
+        // Reset form values
         setCreateCoProducers({
           firstname: "",
           lastname: "",
@@ -293,15 +482,15 @@ const CoProducers = () => {
           invesment_method: "",
         });
   
+        // Close modal on success
         handleClose();
+        setOpen(false);
       }
-    } catch (error) {
-      console.error("Error adding Co-Producer:", error);
-      
+    } catch (err) {
+      console.error("Error adding Co-Producer:", err);
     }
   };
   
-
   
   
 
@@ -321,6 +510,16 @@ const CoProducers = () => {
   },[addCoProducers,editexitCoProducers])
 
 
+  const handleDeleteCoProducers=()=>{
+    dispatch(deleteCoProducers(updateID))
+    setDeleteConfimationModelOpen(false)
+
+    if(deleteCoProducersResponse.message === "Error deleting coproducers"){
+        toast.error("You can't remove the co-producers until you've deleted their party's");
+          } else {
+            toast.success("co=producers deleted successfully !!!");
+          }
+  }
 
     const tableHead = {
       S_no: "S.no",
@@ -556,9 +755,9 @@ const CoProducers = () => {
                       })
                     }
                   />
-                  {/* {error?.username && (
-              <span className={Styles.registerErrormsg}>{error?.username}</span>
-            )} */}
+                  {error?.firstname && (
+              <span className="validationErrorMsg">{error?.firstname}</span>
+            )}
                 </div>
                 <div className={Styles.CreateCoProducersInputCart}>
                   <p className={Styles.CreateCoProducersInputCartText}>
@@ -577,9 +776,9 @@ const CoProducers = () => {
                       })
                     }
                   />
-                  {/* {error?.username && (
-              <span className={Styles.registerErrormsg}>{error?.username}</span>
-            )} */}
+                   {error?.lastname && (
+              <span className="validationErrorMsg">{error?.lastname}</span>
+            )}
                 </div>
               </div>
               <div className={Styles.CreateCoProducersInputContent}>
@@ -598,9 +797,9 @@ const CoProducers = () => {
                       })
                     }
                   />
-                  {/* {error?.username && (
-              <span className={Styles.registerErrormsg}>{error?.username}</span>
-            )} */}
+                   {error?.emailid && (
+              <span className="validationErrorMsg">{error?.emailid}</span>
+            )}
                 </div>
                 <div className={Styles.CreateCoProducersInputCart}>
                   <p className={Styles.CreateCoProducersInputCartText}>Phone</p>
@@ -617,9 +816,9 @@ const CoProducers = () => {
                       })
                     }
                   />
-                  {/* {error?.username && (
-              <span className={Styles.registerErrormsg}>{error?.username}</span>
-            )} */}
+                 {error?.phone && (
+              <span className="validationErrorMsg">{error?.phone}</span>
+            )}
                 </div>
               </div>
               <div className={Styles.CreateCoProducersInputContent}>
@@ -640,9 +839,9 @@ const CoProducers = () => {
                       })
                     }
                   />
-                  {/* {error?.username && (
-              <span className={Styles.registerErrormsg}>{error?.username}</span>
-            )} */}
+                  {error?.legalentity && (
+              <span className="validationErrorMsg">{error?.legalentity}</span>
+            )}
                 </div>
                 <div className={Styles.CreateCoProducersInputCart}>
                   <p className={Styles.CreateCoProducersInputCartText}>
@@ -661,9 +860,9 @@ const CoProducers = () => {
                       })
                     }
                   />
-                  {/* {error?.username && (
-              <span className={Styles.registerErrormsg}>{error?.username}</span>
-            )} */}
+                  {error?.street && (
+              <span className="validationErrorMsg">{error?.street}</span>
+            )}
                 </div>
                 </div>
                 <div className={Styles.CreateCoProducersInputContent}>
@@ -682,9 +881,9 @@ const CoProducers = () => {
                       })
                     }
                   />
-                  {/* {error?.username && (
-              <span className={Styles.registerErrormsg}>{error?.username}</span>
-            )} */}
+                     {error?.city && (
+              <span className="validationErrorMsg">{error?.city}</span>
+            )}
                 </div>
                 <div className={Styles.CreateCoProducersInputCart}>
                   <p className={Styles.CreateCoProducersInputCartText}>State</p>
@@ -701,9 +900,9 @@ const CoProducers = () => {
                       })
                     }
                   />
-                  {/* {error?.username && (
-              <span className={Styles.registerErrormsg}>{error?.username}</span>
-            )} */}
+                  {error?.state && (
+              <span className="validationErrorMsg">{error?.state}</span>
+            )}
                 </div>
               </div>
               <div className={Styles.CreateCoProducersInputContent}>                
@@ -723,9 +922,9 @@ const CoProducers = () => {
                       })
                     }
                   />
-                  {/* {error?.username && (
-              <span className={Styles.registerErrormsg}>{error?.username}</span>
-            )} */}
+                 {error?.totalallocation && (
+              <span className="validationErrorMsg">{error?.totalallocation}</span>
+            )}
                 </div>
               </div>
               <div className={Styles.CreateCoProducersInputContent}>                
@@ -734,7 +933,7 @@ const CoProducers = () => {
                   Status
                   </p>
 
-                  <SelectStyled
+                  {/* <SelectStyled
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={createCoProducers.status}
@@ -749,10 +948,24 @@ const CoProducers = () => {
                     <MenuItem value="Interested">Interested</MenuItem>
                     <MenuItem value="Investing In Project">Investing In Project</MenuItem>
                     <MenuItem value="Passing On Project">Passing On Project</MenuItem>
-                  </SelectStyled>
-                  {/* {error?.username && (
-              <span className={Styles.registerErrormsg}>{error?.username}</span>
-            )} */}
+                  </SelectStyled> */}
+
+                  <select  class="SearchSelectFilter"
+                            value={createCoProducers.status}
+                            onChange={(e) =>
+                              setCreateCoProducers({
+                                ...createCoProducers,
+                                status: e.target.value,
+                              })
+                            }>
+                        <option value="None">-None-</option>
+                        <option value="Interested">Interested</option>
+                        <option value="Investing In Project">Investing In Project</option>
+                         <option value="Passing On Project">Passing On Project</option>
+                        </select>
+                  {error?.status && (
+              <span className="validationErrorMsg">{error?.status}</span>
+            )}
                 </div>
                 <div className={Styles.CreateCoProducersInputCart}>
                   <p className={Styles.CreateCoProducersInputCartText}>
@@ -771,9 +984,9 @@ const CoProducers = () => {
                       })
                     }
                   />
-                  {/* {error?.username && (
-              <span className={Styles.registerErrormsg}>{error?.username}</span>
-            )} */}
+                   {error?.total_raised && (
+              <span className="validationErrorMsg">{error?.total_raised}</span>
+            )}
                 </div>
               </div>
               <div className={Styles.CreateCoProducersInputContent}>
@@ -795,9 +1008,9 @@ const CoProducers = () => {
                       })
                     }
                   />
-                  {/* {error?.username && (
-              <span className={Styles.registerErrormsg}>{error?.username}</span>
-            )} */}
+                  {error?.entityelements && (
+              <span className="validationErrorMsg">{error?.entityelements}</span>
+            )}
                 </div>
                 <div className={Styles.CreateCoProducersInputCart}>
                 <p className={Styles.CreateCoProducersInputCartText}>
@@ -817,9 +1030,9 @@ const CoProducers = () => {
                         })
                       }
                     />
-                {/* {error?.username && (
-              <span className={Styles.registerErrormsg}>{error?.username}</span>
-            )} */}
+                {error?.generalcomments && (
+              <span className="validationErrorMsg">{error?.generalcomments}</span>
+            )}
               </div>
               </div>
              
@@ -1067,10 +1280,10 @@ const CoProducers = () => {
                     Status
                   </p>
 
-                  <SelectStyled
+                  {/* <SelectStyled
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    dvalue={coProducersId.data?.status}
+                    value={coProducersId.data?.status}
                     onChange={(e) =>
                       setUpdateCoProducers({
                         ...updateCoProducers,
@@ -1082,7 +1295,21 @@ const CoProducers = () => {
                     <MenuItem value="Interested">Interested</MenuItem>
                     <MenuItem value="Investing In Project">Investing In Project</MenuItem>
                     <MenuItem value="Passing On Project">Passing On Project</MenuItem>
-                  </SelectStyled>
+                  </SelectStyled> */}
+
+                  <select  class="SearchSelectFilter"
+                           value={coProducersId.data?.status}
+                           onChange={(e) =>
+                             setUpdateCoProducers({
+                               ...updateCoProducers,
+                               status: e.target.value,
+                             })
+                           }>
+                        <option value="None">-None-</option>
+                        <option value="Interested">Interested</option>
+                        <option value="Investing In Project">Investing In Project</option>
+                         <option value="Passing On Project">Passing On Project</option>
+                        </select>
                   {/* {error?.username && (
               <span className={Styles.registerErrormsg}>{error?.username}</span>
             )} */}
@@ -1163,7 +1390,7 @@ const CoProducers = () => {
             <div className="ModelPopupfooter sam">
               <button
                 className={Styles.CreateCoProducersCancelButton}
-                onClick={() => handleClose()}
+                onClick={() => handleCloseEdit()}
               >
                 Cancel
               </button>
@@ -1208,7 +1435,7 @@ const CoProducers = () => {
                             </button>
                             <button
                               className={Styles.CreateCoProducersSubmitButton}
-                              // onClick={() => handleDeleteEdit()}
+                              onClick={() => handleDeleteCoProducers()}
                             >
                               Yes !
                             </button>

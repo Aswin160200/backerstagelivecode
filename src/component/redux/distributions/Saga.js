@@ -5,6 +5,7 @@ import {
     GET_DISRIBUTION_BY_ID,
     EDIT_DISRIBUTION_BY_ID,
     ADD_DISTRIBUTION,
+    DELETE_DISTRIBUTION,
 } from "./ActionTypes";
 import { Service } from "../../service/Helper";
 import {
@@ -13,6 +14,7 @@ import {
     getByDistributionIdResponse,
     editByDistributionIdResponse,
     addDistributionResponse,
+    deleteDistributionResponse,
 } from "./Action";
 
 function* getAllDistributionsByProjectId({payload : id}) {
@@ -26,7 +28,7 @@ function* getAllDistributionsByProjectId({payload : id}) {
 function* getAllDistributionsByProducerId({payload : id}) {
     try {
       const response = yield call(Service.commonFetch, `/distributions/project/${id}`, "GET", null);
-      yield put(getByProducersIdResponse(response));
+      yield put(  (response));
       console.log(response);
     } catch (error) {}
   }
@@ -74,6 +76,21 @@ function* createDistribution({ payload: addDistribution }) {
   } catch (error) {}
 }
 
+function* deleteDirstribution({ payload: id }) {
+  try {
+    const response = yield call(
+      Service.commonFetch,
+      `/distributions/${id}`,
+      "DELETE",
+      null
+    );
+
+    yield put(deleteDistributionResponse(response));
+    console.log(response);
+  } catch (error) {
+    console.error("delete  failed:", error);
+  }
+}
 
 function* distributions() {
   yield takeEvery(GET_ALL_DISTRIBUTIONS, getAllDistributionsByProjectId);
@@ -81,6 +98,7 @@ function* distributions() {
   yield takeEvery(GET_DISRIBUTION_BY_ID, getByDistributionId);
   yield takeEvery(EDIT_DISRIBUTION_BY_ID, editByDistributionId);
   yield takeEvery(ADD_DISTRIBUTION, createDistribution);
+  yield takeEvery(DELETE_DISTRIBUTION, deleteDirstribution);
 
 }
 

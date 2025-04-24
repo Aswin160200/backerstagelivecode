@@ -5,6 +5,7 @@ import {
   GET_INVESTOR_BY_ID_RESPONSE,
   GET_PROJECT_BY_INVESTORS_ID_RESPONSE,
   GET_INVESTORS_BY_PRODUCER_ID_RESPONSE,
+  DELETE_INVESTORS_RESPONSE,
 } from "./ActionTypes";
 
 const initialState = {
@@ -15,7 +16,7 @@ const initialState = {
   getInvestorsByIdDetails: "",
   getProjectByInvestorsIdResponse: "",
   getInvestorsProducersIdSuccessfull: "",
-
+  deleteInvestorsSuccessfull:"",
 };
 
 const investors = (state = initialState, action) => {
@@ -56,6 +57,12 @@ const investors = (state = initialState, action) => {
         getInvestorsProducersIdSuccessfull: action.payload,
       };
       break;
+      case DELETE_INVESTORS_RESPONSE:
+        state = {
+          ...state,
+          deleteInvestorsSuccessfull: action.payload,
+        };
+        break;
     default:
       state = { ...state };
       break;
