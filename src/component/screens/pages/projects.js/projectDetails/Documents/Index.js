@@ -90,7 +90,7 @@ const DcoumentsPage = () => {
     
       {
         projectid: projectid,
-        investorid:null,
+        investorid:"",
         producersid: storedUser.userid,
         filename:"",
         filetype: "",
@@ -214,11 +214,25 @@ const DcoumentsPage = () => {
     setRole(event.target.value);
   };
 
-  const handleCreateDocumentUpload = () => {
+  // const handleCreateDocumentUpload = () => {
   
-    dispatch(createDocumetsFiles(createDocuments));
+  //   dispatch(createDocumetsFiles(createDocuments));
     
-  }
+  // }
+
+  const handleCreateDocumentUpload = () => {
+    const formData = new FormData();
+    formData.append("projectid", createDocuments.projectid);
+    formData.append("investorid", createDocuments.investorid);
+    formData.append("producersid", createDocuments.producersid);
+    formData.append("filename", createDocuments.filename);
+    formData.append("filetype", createDocuments.filetype);
+    formData.append("choosefile", createDocuments.choosefile);
+    formData.append("file", createDocuments.filedata); // the actual file upload
+  
+    dispatch(createDocumetsFiles(formData));
+    handleCloseDocumentUpload();
+  };
 
 
   return (
@@ -248,7 +262,7 @@ const DcoumentsPage = () => {
         </table>
         <div className={Styles.DcoumentsPagePageTablePagination}>
           <Pagination
-            pageSize={countPerPage}
+            pageSize={countPerPage} 
             onChange={updatePage}
             current={currentPage}
             total={allData.length}
@@ -324,7 +338,7 @@ const DcoumentsPage = () => {
                       Upload OA & Subscription Documents as one file
                     </p>
                     <div className="file_input">
-                      <InputStyled
+                      {/* <InputStyled
                         id="outlined-basic"
                         type="file"
                         className=""
@@ -332,6 +346,13 @@ const DcoumentsPage = () => {
                         name="uploadeddocument"
                         onChange={(e) => setDreateDocuments({ ...createDocuments, filedata: e.target.value })}
 
+                      /> */}
+                      <InputStyled
+                        id="outlined-basic"
+                        type="file"
+                        inputProps={{ maxLength: 50 }}
+                        name="uploadeddocument"
+                        onChange={(e) => setDreateDocuments({ ...createDocuments, filedata: e.target.files[0] })}
                       />
                     </div>
                   </div>
